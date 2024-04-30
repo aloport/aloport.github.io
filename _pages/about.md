@@ -2,24 +2,23 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+subtitle: Political scientist, [VU Amsterdam](https://vu.nl/en)
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>De Boelelaan 1105</p>
+    <p>Amsterdam, North Holland</p>
 
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am a postdoctoral researcher in Political Science at the Faculty of Social Sciences, [Vrije Universiteit Amsterdam](https://vu.nl/en). Starting 2024 fall, I will start as Ramón Areces Fellow and Visiting Scholar for 2024-2025 at the [Center of European Studies](https://ces.fas.harvard.edu/) in [Harvard University](https://www.harvard.edu/).
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+I specialize in comparative politics, electoral behavior, representation, and public opinion. I co-direct the electoral prediction market [Predilect](http://predilect.org) and co-lead WG1 at [COST Action LGBTI+ Social and Economic (in)equalities (CA19103)](https://www.lgbtinequalities.eu/). Previously, I earned my Ph.D. in Political Science from the University of Zurich.
+ My research focuses on two key and interconnected challenges that modern democracies face: identity-based polarization and the erosion of sociocultural attitudes, particularly concerning LGBTQ+ perspectives, towards liberal democracy. I have also specialized in understanding the discrimination patterns against LGBTQ+ and other minority political candidates in the European context. My methodological expertise is in quantitative techniques, with a specific emphasis on experimental survey methods.
