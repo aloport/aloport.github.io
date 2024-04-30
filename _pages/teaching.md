@@ -8,7 +8,6 @@ nav_order: 4
 ---
 
 
-
 ###### **University of Zurich**
 
 - Sep–Dec 2018 Personalization of politics. Undergraduate seminar, 3 ETCS
