@@ -10,8 +10,8 @@ email: a.lopez.ortega@vu.nl
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Post-doc @VUamsterdam. PhD Political Science @IPZ_ch. Experimenting about values, private/public opinion and liberal democracy. I run Predilect. He/him. 🏳️‍🌈
 footer_text: >
-  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and
+  hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
   Photo by my partner Christian :)
 keywords: aloport, jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
@@ -46,7 +46,7 @@ rss_icon: true
 # -----------------------------------------------------------------------------
 
 navbar_fixed: true
-footer_fixed: true
+footer_fixed: false
 
 # Dimensions
 max_width: 800px
@@ -106,9 +106,7 @@ x_username: bertous # your X handle
 youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 zotero_username: # your zotero username
 
-contact_note: >
-  You can even add a little note about which of these is the best way to reach you.
-
+contact_note:
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
 # -----------------------------------------------------------------------------

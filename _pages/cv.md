@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /cv/
-title: CV
+title: cv
 nav: true
 nav_order: 2
 cv_pdf: cv_aloport300424.pdf
