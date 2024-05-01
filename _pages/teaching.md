@@ -3,6 +3,7 @@ layout: page
 permalink: /teaching/
 title: teaching
 description: courses I've taught.
+image: teaching_es.jpg
 nav: true
 nav_order: 4
 ---
@@ -12,7 +13,7 @@ nav_order: 4
 
 - Sep–Dec 2018 Personalization of politics. Undergraduate seminar, 3 ETCS
 - Sep–Dec 2019 Political campaigns in times of Big Data. Undergraduate seminar, 3 ETCS.
-***
+
 
 
 ###### **Vrije Universiteit Amsterdam**
