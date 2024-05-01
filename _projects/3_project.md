@@ -1,81 +1,22 @@
 ---
 layout: page
-title: project 3 with very long name
-description: a project that redirects to another website
-img: assets/img/7.jpg
-redirect: https://unsplash.com
+title: Spillovers of Center-Periphery Dynamics
+description: Spillovers of Center-Periphery Dynamics
+img: assets/img/andaluces.jpg
 importance: 3
 category: work
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+In the last decades, conflict over sovereignty and political autonomy has been ubiquitous in Europe, ranging from Catalonia and Spain to Scotland and the United Kingdom, and even extending to the latter and the European Union. Most studies on how center and peripheral regions interact in (quasi)federal states assume a bilateral framework in which the only actors involved are the region demanding devolution and the central government. In this project, we introduce an augmented model of center-periphery dynamics that includes disenfranchised regions, that is, regions not directly involved in the conflict whose demands for (de)centralization are not politically articulated and may vary as a reaction. From a public opinion perspective, we argue that identities in these regions will be influenced by demands for special treatment and the state's answers to these demands. We theorize that providing special treatment can bolster regional identity in disenfranchised areas. In contrast, conflictual negotiations over devolution will increase national identity and, in both cases, this will result in demands for symmetrical decentralization. We propose a multi-arm video-vignette experiment in Spain with a special focus on Andalusia, a prototypical disenfranchised region relative to the Spanish-Catalan conflict. Our experiment is particularly well-suited to the Spanish political scenario, where current negotiations for government formation have reinvigorated the territorial conflict over political autonomy in Catalonia. The results of this project have far-reaching implications beyond the Spanish case. The reactions of the disenfranchised regions are important to understand the constraints faced by the different actors in asymmetric federalist states. Moreover, these negotiations may explain why regional identities might be more prominent in the disenfranchised regions of asymmetric federalist countries than in the disenfranchised regions of centralized countries. This research significantly advances our understanding of state stability by providing a nuanced perspective on regional interactions and identities.
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+_Funded by the University of Lucerne and in collaboration with Álvaro Canalejo-Molero (U. Lucerne) and Javier Padilla (CUNY)_
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/andaluces_2.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
     </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
 </div>
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
-
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
-
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
-
-{% raw %}
-
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
 
 {% endraw %}
