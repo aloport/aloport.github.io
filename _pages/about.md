@@ -8,7 +8,7 @@ profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
-  more_info: #>
+  more_info:#>
     #<p>De Boelelaan 1105</p>
     #<p>Amsterdam, North Holland</p>
 
@@ -19,9 +19,7 @@ social: true # includes social icons at the bottom of the page
 
 ##### Political Scientist, [Vrije Universiteit Amsterdam](https://vu.nl/en)
 
-
 I am a postdoctoral researcher in Political Science at the Faculty of Social Sciences, [Vrije Universiteit Amsterdam](https://vu.nl/en). Starting Fall 2024, I will be the Ramón Areces Fellow and Visiting Scholar for 2024-2025 at the [Center of European Studies](https://ces.fas.harvard.edu/) in [Harvard University](https://www.harvard.edu/).
-
 
 I specialize in comparative politics, electoral behavior, representation, and public opinion. I co-direct the electoral prediction market [Predilect](http://predilect.org) and co-lead WG1 at [COST Action LGBTI+ Social and Economic (in)equalities (CA19103)](https://www.lgbtinequalities.eu/). Previously, I earned my Ph.D. in Political Science from the University of Zurich.
 
