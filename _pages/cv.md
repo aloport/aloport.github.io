@@ -4,7 +4,7 @@ permalink: /cv/
 title: cv
 nav: true
 nav_order: 2
-cv_pdf: cv_aloport300424.pdf
+cv_pdf: cv_aloport080624.pdf
 ---
 
 Also downloadable <a href="/assets/pdf/cv_aloport080624.pdf">here</a>.
