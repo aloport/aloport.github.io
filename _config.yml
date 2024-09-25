@@ -6,9 +6,9 @@ title: blank # the website title (if blank, full name will be used instead)
 first_name: Alberto
 middle_name:
 last_name: López Ortega
-email: a.lopez.ortega@vu.nl
+email: alopezortega@fas.harvard.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Post-doc @VUamsterdam. PhD Political Science @IPZ_ch. Experimenting about values, private/public opinion and liberal democracy. I run Predilect. He/him. 🏳️‍🌈
+   Ramon Areces Fellow @EuropeatHarvard. Post-doc @VUamsterdam. PhD Political Science @IPZ_ch. Experimenting about values, private/public opinion and liberal democracy. I run Predilect. He/him. 🏳️‍🌈
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and
   hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
