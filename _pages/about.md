@@ -26,4 +26,4 @@ I specialize in comparative politics, electoral behavior, representation, and pu
 
 My research focuses on two key and interconnected challenges that modern democracies face: identity-based polarization and the erosion of sociocultural attitudes, particularly concerning LGBTQ+ perspectives in relation to liberal democracy. I have also specialized in understanding the discrimination patterns against LGBTQ+ and other minority political candidates within the European context. My methodological expertise is in quantitative techniques, with a specific emphasis on experimental survey methods.
 
-Some of my research has been published in _Nature Human Behaviour_, _Science Advances_, _American Political Science Review_, _Political Behavior_, and forthcoming in _British Journal of Political Science_ among other outlets.
+Some of my research has been published in _Nature Human Behaviour_, _Science Advances_, _American Political Science Review_, _British Journal of Political Science_, and _Political Behavior_, among other outlets.
