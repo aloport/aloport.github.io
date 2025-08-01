@@ -18,9 +18,9 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-##### Political Scientist, [VU Amsterdam](https://vu.nl/en) & [Harvard University](https://www.harvard.edu/)
+##### Political Scientist, [VU Amsterdam](https://vu.nl/en)
 
-I am a Ramón Areces Fellow and Visiting Scholar for 2024-2025 at the [Center of European Studies](https://ces.fas.harvard.edu/) in [Harvard University](https://www.harvard.edu/). Starting July 2025, I will be a tenured Assistant Professor at the [Vrije Universiteit Amsterdam](https://vu.nl/en), where I will develop my [VENI project (2025-2029)](https://www.nwo.nl/en/calls/nwo-talent-programme) on how ethnic norms impact citizens' (il)liberal democratic attitudes.
+I am an Assistant Professor at the [Vrije Universiteit Amsterdam](https://vu.nl/en), where I develop my [VENI project (2025-2029)](https://www.nwo.nl/en/calls/nwo-talent-programme) on how ethnic norms impact citizens' (il)liberal democratic attitudes. In 2024–2025, I was a Ramón Areces Fellow and Visiting Scholar at the Center of European Studies in [Harvard University](https://www.harvard.edu/).  I am affiliated with Harvard's Weatherhead Research Cluster on Identity Politics.
 
 I specialize in comparative politics, electoral behavior, representation, and public opinion. I co-direct the electoral prediction market [Predilect](http://predilect.org) and co-lead WG1 at [COST Action LGBTI+ Social and Economic (in)equalities (CA19103)](https://www.lgbtinequalities.eu/). Previously, I earned my Ph.D. in Political Science from the University of Zurich.
 
