@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Papers Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #16213e;
+            --accent-purple: #7c3aed;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-orange: #f97316;
+            --accent-red: #ef4444;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --chart-text: #94a3b8;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #cbd5e1;
+            --chart-text: #64748b;
+        }
+
+        [data-theme="light"] .paper-card:hover {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .meta-tag.journal { background: rgba(124, 58, 237, 0.1); color: #6d28d9; }
+        [data-theme="light"] .meta-tag.year { background: rgba(6, 182, 212, 0.1); color: #0891b2; }
+        [data-theme="light"] .meta-tag.type { background: rgba(236, 72, 153, 0.1); color: #db2777; }
+        [data-theme="light"] .meta-tag.topic { background: rgba(16, 185, 129, 0.1); color: #059669; }
+        [data-theme="light"] .meta-tag.method { background: rgba(245, 158, 11, 0.1); color: #d97706; }
+
+        [data-theme="light"] .paper-coauthors strong { color: #0891b2; }
+        [data-theme="light"] .paper-doi a { color: #2563eb; }
+        [data-theme="light"] .paper-doi a:hover { color: #0891b2; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1800px; margin: 0 auto; padding: 2rem; }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle { color: var(--text-secondary); font-size: 1rem; }
+
+        /* Setup Banner */
+        .setup-banner {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid var(--accent-purple);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .setup-banner h2 { color: var(--accent-purple); margin-bottom: 1rem; }
+        .setup-banner ol { text-align: left; max-width: 600px; margin: 0 auto 1.5rem; color: var(--text-secondary); }
+        .setup-banner li { margin-bottom: 0.5rem; }
+        .setup-banner code { background: var(--bg-card); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.9rem; }
+
+        .url-input-group { display: flex; gap: 1rem; max-width: 700px; margin: 0 auto; }
+        .url-input-group input {
+            flex: 1; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; color: var(--text-primary); font-size: 1rem;
+        }
+        .url-input-group input:focus { outline: none; border-color: var(--accent-purple); }
+        .url-input-group button {
+            padding: 1rem 2rem; background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer;
+        }
+
+        .connected-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.2); border: 1px solid var(--accent-green);
+            border-radius: 20px; color: var(--accent-green); font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem; background: transparent; border: 1px solid var(--border-color);
+            border-radius: 8px; color: var(--text-secondary); cursor: pointer; font-size: 0.85rem;
+            transition: all 0.2s; margin-left: 0.5rem;
+        }
+        .btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .btn-danger { color: var(--accent-red); border-color: var(--accent-red); }
+        .btn-primary { background: var(--accent-purple); color: white; border-color: var(--accent-purple); }
+
+        /* Tabs */
+        .tabs {
+            display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+        }
+        .tab {
+            padding: 0.75rem 1.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 12px; color: var(--text-secondary); cursor: pointer; font-weight: 500;
+            transition: all 0.2s;
+        }
+        .tab:hover { border-color: var(--accent-purple); color: var(--text-primary); }
+        .tab.active {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            border-color: transparent; color: white;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem; margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--bg-secondary); border-radius: 12px; padding: 1rem;
+            text-align: center; border: 1px solid var(--border-color);
+        }
+        .stat-number {
+            font-size: 2rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .stat-card.published .stat-number { background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)); -webkit-background-clip: text; background-clip: text; }
+        .stat-card.accepted .stat-number { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; background-clip: text; }
+        .stat-card.submitted .stat-number { background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange)); -webkit-background-clip: text; background-clip: text; }
+        .stat-card.wip .stat-number { background: linear-gradient(135deg, var(--accent-pink), var(--accent-red)); -webkit-background-clip: text; background-clip: text; }
+        .stat-label { color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* Controls */
+        .controls {
+            display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; padding: 1rem;
+            background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color);
+            align-items: center;
+        }
+        .search-box { flex: 1; min-width: 200px; position: relative; }
+        .search-box input {
+            width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; background: var(--bg-card);
+            border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); font-size: 0.95rem;
+        }
+        .search-box input:focus { outline: none; border-color: var(--accent-purple); }
+        .search-box::before { content: "🔍"; position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.9rem; }
+
+        select {
+            padding: 0.75rem 2rem 0.75rem 0.75rem; background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 10px; color: var(--text-primary); font-size: 0.9rem; cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1rem;
+        }
+        select:focus { outline: none; border-color: var(--accent-purple); }
+
+        /* Multi-select chips */
+        .filter-section { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        .filter-label { font-size: 0.8rem; color: var(--text-secondary); margin-right: 0.25rem; }
+        .chip {
+            padding: 0.35rem 0.75rem; background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
+            user-select: none;
+        }
+        .chip:hover { border-color: var(--accent-purple); }
+        .chip.selected { background: var(--accent-purple); border-color: var(--accent-purple); color: white; }
+        .chip.excluded { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-red); color: var(--accent-red); text-decoration: line-through; }
+        .chip-hint { font-size: 0.7rem; color: var(--text-secondary); margin-left: 0.5rem; }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem; margin-bottom: 2rem;
+        }
+        .chart-card {
+            background: var(--bg-secondary); border-radius: 16px; padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        .chart-card h3 {
+            font-size: 1rem; margin-bottom: 1rem; color: var(--text-primary);
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .chart-container { position: relative; height: 250px; }
+
+        /* Pipeline Funnel */
+        .funnel {
+            display: flex; flex-direction: column; gap: 0.5rem;
+        }
+        .funnel-stage {
+            display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem;
+            border-radius: 8px; transition: all 0.2s;
+        }
+        .funnel-stage:hover { transform: translateX(5px); }
+        .funnel-bar {
+            height: 30px; border-radius: 4px; display: flex; align-items: center;
+            justify-content: flex-end; padding-right: 0.75rem; font-weight: 600; font-size: 0.9rem;
+            min-width: 40px;
+        }
+        .funnel-label { font-size: 0.9rem; color: var(--text-secondary); min-width: 120px; }
+        .funnel-brainstorming .funnel-bar { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+        .funnel-wip .funnel-bar { background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); }
+        .funnel-submitted .funnel-bar { background: linear-gradient(90deg, var(--accent-yellow), var(--accent-green)); }
+        .funnel-accepted .funnel-bar { background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); }
+        .funnel-published .funnel-bar { background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan)); }
+
+        /* Priority List */
+        .priority-list {
+            display: flex; flex-direction: column; gap: 0.75rem;
+        }
+        .priority-item {
+            display: flex; align-items: center; gap: 1rem; padding: 1rem;
+            background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        .priority-item:hover { border-color: var(--accent-purple); transform: translateX(5px); }
+        .priority-rank {
+            font-size: 1.5rem; font-weight: 700; min-width: 40px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .priority-content { flex: 1; min-width: 0; }
+        .priority-title { font-weight: 600; margin-bottom: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .priority-meta { font-size: 0.85rem; color: var(--text-secondary); }
+        .priority-score {
+            text-align: center; padding: 0.5rem 1rem; background: var(--bg-secondary);
+            border-radius: 8px; min-width: 80px;
+        }
+        .priority-score-value { font-size: 1.25rem; font-weight: 700; color: var(--accent-green); }
+        .priority-score-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; }
+        .stale-badge {
+            padding: 0.25rem 0.5rem; background: rgba(239, 68, 68, 0.2); border-radius: 4px;
+            font-size: 0.7rem; color: var(--accent-red); margin-left: 0.5rem;
+        }
+
+        /* Papers Grid */
+        .papers-grid { display: grid; gap: 1rem; }
+        .paper-card {
+            background: var(--bg-secondary); border-radius: 12px; padding: 1.25rem;
+            border: 1px solid var(--border-color); transition: all 0.2s;
+            display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: start;
+        }
+        .paper-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); border-color: var(--accent-purple); }
+        .paper-card.stale { border-color: var(--accent-red); background: linear-gradient(135deg, var(--bg-secondary), rgba(239, 68, 68, 0.05)); }
+
+        .paper-status {
+            writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+            padding: 0.5rem 0.4rem; border-radius: 6px; font-size: 0.7rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
+            min-height: 80px; display: flex; align-items: center; justify-content: center;
+        }
+        .status-published { background: linear-gradient(180deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2)); color: var(--accent-green); border: 1px solid var(--accent-green); }
+        .status-accepted { background: linear-gradient(180deg, rgba(59, 130, 246, 0.2), rgba(124, 58, 237, 0.2)); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+        .status-submitted { background: linear-gradient(180deg, rgba(245, 158, 11, 0.2), rgba(249, 115, 22, 0.2)); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
+        .status-rr { background: linear-gradient(180deg, rgba(236, 72, 153, 0.2), rgba(249, 115, 22, 0.2)); color: var(--accent-pink); border: 1px solid var(--accent-pink); }
+        .status-wip { background: linear-gradient(180deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2)); color: var(--accent-orange); border: 1px solid var(--accent-orange); }
+        .status-frozen { background: linear-gradient(180deg, rgba(100, 116, 139, 0.2), rgba(71, 85, 105, 0.2)); color: #64748b; border: 1px solid #64748b; }
+        .status-brainstorming { background: linear-gradient(180deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2)); color: var(--accent-purple); border: 1px solid var(--accent-purple); }
+        .status-rejected { background: linear-gradient(180deg, rgba(239, 68, 68, 0.2), rgba(127, 29, 29, 0.2)); color: var(--accent-red); border: 1px solid var(--accent-red); }
+
+        .paper-content { min-width: 0; }
+        .paper-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.4rem; line-height: 1.4; }
+        .paper-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+        .meta-tag {
+            display: inline-flex; align-items: center; gap: 0.2rem; padding: 0.2rem 0.6rem;
+            background: var(--bg-card); border-radius: 15px; font-size: 0.75rem; color: var(--text-secondary);
+        }
+        .meta-tag.journal { background: rgba(124, 58, 237, 0.15); color: #a78bfa; }
+        .meta-tag.year { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+        .meta-tag.type { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+        .meta-tag.topic { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .meta-tag.method { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+
+        .paper-coauthors { font-size: 0.85rem; color: var(--text-secondary); }
+        .paper-coauthors strong { color: var(--accent-cyan); }
+        .paper-doi { font-size: 0.75rem; margin-top: 0.4rem; }
+        .paper-doi a { color: var(--accent-blue); text-decoration: none; }
+        .paper-doi a:hover { color: var(--accent-cyan); text-decoration: underline; }
+
+        .paper-metrics { display: flex; flex-direction: column; gap: 0.5rem; min-width: 100px; }
+        .metric { text-align: center; padding: 0.5rem; background: var(--bg-card); border-radius: 8px; }
+        .metric-value { font-size: 1.25rem; font-weight: 700; }
+        .metric-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; }
+        .metric.potential .metric-value { color: var(--accent-green); }
+        .metric.stage .metric-value { color: var(--accent-cyan); }
+        .metric.touch .metric-value { color: var(--accent-yellow); }
+        .metric.priority .metric-value { color: var(--accent-pink); }
+
+        .progress-bar { width: 100%; height: 4px; background: var(--bg-primary); border-radius: 2px; overflow: hidden; margin-top: 0.3rem; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan)); border-radius: 2px; }
+
+        .group-header {
+            font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 0.75rem;
+            padding: 0.75rem 1rem; background: linear-gradient(90deg, var(--bg-card), transparent);
+            border-left: 3px solid var(--accent-purple); border-radius: 0 8px 8px 0;
+        }
+
+        .empty-state { text-align: center; padding: 3rem 2rem; color: var(--text-secondary); }
+        .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+        .loading { text-align: center; padding: 3rem; color: var(--text-secondary); }
+        .loading-spinner {
+            width: 40px; height: 40px; border: 3px solid var(--border-color);
+            border-top-color: var(--accent-purple); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto 1rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-red);
+            border-radius: 12px; padding: 1.5rem; color: var(--accent-red); text-align: center; margin: 2rem 0;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed; bottom: 1rem; right: 1rem; padding: 0.5rem 1rem;
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary);
+        }
+        .keyboard-hint kbd {
+            padding: 0.15rem 0.4rem; background: var(--bg-card); border-radius: 4px;
+            font-family: monospace; margin: 0 0.2rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7); display: flex;
+            align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-content {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 1.5rem; max-width: 500px; width: 90%;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--border-color);
+            background: var(--bg-card); cursor: pointer; font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1); border-color: var(--accent-purple);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
+        }
+        .theme-toggle .theme-icon { transition: transform 0.5s ease; }
+        .theme-toggle:hover .theme-icon { transform: rotate(20deg); }
+        [data-theme="light"] .theme-toggle { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+
+        @media (max-width: 768px) {
+            .paper-card { grid-template-columns: 1fr; }
+            .paper-status { writing-mode: horizontal-tb; transform: none; min-height: auto; width: fit-content; }
+            .paper-metrics { flex-direction: row; flex-wrap: wrap; }
+            .controls { flex-direction: column; }
+            .url-input-group { flex-direction: column; }
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div></div>
+                <div style="text-align: center; flex: 1;">
+                    <h1>📚 Research Papers Dashboard</h1>
+                    <p class="subtitle">Alberto López Ortega • Academic Portfolio Tracker</p>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle day/night mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Setup Section -->
+        <div class="setup-banner" id="setup-section">
+            <h2>🔗 Connect Your Google Sheet</h2>
+            <ol>
+                <li>Open <a href="https://docs.google.com/spreadsheets/create" target="_blank" style="color: var(--accent-cyan);">Google Sheets</a> and create a new spreadsheet</li>
+                <li>Headers: <code>Type, Code, Title, Coauthors, Journal, Year, DOI, State, Stage, Potential, LastTouch, Topic, Method</code></li>
+                <li><strong>File → Share → Publish to web</strong> → Select <strong>CSV</strong> → Publish</li>
+                <li>Paste URL below</li>
+            </ol>
+            <div class="url-input-group">
+                <input type="text" id="sheet-url" placeholder="Paste your published Google Sheet CSV URL here...">
+                <button onclick="connectSheet()">Connect</button>
+            </div>
+        </div>
+
+        <!-- Connected Section -->
+        <div class="setup-banner hidden" id="connected-section" style="padding: 0.75rem 1.5rem;">
+            <span class="connected-badge">✓ Connected</span>
+            <button class="btn" onclick="refreshData()">↻ Refresh</button>
+            <button class="btn" id="edit-sheet-btn" onclick="openEditSheet(event)" title="Shift+click to reconfigure">Edit Sheet ↗</button>
+            <button class="btn" onclick="exportCSV()">⬇ Export</button>
+            <button class="btn btn-danger" onclick="disconnect()">Disconnect</button>
+        </div>
+
+        <!-- Edit URL Modal -->
+        <div class="modal-overlay hidden" id="edit-url-modal" onclick="closeEditModal(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <h3 style="margin-bottom: 1rem;">Set Edit URL</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                    The published CSV URL can't be used to edit. Please paste your spreadsheet's edit URL:<br>
+                    <code style="font-size: 0.8rem;">https://docs.google.com/spreadsheets/d/YOUR_ID/edit</code>
+                </p>
+                <input type="text" id="edit-url-input" placeholder="Paste your Google Sheet edit URL here..." style="width: 100%; padding: 0.75rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); margin-bottom: 1rem;">
+                <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                    <button class="btn" onclick="closeEditModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="saveEditUrl()">Save & Open</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading hidden" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading papers...</p>
+        </div>
+
+        <div class="error-message hidden" id="error-message"></div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" class="hidden">
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-tab="all" onclick="switchTab('all')">📋 All Papers</div>
+                <div class="tab" data-tab="priority" onclick="switchTab('priority')">🎯 What to Work On</div>
+                <div class="tab" data-tab="analytics" onclick="switchTab('analytics')">📊 Analytics</div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card published"><div class="stat-number" id="stat-published">0</div><div class="stat-label">Published</div></div>
+                <div class="stat-card accepted"><div class="stat-number" id="stat-accepted">0</div><div class="stat-label">Accepted</div></div>
+                <div class="stat-card submitted"><div class="stat-number" id="stat-submitted">0</div><div class="stat-label">Submitted</div></div>
+                <div class="stat-card wip"><div class="stat-number" id="stat-wip">0</div><div class="stat-label">In Progress</div></div>
+                <div class="stat-card"><div class="stat-number" id="stat-total">0</div><div class="stat-label">Total</div></div>
+                <div class="stat-card"><div class="stat-number" id="stat-stale">0</div><div class="stat-label">🔴 Stale</div></div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls" id="controls-section">
+                <div class="search-box">
+                    <input type="text" id="search" placeholder="Search... (press / to focus)">
+                </div>
+                <select id="group-by">
+                    <option value="">No Grouping</option>
+                    <option value="state">Group by Status</option>
+                    <option value="journal">Group by Journal</option>
+                    <option value="coauthor">Group by Co-author</option>
+                    <option value="year">Group by Year</option>
+                    <option value="topic">Group by Topic</option>
+                </select>
+                <select id="sort-by">
+                    <option value="priority-desc">Priority Score ↓</option>
+                    <option value="year-desc">Year (Newest)</option>
+                    <option value="year-asc">Year (Oldest)</option>
+                    <option value="potential-desc">Potential ↓</option>
+                    <option value="stage-desc">Stage ↓</option>
+                    <option value="lasttouch-asc">Stalest First</option>
+                    <option value="title">Title (A-Z)</option>
+                </select>
+            </div>
+
+            <!-- Multi-select filters -->
+            <div class="controls" id="filters-section">
+                <div class="filter-section">
+                    <span class="filter-label">Status:</span>
+                    <div id="status-chips"></div>
+                    <span class="chip-hint">(click = include, shift+click = exclude)</span>
+                </div>
+            </div>
+            <div class="controls" id="topic-filters-section">
+                <div class="filter-section">
+                    <span class="filter-label">Topics:</span>
+                    <div id="topic-chips"></div>
+                </div>
+            </div>
+            <div class="controls" id="coauthor-filters-section">
+                <div class="filter-section">
+                    <span class="filter-label">Co-authors:</span>
+                    <div id="coauthor-chips"></div>
+                </div>
+            </div>
+
+            <!-- All Papers Tab -->
+            <div id="tab-all">
+                <div class="papers-grid" id="papers-container"></div>
+            </div>
+
+            <!-- Priority Tab -->
+            <div id="tab-priority" class="hidden">
+                <div class="chart-card" style="margin-bottom: 1.5rem;">
+                    <h3>🎯 Top Priority Papers (High Potential + Recently Touched)</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Priority = Potential × (11 - LastTouch) — Focus on high-potential papers you've been working on
+                    </p>
+                    <div class="priority-list" id="priority-list"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>🔴 Stale Papers (LastTouch > 5)</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Papers you haven't touched in a while — consider revisiting or dropping
+                    </p>
+                    <div class="priority-list" id="stale-list"></div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="tab-analytics" class="hidden">
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>📈 Pipeline Funnel</h3>
+                        <div class="funnel" id="pipeline-funnel"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>📅 Publications by Year</h3>
+                        <div class="chart-container"><canvas id="chart-years"></canvas></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🏷️ Papers by Topic</h3>
+                        <div class="chart-container"><canvas id="chart-topics"></canvas></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🤝 Top Co-authors</h3>
+                        <div class="chart-container"><canvas id="chart-coauthors"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="keyboard-hint">
+        <kbd>/</kbd> Search <kbd>1-3</kbd> Tabs <kbd>R</kbd> Refresh <kbd>T</kbd> Theme
+    </div>
+
+    <script>
+        let papers = [];
+        let currentTab = 'all';
+        let statusFilters = { include: [], exclude: [] };
+        let topicFilters = { include: [], exclude: [] };
+        let coauthorFilters = { include: [], exclude: [] };
+        const STORAGE_KEY = 'papers_dashboard_sheet_url';
+        const EDIT_URL_KEY = 'papers_dashboard_edit_url';
+        const THEME_KEY = 'papers_dashboard_theme';
+
+        // Theme toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem(THEME_KEY, newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.querySelector('.theme-icon');
+            if (icon) icon.textContent = theme === 'light' ? '☀️' : '🌙';
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        // Priority score calculation
+        function calcPriority(paper) {
+            if (paper.state === 'Published' || paper.state === 'Rejected') return 0;
+            const potential = paper.potential || 0;
+            const lastTouch = paper.lastTouch ?? 10;
+            return potential * (11 - lastTouch);
+        }
+
+        function isStale(paper) {
+            return paper.lastTouch !== null && paper.lastTouch > 5 &&
+                   !['Published', 'Rejected', 'Accepted'].includes(paper.state);
+        }
+
+        // Init
+        function init() {
+            loadTheme();
+            const savedUrl = localStorage.getItem(STORAGE_KEY);
+            if (savedUrl) {
+                document.getElementById('sheet-url').value = savedUrl;
+                connectSheet();
+            }
+            setupKeyboardShortcuts();
+        }
+
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') { closeEditModal(); return; }
+                if (e.target.tagName === 'INPUT') return;
+                if (e.key === '/') { e.preventDefault(); document.getElementById('search').focus(); }
+                if (e.key === '1') switchTab('all');
+                if (e.key === '2') switchTab('priority');
+                if (e.key === '3') switchTab('analytics');
+                if (e.key.toLowerCase() === 'r') refreshData();
+                if (e.key.toLowerCase() === 't') toggleTheme();
+            });
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+            document.getElementById('tab-all').classList.toggle('hidden', tab !== 'all');
+            document.getElementById('tab-priority').classList.toggle('hidden', tab !== 'priority');
+            document.getElementById('tab-analytics').classList.toggle('hidden', tab !== 'analytics');
+            document.getElementById('controls-section').classList.toggle('hidden', tab !== 'all');
+            document.getElementById('filters-section').classList.toggle('hidden', tab !== 'all');
+            document.getElementById('topic-filters-section').classList.toggle('hidden', tab !== 'all');
+            document.getElementById('coauthor-filters-section').classList.toggle('hidden', tab !== 'all');
+
+            if (tab === 'priority') renderPriorityTab();
+            if (tab === 'analytics') renderAnalytics();
+        }
+
+        function connectSheet() {
+            const url = document.getElementById('sheet-url').value.trim();
+            if (!url) { showError('Please enter a Google Sheet URL'); return; }
+
+            localStorage.setItem(STORAGE_KEY, url);
+            document.getElementById('setup-section').classList.add('hidden');
+            document.getElementById('connected-section').classList.remove('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('error-message').classList.add('hidden');
+
+            fetchSheetData(url);
+        }
+
+        function disconnect() {
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(EDIT_URL_KEY);
+            document.getElementById('sheet-url').value = '';
+            document.getElementById('setup-section').classList.remove('hidden');
+            document.getElementById('connected-section').classList.add('hidden');
+            document.getElementById('dashboard-content').classList.add('hidden');
+            papers = [];
+        }
+
+        function openEditSheet(event) {
+            const savedEditUrl = localStorage.getItem(EDIT_URL_KEY);
+            if (savedEditUrl && !event.shiftKey) {
+                window.open(savedEditUrl, '_blank');
+            } else {
+                document.getElementById('edit-url-input').value = savedEditUrl || '';
+                document.getElementById('edit-url-modal').classList.remove('hidden');
+            }
+        }
+
+        function closeEditModal(event) {
+            if (!event || event.target === event.currentTarget) {
+                document.getElementById('edit-url-modal').classList.add('hidden');
+            }
+        }
+
+        function saveEditUrl() {
+            const editUrl = document.getElementById('edit-url-input').value.trim();
+            if (editUrl) {
+                localStorage.setItem(EDIT_URL_KEY, editUrl);
+                closeEditModal();
+                window.open(editUrl, '_blank');
+            }
+        }
+
+        function refreshData() {
+            const url = localStorage.getItem(STORAGE_KEY);
+            if (url) {
+                document.getElementById('loading').classList.remove('hidden');
+                document.getElementById('dashboard-content').classList.add('hidden');
+                fetchSheetData(url);
+            }
+        }
+
+        function exportCSV() {
+            const filtered = getFilteredPapers();
+            const headers = ['Type', 'Code', 'Title', 'Coauthors', 'Journal', 'Year', 'DOI', 'State', 'Stage', 'Potential', 'LastTouch', 'Topic', 'Method'];
+            let csv = headers.join(',') + '\n';
+            filtered.forEach(p => {
+                csv += headers.map(h => {
+                    const key = h.toLowerCase().replace('lasttouch', 'lastTouch');
+                    const val = p[key] ?? '';
+                    return `"${String(val).replace(/"/g, '""')}"`;
+                }).join(',') + '\n';
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'papers_export.csv';
+            a.click();
+        }
+
+        async function fetchSheetData(url) {
+            try {
+                let csvText;
+                try {
+                    const response = await fetch(url);
+                    if (response.ok) csvText = await response.text();
+                    else throw new Error('Direct fetch failed');
+                } catch {
+                    console.log('Using CORS proxy...');
+                    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error('Failed to fetch');
+                    csvText = await response.text();
+                }
+
+                papers = parseCSV(csvText);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('dashboard-content').classList.remove('hidden');
+
+                populateFilters();
+                renderPapers();
+                updateStats(papers);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError(`Failed to load data: ${error.message}. Make sure sheet is published as CSV.`);
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+            const result = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                const values = parseCSVLine(lines[i]);
+                const paper = {};
+
+                headers.forEach((header, index) => {
+                    let value = values[index]?.trim() || '';
+                    const headerMap = {
+                        'type': 'type', 'code': 'code', 'title': 'title', 'coauthors': 'coauthors',
+                        'co-authors': 'coauthors', 'journal': 'journal', 'year': 'year', 'doi': 'doi',
+                        'state': 'state', 'status': 'state', 'stage': 'stage', 'potential': 'potential',
+                        'lasttouch': 'lastTouch', 'last touch': 'lastTouch', 'topic': 'topic', 'method': 'method'
+                    };
+                    const propName = headerMap[header] || header;
+                    if (['year', 'stage', 'potential', 'lastTouch'].includes(propName)) {
+                        paper[propName] = value ? parseInt(value) || null : null;
+                    } else {
+                        paper[propName] = value;
+                    }
+                });
+
+                if (paper.title) {
+                    paper.priority = calcPriority(paper);
+                    result.push(paper);
+                }
+            }
+            return result;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '', inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    if (inQuotes && line[i + 1] === '"') { current += '"'; i++; }
+                    else inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) { result.push(current); current = ''; }
+                else current += char;
+            }
+            result.push(current);
+            return result.map(v => v.replace(/^"|"$/g, ''));
+        }
+
+        function showError(message) {
+            const el = document.getElementById('error-message');
+            el.textContent = message;
+            el.classList.remove('hidden');
+        }
+
+        function populateFilters() {
+            // Status chips
+            const statuses = ['Published', 'Accepted', 'Submitted', 'R&R', 'Work-in-progress', 'Frozen', 'Brainstorming'];
+            document.getElementById('status-chips').innerHTML = statuses.map(s =>
+                `<span class="chip" data-value="${s}" onclick="toggleFilter(event, 'status', '${s}')">${s}</span>`
+            ).join('');
+
+            // Topic chips
+            const topics = [...new Set(papers.map(p => p.topic).filter(Boolean))].sort();
+            document.getElementById('topic-chips').innerHTML = topics.map(t =>
+                `<span class="chip" data-value="${t}" onclick="toggleFilter(event, 'topic', '${t}')">${t}</span>`
+            ).join('');
+
+            // Coauthor chips
+            const coauthors = [...new Set(papers.flatMap(p => p.coauthors ? p.coauthors.split(';').map(c => c.trim()) : []).filter(Boolean))].sort();
+            document.getElementById('coauthor-chips').innerHTML = coauthors.slice(0, 15).map(c =>
+                `<span class="chip" data-value="${c}" onclick="toggleFilter(event, 'coauthor', '${c}')">${c}</span>`
+            ).join('') + (coauthors.length > 15 ? `<span style="color: var(--text-secondary); font-size: 0.8rem;">+${coauthors.length - 15} more</span>` : '');
+        }
+
+        function toggleFilter(event, type, value) {
+            const filters = type === 'status' ? statusFilters : type === 'topic' ? topicFilters : coauthorFilters;
+            const chip = event.target;
+
+            if (event.shiftKey) {
+                // Toggle exclude
+                if (filters.exclude.includes(value)) {
+                    filters.exclude = filters.exclude.filter(v => v !== value);
+                    chip.classList.remove('excluded');
+                } else {
+                    filters.exclude.push(value);
+                    filters.include = filters.include.filter(v => v !== value);
+                    chip.classList.add('excluded');
+                    chip.classList.remove('selected');
+                }
+            } else {
+                // Toggle include
+                if (filters.include.includes(value)) {
+                    filters.include = filters.include.filter(v => v !== value);
+                    chip.classList.remove('selected');
+                } else {
+                    filters.include.push(value);
+                    filters.exclude = filters.exclude.filter(v => v !== value);
+                    chip.classList.add('selected');
+                    chip.classList.remove('excluded');
+                }
+            }
+            renderPapers();
+        }
+
+        function getFilteredPapers() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+
+            return papers.filter(paper => {
+                const matchesSearch = !searchTerm ||
+                    paper.title?.toLowerCase().includes(searchTerm) ||
+                    paper.coauthors?.toLowerCase().includes(searchTerm) ||
+                    paper.journal?.toLowerCase().includes(searchTerm) ||
+                    paper.topic?.toLowerCase().includes(searchTerm);
+
+                // Status filter
+                const statusOk = (statusFilters.include.length === 0 || statusFilters.include.includes(paper.state)) &&
+                                 !statusFilters.exclude.includes(paper.state);
+
+                // Topic filter
+                const topicOk = (topicFilters.include.length === 0 || topicFilters.include.includes(paper.topic)) &&
+                                !topicFilters.exclude.includes(paper.topic);
+
+                // Coauthor filter
+                const paperCoauthors = paper.coauthors ? paper.coauthors.split(';').map(c => c.trim()) : [];
+                const coauthorOk = (coauthorFilters.include.length === 0 ||
+                                    coauthorFilters.include.some(c => paperCoauthors.includes(c))) &&
+                                   !coauthorFilters.exclude.some(c => paperCoauthors.includes(c));
+
+                return matchesSearch && statusOk && topicOk && coauthorOk;
+            });
+        }
+
+        function updateStats(filteredPapers) {
+            document.getElementById('stat-published').textContent = filteredPapers.filter(p => p.state === 'Published').length;
+            document.getElementById('stat-accepted').textContent = filteredPapers.filter(p => p.state === 'Accepted').length;
+            document.getElementById('stat-submitted').textContent = filteredPapers.filter(p => p.state === 'Submitted').length;
+            document.getElementById('stat-wip').textContent = filteredPapers.filter(p => p.state === 'Work-in-progress').length;
+            document.getElementById('stat-total').textContent = filteredPapers.length;
+            document.getElementById('stat-stale').textContent = filteredPapers.filter(isStale).length;
+        }
+
+        function getStatusClass(state) {
+            const map = {
+                'Published': 'status-published', 'Accepted': 'status-accepted', 'Submitted': 'status-submitted',
+                'R&R': 'status-rr', 'Work-in-progress': 'status-wip', 'Frozen': 'status-frozen',
+                'Brainstorming': 'status-brainstorming', 'Rejected': 'status-rejected'
+            };
+            return map[state] || 'status-wip';
+        }
+
+        function createPaperCard(paper) {
+            const doiLink = paper.doi && !paper.doi.startsWith('NIPO')
+                ? `<div class="paper-doi">DOI: <a href="https://doi.org/${paper.doi}" target="_blank">${paper.doi}</a></div>`
+                : paper.doi ? `<div class="paper-doi">${paper.doi}</div>` : '';
+
+            const coauthorsHtml = paper.coauthors
+                ? `<div class="paper-coauthors">with <strong>${paper.coauthors.replace(/;/g, ', ')}</strong></div>` : '';
+
+            const staleClass = isStale(paper) ? 'stale' : '';
+            const staleBadge = isStale(paper) ? '<span class="stale-badge">STALE</span>' : '';
+
+            const metricsHtml = `
+                <div class="paper-metrics">
+                    ${paper.priority > 0 ? `<div class="metric priority"><div class="metric-value">${paper.priority}</div><div class="metric-label">Priority</div></div>` : ''}
+                    ${paper.stage !== null ? `<div class="metric stage"><div class="metric-value">${paper.stage}%</div><div class="metric-label">Stage</div><div class="progress-bar"><div class="progress-fill" style="width:${paper.stage}%"></div></div></div>` : ''}
+                    ${paper.potential !== null ? `<div class="metric potential"><div class="metric-value">${paper.potential}</div><div class="metric-label">Potential</div></div>` : ''}
+                    ${paper.lastTouch !== null ? `<div class="metric touch"><div class="metric-value">${paper.lastTouch}</div><div class="metric-label">Last Touch</div></div>` : ''}
+                </div>`;
+
+            return `
+                <div class="paper-card ${staleClass}">
+                    <div class="paper-status ${getStatusClass(paper.state)}">${paper.state || 'Unknown'}</div>
+                    <div class="paper-content">
+                        <div class="paper-title">${paper.title}${staleBadge}</div>
+                        <div class="paper-meta">
+                            ${paper.type && paper.type !== 'Paper' ? `<span class="meta-tag type">📖 ${paper.type}</span>` : ''}
+                            ${paper.journal ? `<span class="meta-tag journal">📚 ${paper.journal}</span>` : ''}
+                            ${paper.year ? `<span class="meta-tag year">📅 ${paper.year}</span>` : ''}
+                            ${paper.topic ? `<span class="meta-tag topic">🏷️ ${paper.topic}</span>` : ''}
+                            ${paper.method ? `<span class="meta-tag method">🔬 ${paper.method}</span>` : ''}
+                        </div>
+                        ${coauthorsHtml}
+                        ${doiLink}
+                    </div>
+                    ${metricsHtml}
+                </div>`;
+        }
+
+        function renderPapers() {
+            let filtered = getFilteredPapers();
+            const sortBy = document.getElementById('sort-by').value;
+            const groupBy = document.getElementById('group-by').value;
+
+            filtered.sort((a, b) => {
+                switch(sortBy) {
+                    case 'priority-desc': return (b.priority || 0) - (a.priority || 0);
+                    case 'year-desc': return (b.year || 0) - (a.year || 0);
+                    case 'year-asc': return (a.year || 9999) - (b.year || 9999);
+                    case 'potential-desc': return (b.potential || 0) - (a.potential || 0);
+                    case 'stage-desc': return (b.stage || 0) - (a.stage || 0);
+                    case 'lasttouch-asc': return (a.lastTouch ?? 99) - (b.lastTouch ?? 99);
+                    case 'title': return (a.title || '').localeCompare(b.title || '');
+                    default: return 0;
+                }
+            });
+
+            updateStats(filtered);
+            const container = document.getElementById('papers-container');
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No papers found</p></div>`;
+                return;
+            }
+
+            if (groupBy) {
+                const groups = {};
+                filtered.forEach(paper => {
+                    let key;
+                    switch(groupBy) {
+                        case 'state': key = paper.state || 'Unknown'; break;
+                        case 'journal': key = paper.journal || 'No Journal'; break;
+                        case 'year': key = paper.year || 'TBD'; break;
+                        case 'topic': key = paper.topic || 'No Topic'; break;
+                        case 'coauthor':
+                            (paper.coauthors ? paper.coauthors.split(';').map(c => c.trim()) : ['Solo']).forEach(author => {
+                                if (!groups[author]) groups[author] = [];
+                                groups[author].push(paper);
+                            });
+                            return;
+                        default: key = 'All';
+                    }
+                    if (!groups[key]) groups[key] = [];
+                    groups[key].push(paper);
+                });
+
+                let html = '';
+                Object.keys(groups).sort((a, b) => groupBy === 'year' ? (parseInt(b) || 0) - (parseInt(a) || 0) : a.localeCompare(b))
+                    .forEach(group => {
+                        html += `<div class="group-header">${group} (${groups[group].length})</div>`;
+                        groups[group].forEach(paper => html += createPaperCard(paper));
+                    });
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = filtered.map(createPaperCard).join('');
+            }
+        }
+
+        function renderPriorityTab() {
+            // Top priority
+            const priorityPapers = papers
+                .filter(p => !['Published', 'Rejected'].includes(p.state) && p.priority > 0)
+                .sort((a, b) => b.priority - a.priority)
+                .slice(0, 10);
+
+            document.getElementById('priority-list').innerHTML = priorityPapers.length ? priorityPapers.map((p, i) => `
+                <div class="priority-item">
+                    <div class="priority-rank">#${i + 1}</div>
+                    <div class="priority-content">
+                        <div class="priority-title">${p.title}</div>
+                        <div class="priority-meta">${p.state} • ${p.topic || 'No topic'} • Stage: ${p.stage || 0}%</div>
+                    </div>
+                    <div class="priority-score">
+                        <div class="priority-score-value">${p.priority}</div>
+                        <div class="priority-score-label">Priority</div>
+                    </div>
+                </div>
+            `).join('') : '<p style="color: var(--text-secondary);">No priority papers found. Add Potential and LastTouch values to your papers.</p>';
+
+            // Stale papers
+            const stalePapers = papers.filter(isStale).sort((a, b) => (b.lastTouch || 0) - (a.lastTouch || 0));
+
+            document.getElementById('stale-list').innerHTML = stalePapers.length ? stalePapers.map(p => `
+                <div class="priority-item" style="border-color: var(--accent-red);">
+                    <div class="priority-content">
+                        <div class="priority-title">${p.title}</div>
+                        <div class="priority-meta">${p.state} • ${p.topic || 'No topic'} • Potential: ${p.potential || '?'}</div>
+                    </div>
+                    <div class="priority-score" style="background: rgba(239, 68, 68, 0.1);">
+                        <div class="priority-score-value" style="color: var(--accent-red);">${p.lastTouch}</div>
+                        <div class="priority-score-label">Last Touch</div>
+                    </div>
+                </div>
+            `).join('') : '<p style="color: var(--text-secondary);">No stale papers! 🎉</p>';
+        }
+
+        function renderAnalytics() {
+            // Pipeline funnel
+            const stages = [
+                { key: 'Brainstorming', label: 'Brainstorming', class: 'funnel-brainstorming' },
+                { key: 'Work-in-progress', label: 'Work in Progress', class: 'funnel-wip' },
+                { key: 'Submitted', label: 'Submitted', class: 'funnel-submitted' },
+                { key: 'Accepted', label: 'Accepted', class: 'funnel-accepted' },
+                { key: 'Published', label: 'Published', class: 'funnel-published' }
+            ];
+            const maxCount = Math.max(...stages.map(s => papers.filter(p => p.state === s.key).length), 1);
+
+            document.getElementById('pipeline-funnel').innerHTML = stages.map(s => {
+                const count = papers.filter(p => p.state === s.key).length;
+                const width = (count / maxCount) * 100;
+                return `
+                    <div class="funnel-stage ${s.class}">
+                        <span class="funnel-label">${s.label}</span>
+                        <div class="funnel-bar" style="width: ${Math.max(width, 15)}%">${count}</div>
+                    </div>`;
+            }).join('');
+
+            // Years chart
+            const years = {};
+            papers.filter(p => p.year && p.state === 'Published').forEach(p => years[p.year] = (years[p.year] || 0) + 1);
+            const sortedYears = Object.keys(years).sort();
+
+            const chartTextColor = getComputedStyle(document.documentElement).getPropertyValue('--chart-text').trim() || '#94a3b8';
+
+            new Chart(document.getElementById('chart-years'), {
+                type: 'bar',
+                data: {
+                    labels: sortedYears,
+                    datasets: [{ label: 'Publications', data: sortedYears.map(y => years[y]),
+                        backgroundColor: 'rgba(124, 58, 237, 0.7)', borderRadius: 6 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { color: chartTextColor } }, x: { ticks: { color: chartTextColor } } } }
+            });
+
+            // Topics chart
+            const topics = {};
+            papers.forEach(p => { if (p.topic) topics[p.topic] = (topics[p.topic] || 0) + 1; });
+            const sortedTopics = Object.entries(topics).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+            new Chart(document.getElementById('chart-topics'), {
+                type: 'doughnut',
+                data: {
+                    labels: sortedTopics.map(t => t[0]),
+                    datasets: [{ data: sortedTopics.map(t => t[1]),
+                        backgroundColor: ['#7c3aed', '#ec4899', '#06b6d4', '#10b981', '#f59e0b', '#3b82f6', '#f97316', '#64748b'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { color: chartTextColor, boxWidth: 12 } } } }
+            });
+
+            // Coauthors chart
+            const coauthors = {};
+            papers.forEach(p => {
+                if (p.coauthors) p.coauthors.split(';').map(c => c.trim()).forEach(c => coauthors[c] = (coauthors[c] || 0) + 1);
+            });
+            const sortedCoauthors = Object.entries(coauthors).sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+            new Chart(document.getElementById('chart-coauthors'), {
+                type: 'bar',
+                data: {
+                    labels: sortedCoauthors.map(c => c[0].split(' ').pop()),
+                    datasets: [{ label: 'Papers', data: sortedCoauthors.map(c => c[1]),
+                        backgroundColor: 'rgba(6, 182, 212, 0.7)', borderRadius: 6 }]
+                },
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { beginAtZero: true, ticks: { color: chartTextColor } }, y: { ticks: { color: chartTextColor } } } }
+            });
+        }
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', renderPapers);
+        document.getElementById('group-by').addEventListener('change', renderPapers);
+        document.getElementById('sort-by').addEventListener('change', renderPapers);
+
+        init();
+    </script>
+</body>
+</html>
