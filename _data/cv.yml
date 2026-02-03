@@ -1,97 +1,218 @@
 - title: General Information
   type: map
   contents:
-    - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
+    - name: Position
+      value: Assistant Professor
+    - name: Affiliation
+      value: Faculty of Social Sciences, VU Amsterdam
+    - name: Email
+      value: a.lopez.ortega@vu.nl
+    - name: ORCID
+      value: 0000-0003-2765-7232
     - name: Languages
-      value: English, German
+      value: Spanish (native), English (fluent), French (intermediate)
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: Ph.D. in Political Science
+      institution: University of Zurich, Switzerland
+      year: 2021
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
-      description:
-        - Description 1.
-        - Description 2.
+        - "Thesis: <em>A vote for diversity? Understanding voters' preferences for politicians through experimental innovations</em>"
+        - "Magna Cum Laude"
+        - "Advisor: Assoc. Prof. Oliver Strijbis"
 
-- title: Experience
+    - title: M.S. in Political and Electoral Analysis
+      institution: Carlos III University (UC3M), Spain
+      year: 2017
+      description:
+        - "Thesis: <em>The personalization of politics in parliamentary democracies: a conjoint experiment in Spain</em> (9.8/10)"
+        - "Advisor: Assoc. Prof. Gema Garcia-Albacete"
+
+    - title: B.S. in Political Science
+      institution: Pablo de Olavide University, Spain
+      year: 2016
+      description:
+        - Political Behavior Specialization
+
+    - title: B.S. in Law
+      institution: Pablo de Olavide University, Spain
+      year: 2016
+      description:
+        - Constitutional Law Specialization
+        - One-year Erasmus at University of Luxembourg (2014-2015)
+
+- title: Academic Appointments
   type: time_table
   contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
-      year: 1933 - 1955
-      description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Visiting Professor
-      institution: California Institute of Technology, Pasadena, California, US
-      year: 1933
-      description:
-        - Description 1.
-        - Description 2.
+    - title: Assistant Professor
+      institution: Vrije Universiteit Amsterdam, Faculty of Social Sciences
+      year: 2025 -
 
-    - title: Director
-      institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
-      year: 1917-1933
+    - title: Ramon Areces Fellow and Visiting Scholar
+      institution: Harvard University, Center for European Studies
+      year: 2024 - 2025
 
-    - title: Professor of Theoretical Physics
-      institution: Karl-Ferdinand University, Prague, Czechoslovakia
-      year: 1911 - 1917
-      description:
+    - title: Postdoctoral Researcher
+      institution: Vrije Universiteit Amsterdam, Faculty of Social Sciences
+      year: 2021 - 2024
 
-    - title: Associate Professor of Theoretical Physics
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1909 - 1911
+    - title: Visiting Scholar
+      institution: GESIS Leibniz Institute for the Social Sciences
+      year: 2023
 
-- title: Open Source Projects
+    - title: Research Assistant
+      institution: Duke University, "Women in Combat" Project (PI Prof. Laia Balcells)
+      year: 2017
+
+- title: Grants
   type: time_table
   contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
+    - title: VENI Grant
+      institution: NWO Talent Program, Dutch Ministry of Education, Culture and Science
+      year: 2025
+      description:
+        - "$320,000 for research on identity politics and democratic resilience"
 
-- title: Honors and Awards
+    - title: Ramón Areces Fellowship
+      institution: Center for European Studies, Harvard University
+      year: 2024
+      description:
+        - "$65,000 for project on how nativism affects LGBTQ+ attitudes in Europe"
+
+    - title: University of Zurich Research Grant
+      institution: University of Zurich
+      year: 2023
+      description:
+        - "9,270 CHF for development of AI-powered experiments"
+
+    - title: British Academy Grant
+      institution: British Academy
+      year: 2023
+      description:
+        - "£7,460 to conduct experiments on homonationalism and instrumental liberalism"
+
+    - title: Next Gen Ideas Grant
+      year: 2023
+      description:
+        - "$1,500 to study consequences of identity-driven factual polarization"
+
+    - title: Georgetown University Visiting Research Grant
+      institution: Georgetown University
+      year: 2020
+      description:
+        - "3,400 CHF for research on strategic support for LGBTQ+ causes"
+
+- title: Awards and Recognition
   type: time_table
   contents:
-    - year: 1921
+    - year: 2025
       items:
-        - Nobel Prize in Physics
-        - Matteucci Medal
-    - year: 2029
-      items:
-        - Max Planck Medal
+        - Best Article Award, European Politics and Society Section, APSA
+        - Travel grant, CES Harvard University ($1,500)
 
-- title: Academic Interests
+    - year: 2019
+      items:
+        - Best Paper Award, Spanish Association of Political Science (AECPA)
+
+    - year: 2016
+      items:
+        - POLEXP Prize for master's thesis on conjoint experiments
+
+    - year: 2014
+      items:
+        - Erasmus Grant for exchange at University of Luxembourg
+
+- title: International Scientific Leadership
+  type: time_table
+  contents:
+    - title: Chair of Public Opinion
+      institution: Midwestern Political Science Association
+      year: 2025 -
+
+    - title: Co-Organizer, Queer Politics Webinar
+      institution: International webinar series on LGBTQ+ politics research
+      year: 2023 - 2025
+
+    - title: Scientific Committee Member and Instructor
+      institution: COST Action LGBTQ+ Methods Summer Schools (London, Venice, Cluj-Napoca)
+      year: 2022 - 2024
+
+    - title: Founder and Coordinator
+      institution: LGBTQ+ Mentorship Program, European Political Science Association
+      year: 2021 -
+      description:
+        - "Connecting 50+ early-career researchers with established scholars"
+
+    - title: Co-director
+      institution: PREDI Political Prediction Market
+      year: 2018 -
+      description:
+        - "European-wide platform helping citizens forecast social events"
+
+- title: Teaching Experience
+  type: time_table
+  contents:
+    - title: Media & Politics
+      institution: VU Amsterdam, Political Communication Program
+      year: 2025 - 2026
+
+    - title: Public Opinion
+      institution: VU Amsterdam, Political Communication Program
+      year: 2025 - 2026
+
+    - title: Master Thesis Supervisor (9 students)
+      institution: VU Amsterdam, Political Communication Program
+      year: 2022 - 2023
+
+    - title: Quantitative Text Analysis
+      institution: VU Amsterdam (Undergraduate)
+      year: 2022, 2025
+
+    - title: Political Campaigns in Times of Big Data
+      institution: University of Zurich (Undergraduate)
+      year: 2019
+
+    - title: Personalization of Politics
+      institution: University of Zurich (Undergraduate)
+      year: 2018
+
+- title: Societal Impact
+  type: time_table
+  contents:
+    - title: Policy Advisor
+      institution: Dutch Zorg Institute
+      year: 2023 -
+      description:
+        - "Providing evidence-based policy recommendations"
+
+    - title: Co-author, Libro de la Juventud
+      institution: Spain's National Youth Institute (INJUVE)
+      year: 2022
+
+    - title: Media Engagement
+      year: 2018 -
+      description:
+        - "Research featured in 30+ major outlets including: The New York Times, The Guardian, Libération, El País, El Periódico, El Confidencial, Spanish National Radio (RNE), Vrij Nederland"
+
+- title: Technical Skills
   type: nested_list
   contents:
-    - title: Topic 1.
+    - title: Advanced
       items:
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
+        - R, Stata, experimental design, conjoint analysis, computational text analysis
+    - title: Intermediate
       items:
-        - Description 1.
-        - Description 2.
+        - LaTeX, French, experimental programming
+    - title: Basic
+      items:
+        - Python, HTML, JavaScript
 
-- title: Other Interests
+- title: Open Science Practices
   type: list
   contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+    - Pre-registration of all experimental studies with detailed hypotheses and analytical plans
+    - Public archiving of research data, experimental materials, and analysis code
+    - Prioritization of open-access publication venues and preprint distribution
+    - Active promotion of research transparency in collaborative projects
