@@ -1,9 +1,71 @@
-"AJP":
-  url: https://aapt.scitation.org/journal/ajp
-  color: "#00369f"
+"CPS":
+  url: https://journals.sagepub.com/home/cps
+  color: "#8B0000"
 
-"PhysRev":
-  url: https://journals.aps.org/
+"POQ":
+  url: https://academic.oup.com/poq
+  color: "#1E90FF"
 
-"Vision":
-  color: "#009f36"
+"PSRM":
+  url: https://www.cambridge.org/core/journals/political-science-research-and-methods
+  color: "#228B22"
+
+"G&O":
+  url: https://www.cambridge.org/core/journals/government-and-opposition
+  color: "#4B0082"
+
+"R&P":
+  url: https://journals.sagepub.com/home/rap
+  color: "#FF8C00"
+
+"JOP":
+  url: https://www.journals.uchicago.edu/toc/jop/current
+  color: "#DC143C"
+
+"BJPS":
+  url: https://www.cambridge.org/core/journals/british-journal-of-political-science
+  color: "#00008B"
+
+"NHB":
+  url: https://www.nature.com/nathumbehav/
+  color: "#E64A19"
+
+"ES":
+  url: https://www.sciencedirect.com/journal/electoral-studies
+  color: "#2E7D32"
+
+"PB":
+  url: https://link.springer.com/journal/11109
+  color: "#7B1FA2"
+
+"EJPG":
+  url: https://bristoluniversitypressdigital.com/view/journals/ejpg/ejpg-overview.xml
+  color: "#C2185B"
+
+"SciAdv":
+  url: https://www.science.org/journal/sciadv
+  color: "#D32F2F"
+
+"APSR":
+  url: https://www.cambridge.org/core/journals/american-political-science-review
+  color: "#1565C0"
+
+"EUP":
+  url: https://journals.sagepub.com/home/eup
+  color: "#003399"
+
+"JEPOP":
+  url: https://www.tandfonline.com/toc/fbep20/current
+  color: "#455A64"
+
+"JLS":
+  url: https://www.tandfonline.com/toc/fjls20/current
+  color: "#5D4037"
+
+"EPS":
+  url: https://link.springer.com/journal/41304
+  color: "#00695C"
+
+"REIS":
+  url: https://reis.cis.es/
+  color: "#BF360C"
