@@ -666,10 +666,24 @@ footer.sticky-bottom {
   ol.bibliography {
     list-style: none;
     padding: 0;
+    padding-left: 2.5rem;
     margin-top: 0;
+    counter-reset: pub-counter;
 
     li {
       margin-bottom: 1rem;
+      counter-increment: pub-counter;
+      position: relative;
+
+      &::before {
+        content: counter(pub-counter) ".";
+        position: absolute;
+        left: -2.5rem;
+        top: 0;
+        font-weight: bold;
+        color: var(--global-theme-color);
+        font-size: 1rem;
+      }
 
       .preview {
       }

@@ -69,3 +69,11 @@
 "REIS":
   url: https://reis.cis.es/
   color: "#BF360C"
+
+"JIT":
+  url: https://www.tandfonline.com/toc/witp20/current
+  color: "#6A1B9A"
+
+"P&G":
+  url: https://www.cogitatiopress.com/politicsandgovernance
+  color: "#00838F"
