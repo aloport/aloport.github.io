@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7. Data Pipeline &amp; Methodology – LGBTQ+ Candidates in Brazil’s 2024 Municipal Elections</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">LGBTQ+ Candidates in Brazil’s 2024 Municipal Elections</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="./01_candidate_universe.html">
+ <span class="dropdown-text">1. Candidate Universe</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./02_lgbtq_profile.html">
+ <span class="dropdown-text">2. LGBTQ+ Profile</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03_identity_disaggregation.html">
+ <span class="dropdown-text">3. L-G-B-T Disaggregation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04_geography.html">
+ <span class="dropdown-text">4. Geography</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./05_campaign_finance.html">
+ <span class="dropdown-text">5. Campaign Finance</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./06_intersections.html">
+ <span class="dropdown-text">6. Intersections</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="./07_methodology.html">
+ <span class="dropdown-text">7. Methodology</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./08_candidate_explorer.html">
+ <span class="dropdown-text">8. Candidate Explorer</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./99_data_codebook.html">
+ <span class="dropdown-text">Codebook</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#pipeline-overview" id="toc-pipeline-overview" class="nav-link active" data-scroll-target="#pipeline-overview"><span class="header-section-number">1</span> Pipeline Overview</a>
+  <ul class="collapse">
+  <li><a href="#data-flow" id="toc-data-flow" class="nav-link" data-scroll-target="#data-flow"><span class="header-section-number">1.1</span> Data Flow</a></li>
+  <li><a href="#script-descriptions" id="toc-script-descriptions" class="nav-link" data-scroll-target="#script-descriptions"><span class="header-section-number">1.2</span> Script Descriptions</a></li>
+  </ul></li>
+  <li><a href="#lgbtq-identification-methodology" id="toc-lgbtq-identification-methodology" class="nav-link" data-scroll-target="#lgbtq-identification-methodology"><span class="header-section-number">2</span> LGBTQ+ Identification Methodology</a>
+  <ul class="collapse">
+  <li><a href="#two-sources-of-identification" id="toc-two-sources-of-identification" class="nav-link" data-scroll-target="#two-sources-of-identification"><span class="header-section-number">2.1</span> Two Sources of Identification</a>
+  <ul class="collapse">
+  <li><a href="#tse-self-disclosure-new-in-2024" id="toc-tse-self-disclosure-new-in-2024" class="nav-link" data-scroll-target="#tse-self-disclosure-new-in-2024"><span class="header-section-number">2.1.1</span> TSE Self-Disclosure (New in 2024)</a></li>
+  <li><a href="#vote-lgbt-candidate-list" id="toc-vote-lgbt-candidate-list" class="nav-link" data-scroll-target="#vote-lgbt-candidate-list"><span class="header-section-number">2.1.2</span> VOTE LGBT Candidate List</a></li>
+  </ul></li>
+  <li><a href="#matching-algorithm-3-stages" id="toc-matching-algorithm-3-stages" class="nav-link" data-scroll-target="#matching-algorithm-3-stages"><span class="header-section-number">2.2</span> Matching Algorithm (3 Stages)</a>
+  <ul class="collapse">
+  <li><a href="#stage-1-exact-match-name-state-municipality" id="toc-stage-1-exact-match-name-state-municipality" class="nav-link" data-scroll-target="#stage-1-exact-match-name-state-municipality"><span class="header-section-number">2.2.1</span> Stage 1: Exact Match (Name + State + Municipality)</a></li>
+  <li><a href="#stage-2-exact-match-name-state-only" id="toc-stage-2-exact-match-name-state-only" class="nav-link" data-scroll-target="#stage-2-exact-match-name-state-only"><span class="header-section-number">2.2.2</span> Stage 2: Exact Match (Name + State Only)</a></li>
+  <li><a href="#stage-3-fuzzy-matching-jaro-winkler-distance" id="toc-stage-3-fuzzy-matching-jaro-winkler-distance" class="nav-link" data-scroll-target="#stage-3-fuzzy-matching-jaro-winkler-distance"><span class="header-section-number">2.2.3</span> Stage 3: Fuzzy Matching (Jaro-Winkler Distance)</a></li>
+  </ul></li>
+  <li><a href="#identity-categorization" id="toc-identity-categorization" class="nav-link" data-scroll-target="#identity-categorization"><span class="header-section-number">2.3</span> Identity Categorization</a></li>
+  <li><a href="#match-quality-statistics" id="toc-match-quality-statistics" class="nav-link" data-scroll-target="#match-quality-statistics"><span class="header-section-number">2.4</span> Match Quality Statistics</a>
+  <ul class="collapse">
+  <li><a href="#match-type-distribution" id="toc-match-type-distribution" class="nav-link" data-scroll-target="#match-type-distribution"><span class="header-section-number">2.4.1</span> Match Type Distribution</a></li>
+  <li><a href="#disclosure-source-distribution" id="toc-disclosure-source-distribution" class="nav-link" data-scroll-target="#disclosure-source-distribution"><span class="header-section-number">2.4.2</span> Disclosure Source Distribution</a></li>
+  <li><a href="#cross-tabulation-match-type-x-disclosure-source" id="toc-cross-tabulation-match-type-x-disclosure-source" class="nav-link" data-scroll-target="#cross-tabulation-match-type-x-disclosure-source"><span class="header-section-number">2.4.3</span> Cross-Tabulation: Match Type x Disclosure Source</a></li>
+  <li><a href="#match-quality-summary" id="toc-match-quality-summary" class="nav-link" data-scroll-target="#match-quality-summary"><span class="header-section-number">2.4.4</span> Match Quality Summary</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#campaign-finance-classification" id="toc-campaign-finance-classification" class="nav-link" data-scroll-target="#campaign-finance-classification"><span class="header-section-number">3</span> Campaign Finance Classification</a>
+  <ul class="collapse">
+  <li><a href="#raw-tse-categories" id="toc-raw-tse-categories" class="nav-link" data-scroll-target="#raw-tse-categories"><span class="header-section-number">3.1</span> Raw TSE Categories</a></li>
+  <li><a href="#self-funding-detection" id="toc-self-funding-detection" class="nav-link" data-scroll-target="#self-funding-detection"><span class="header-section-number">3.2</span> Self-Funding Detection</a></li>
+  <li><a href="#classification-code" id="toc-classification-code" class="nav-link" data-scroll-target="#classification-code"><span class="header-section-number">3.3</span> Classification Code</a></li>
+  <li><a href="#financial-vs.-in-kind-contributions" id="toc-financial-vs.-in-kind-contributions" class="nav-link" data-scroll-target="#financial-vs.-in-kind-contributions"><span class="header-section-number">3.4</span> Financial vs.&nbsp;In-Kind Contributions</a></li>
+  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation"><span class="header-section-number">3.5</span> Validation</a></li>
+  </ul></li>
+  <li><a href="#municipality-crosswalk" id="toc-municipality-crosswalk" class="nav-link" data-scroll-target="#municipality-crosswalk"><span class="header-section-number">4</span> Municipality Crosswalk</a>
+  <ul class="collapse">
+  <li><a href="#the-tse-ibge-code-problem" id="toc-the-tse-ibge-code-problem" class="nav-link" data-scroll-target="#the-tse-ibge-code-problem"><span class="header-section-number">4.1</span> The TSE-IBGE Code Problem</a></li>
+  <li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution"><span class="header-section-number">4.2</span> Solution</a></li>
+  <li><a href="#match-rate" id="toc-match-rate" class="nav-link" data-scroll-target="#match-rate"><span class="header-section-number">4.3</span> Match Rate</a></li>
+  </ul></li>
+  <li><a href="#variable-construction-reference" id="toc-variable-construction-reference" class="nav-link" data-scroll-target="#variable-construction-reference"><span class="header-section-number">5</span> Variable Construction Reference</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility"><span class="header-section-number">6</span> Reproducibility</a>
+  <ul class="collapse">
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">6.1</span> Prerequisites</a></li>
+  <li><a href="#execution-order" id="toc-execution-order" class="nav-link" data-scroll-target="#execution-order"><span class="header-section-number">6.2</span> Execution Order</a></li>
+  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering"><span class="header-section-number">6.3</span> Rendering</a></li>
+  <li><a href="#data-access" id="toc-data-access" class="nav-link" data-scroll-target="#data-access"><span class="header-section-number">6.4</span> Data Access</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">7. Data Pipeline &amp; Methodology</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<p class="subtitle lead">From Raw TSE Files to Analysis-Ready Data</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="pipeline-overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Pipeline Overview</h1>
+<p>This chapter documents the complete data pipeline that transforms raw electoral records into the analysis-ready dataset used throughout Chapters 1–6. Transparency and reproducibility are core objectives: every classification decision, matching algorithm, and variable derivation is described here so that other researchers can evaluate, replicate, or extend this work.</p>
+<p>The pipeline consists of four R scripts, executed sequentially, each reading specific inputs and producing well-defined outputs. An upstream step in the parent research project handles the initial VOTE LGBT matching; all subsequent processing occurs within this descriptives project.</p>
+<section id="data-flow" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="data-flow"><span class="header-section-number">1.1</span> Data Flow</h2>
+<div class="cell" data-layout-align="default">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    A["TSE Candidate Registration\n~933K rows, 61 cols"] --&gt; B["01_load_candidates.R"]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    C["VOTE LGBT List\n~1,300 candidates"] --&gt; D["07_merge_lgbtq_list.R\n(Parent Project)"]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    D --&gt; A</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    E["TSE Finance Raw\n~5.5M transactions, 1.3GB"] --&gt; F["02_load_finance_raw.R"]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    G["IBGE Shapefiles\ngeobr package"] --&gt; H["03_prepare_geography.R"]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    B --&gt; I["04_build_analysis_data.R"]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    F --&gt; I</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    H --&gt; I</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    I --&gt; J["analysis_full.rds\n~933K rows, 80+ cols"]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    J --&gt; K["Quarto Website\nChapters 1-6"]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    J --&gt; L["Shiny Explorer"]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A["TSE Candidate Registration\n~933K rows, 61 cols"] --&gt; B["01_load_candidates.R"]
+    C["VOTE LGBT List\n~1,300 candidates"] --&gt; D["07_merge_lgbtq_list.R\n(Parent Project)"]
+    D --&gt; A
+    E["TSE Finance Raw\n~5.5M transactions, 1.3GB"] --&gt; F["02_load_finance_raw.R"]
+    G["IBGE Shapefiles\ngeobr package"] --&gt; H["03_prepare_geography.R"]
+    B --&gt; I["04_build_analysis_data.R"]
+    F --&gt; I
+    H --&gt; I
+    I --&gt; J["analysis_full.rds\n~933K rows, 80+ cols"]
+    J --&gt; K["Quarto Website\nChapters 1-6"]
+    J --&gt; L["Shiny Explorer"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="script-descriptions" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="script-descriptions"><span class="header-section-number">1.2</span> Script Descriptions</h2>
+<p><strong><code>01_load_candidates.R</code></strong> reads the integrated candidate CSV from the parent project (~416 MB, ~933K rows x 61 columns). It creates derived variables—simplified demographics, age groups, regional assignments, ideology categories, and the disaggregated LGBTQ+ identity classification—and saves the result as <code>candidates_analysis.rds</code>.</p>
+<p><strong><code>02_load_finance_raw.R</code></strong> reads the raw TSE campaign finance file (<code>receitas_candidatos_2024_BRASIL.csv</code>, ~1.3 GB, semicolon-delimited, Latin1 encoding). It documents every revenue source category in the raw data, classifies each transaction into funding types (self, party, individual, crowdfunding, other candidates, other), aggregates to the candidate level, validates the aggregation against a pre-existing aggregated file, and saves both candidate-level summaries (<code>finance_by_candidate.rds</code>) and the full transaction-level data (<code>finance_transactions.rds</code>).</p>
+<p><strong><code>03_prepare_geography.R</code></strong> downloads and caches municipality and state boundary shapefiles from the IBGE via the <code>geobr</code> R package. These are stored locally in <code>data/geo_cache/</code> so that subsequent renders do not re-download. It also reads the municipality crosswalk that bridges TSE and IBGE coding systems.</p>
+<p><strong><code>04_build_analysis_data.R</code></strong> merges the three preceding outputs—candidates, finance, and geography—into a single analysis-ready file (<code>analysis_full.rds</code>, ~933K rows, 80+ columns). Candidates without finance records have all financial variables filled with zeros rather than <code>NA</code>, ensuring clean downstream analysis.</p>
+</section>
+</section>
+<section id="lgbtq-identification-methodology" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> LGBTQ+ Identification Methodology</h1>
+<p>Identifying LGBTQ+ candidates in a population of nearly one million candidacies is the central methodological challenge of this project. We draw on two complementary sources, then apply a three-stage matching algorithm to link the external VOTE LGBT list to official TSE records.</p>
+<section id="two-sources-of-identification" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="two-sources-of-identification"><span class="header-section-number">2.1</span> Two Sources of Identification</h2>
+<section id="tse-self-disclosure-new-in-2024" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="tse-self-disclosure-new-in-2024"><span class="header-section-number">2.1.1</span> TSE Self-Disclosure (New in 2024)</h3>
+<p>For the first time in Brazilian electoral history, the <em>Tribunal Superior Eleitoral</em> (TSE) allowed candidates to voluntarily declare their sexual orientation and gender identity on the official registration form for the 2024 municipal elections. This was a landmark step in institutional recognition of LGBTQ+ political participation.</p>
+<p>The TSE registration data provides two relevant fields:</p>
+<ul>
+<li><strong><code>DS_ORIENTACAO_SEXUAL</code></strong> — sexual orientation (e.g., Heterossexual, Gay, Lesbica, Bissexual, Pansexual, Assexual, or open text)</li>
+<li><strong><code>DS_IDENTIDADE_GENERO</code></strong> — gender identity (e.g., Cisgenero, Transgenero/Travesti, Nao-binario, or open text)</li>
+</ul>
+<p>Candidates who reported any non-heterosexual orientation or non-cisgender identity are flagged as LGBTQ+.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Voluntary Disclosure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Self-disclosure was entirely voluntary. Many LGBTQ+ candidates—particularly those in conservative regions or parties—may have chosen not to declare, meaning the TSE data alone substantially undercounts the true LGBTQ+ candidate population. This is why the VOTE LGBT list is an essential complement.</p>
+</div>
+</div>
+</section>
+<section id="vote-lgbt-candidate-list" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="vote-lgbt-candidate-list"><span class="header-section-number">2.1.2</span> VOTE LGBT Candidate List</h3>
+<p>VOTE LGBT (<em>Voto com Orgulho</em>) is a Brazilian civil society project that independently identifies LGBTQ+ candidates running in elections. Their identification methods include:</p>
+<ul>
+<li>Direct self-identification to the organization</li>
+<li>Public campaigning on LGBTQ+ issues or identity</li>
+<li>Social media analysis and community referrals</li>
+<li>Nominations from LGBTQ+ advocacy organizations</li>
+</ul>
+<p>For the 2024 municipal elections, VOTE LGBT identified approximately 1,300 candidates. Their list provides: ballot name, state, municipality, position sought, party, gender identity, sexual orientation, and (for some candidates) vote counts.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Complementary Coverage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The two sources have partially overlapping but distinct coverage. The TSE captures candidates who chose to declare on the official form regardless of public visibility, while VOTE LGBT captures publicly visible LGBTQ+ candidates regardless of whether they filed a TSE declaration. The union of both sources provides the most comprehensive identification achievable with available data.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="matching-algorithm-3-stages" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="matching-algorithm-3-stages"><span class="header-section-number">2.2</span> Matching Algorithm (3 Stages)</h2>
+<p>Linking the VOTE LGBT candidate list to TSE registration records requires reconciling informal names, varying municipality spellings, and approximate string matches. The matching proceeds in three stages, each applied only to candidates not yet matched by a prior stage.</p>
+<section id="stage-1-exact-match-name-state-municipality" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="stage-1-exact-match-name-state-municipality"><span class="header-section-number">2.2.1</span> Stage 1: Exact Match (Name + State + Municipality)</h3>
+<p>The first and most restrictive stage joins on three standardized keys: ballot name, state, and municipality. Both datasets are preprocessed by removing accents, collapsing whitespace, and converting to uppercase.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 1: Exact match (name + state + municipality)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lgbt_matched_exact <span class="ot">&lt;-</span> lgbt_clean <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    candidates_std <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(candidate_id, ballot_name_std, state_std, municipality_std),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ballot_name_lgbt"</span> <span class="ot">=</span> <span class="st">"ballot_name_std"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>           <span class="st">"state_lgbt"</span> <span class="ot">=</span> <span class="st">"state_std"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>           <span class="st">"municipality_lgbt"</span> <span class="ot">=</span> <span class="st">"municipality_std"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">match_type =</span> <span class="st">"exact_full"</span>, <span class="at">match_quality =</span> <span class="fl">1.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li><strong>Join keys</strong>: <code>ballot_name_lgbt = ballot_name_std</code>, <code>state_lgbt = state_std</code>, <code>municipality_lgbt = municipality_std</code></li>
+<li><strong>Quality score</strong>: 1.0 (perfect match on all three dimensions)</li>
+<li><strong>Expectation</strong>: Captures the majority of matches, as most VOTE LGBT entries use the official ballot name and standard municipality spelling</li>
+</ul>
+</section>
+<section id="stage-2-exact-match-name-state-only" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="stage-2-exact-match-name-state-only"><span class="header-section-number">2.2.2</span> Stage 2: Exact Match (Name + State Only)</h3>
+<p>For candidates unmatched after Stage 1, we relax the municipality requirement and match on ballot name and state alone.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 2: Exact match (name + state, relaxing municipality)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lgbt_unmatched_s1 <span class="ot">&lt;-</span> lgbt_clean <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(lgbt_matched_exact, <span class="at">by =</span> <span class="st">"row_id"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>lgbt_matched_state <span class="ot">&lt;-</span> lgbt_unmatched_s1 <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    candidates_std <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(candidate_id, ballot_name_std, state_std),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ballot_name_lgbt"</span> <span class="ot">=</span> <span class="st">"ballot_name_std"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>           <span class="st">"state_lgbt"</span> <span class="ot">=</span> <span class="st">"state_std"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">match_type =</span> <span class="st">"exact_state"</span>, <span class="at">match_quality =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li><strong>Rationale</strong>: The VOTE LGBT list sometimes records informal municipality names, abbreviated forms, or the name of a metropolitan area rather than the specific municipality where the candidate is registered. Matching on name + state resolves these cases while still requiring an exact name match as a safeguard.</li>
+<li><strong>Quality score</strong>: 0.9</li>
+</ul>
+</section>
+<section id="stage-3-fuzzy-matching-jaro-winkler-distance" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="stage-3-fuzzy-matching-jaro-winkler-distance"><span class="header-section-number">2.2.3</span> Stage 3: Fuzzy Matching (Jaro-Winkler Distance)</h3>
+<p>For remaining unmatched candidates, we apply fuzzy string matching within the same state using the Jaro-Winkler distance metric, which is well-suited for name matching because it gives extra weight to matching prefixes—a useful property when ballot names share common first elements.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 3: Fuzzy match using Jaro-Winkler distance within state</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringdist)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(lgbt_unmatched_s2))) {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  state_candidates <span class="ot">&lt;-</span> candidates_std <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(state_std <span class="sc">==</span> lgbt_unmatched_s2<span class="sc">$</span>state_lgbt[i])</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  distances <span class="ot">&lt;-</span> <span class="fu">stringdist</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    lgbt_unmatched_s2<span class="sc">$</span>ballot_name_lgbt[i],</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    state_candidates<span class="sc">$</span>ballot_name_std,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"jw"</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  best_idx <span class="ot">&lt;-</span> <span class="fu">which.min</span>(distances)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  min_dist <span class="ot">&lt;-</span> distances[best_idx]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Accept if distance &lt; 0.15 (high similarity)</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (min_dist <span class="sc">&lt;</span> <span class="fl">0.15</span>) {</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Record match with quality = 1 - distance</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    match_quality <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> min_dist</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Match found: store candidate_id, match_type = "fuzzy_jw"</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li><strong>Threshold</strong>: Matches are accepted only when the Jaro-Winkler distance is less than 0.15, corresponding to a similarity of at least 0.85. This conservative threshold minimizes false positives.</li>
+<li><strong>Quality score</strong>: <code>1 - distance</code> (ranges from 0.85 to ~0.99)</li>
+<li><strong>Manual review</strong>: All fuzzy matches were manually inspected. State and party information served as additional disambiguation criteria in ambiguous cases.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why Jaro-Winkler?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Jaro-Winkler distance is preferred over alternatives (Levenshtein, cosine similarity) for person-name matching because it (1) is normalized to [0, 1], (2) penalizes transpositions less harshly than insertions/deletions, and (3) applies a prefix bonus that rewards names sharing the same initial characters—common in Brazilian ballot names that begin with a first name or nickname.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="identity-categorization" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="identity-categorization"><span class="header-section-number">2.3</span> Identity Categorization</h2>
+<p>Once a candidate is identified as LGBTQ+ (from either source), they are assigned to a disaggregated identity category. The key design decision is that <strong>trans identity is prioritized over sexual orientation</strong>, because gender identity is a distinct dimension that cross-cuts orientation. A trans lesbian, for example, is categorized as “Trans” rather than “Lesbian” in our primary classification.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lcd_category <span class="ot">=</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  trans_candidate <span class="sc">~</span> <span class="st">"Trans"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  sexual_orientation <span class="sc">==</span> <span class="st">"Gay"</span> <span class="sc">~</span> <span class="st">"Gay"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  sexual_orientation <span class="sc">==</span> <span class="st">"Lésbica"</span> <span class="sc">~</span> <span class="st">"Lesbian"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  sexual_orientation <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Bissexual"</span>, <span class="st">"Pansexual"</span>) <span class="sc">~</span> <span class="st">"Bisexual+"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  sexual_orientation <span class="sc">==</span> <span class="st">"Assexual"</span> <span class="sc">~</span> <span class="st">"Asexual"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Other LGBTQ+"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The resulting categories are:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Trans</strong></td>
+<td>Any candidate with a transgender or travesti gender identity, regardless of sexual orientation</td>
+</tr>
+<tr class="even">
+<td><strong>Gay</strong></td>
+<td>Cisgender male candidates with gay sexual orientation</td>
+</tr>
+<tr class="odd">
+<td><strong>Lesbian</strong></td>
+<td>Cisgender female candidates with lesbian (<em>Lesbica</em>) sexual orientation</td>
+</tr>
+<tr class="even">
+<td><strong>Bisexual+</strong></td>
+<td>Candidates with bisexual or pansexual orientation (collapsed because both describe attraction to more than one gender)</td>
+</tr>
+<tr class="odd">
+<td><strong>Asexual</strong></td>
+<td>Candidates with asexual orientation</td>
+</tr>
+<tr class="even">
+<td><strong>Other LGBTQ+</strong></td>
+<td>Identified LGBTQ+ candidates whose specific identity does not map to the above categories</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why Prioritize Trans?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This follows conventions in both the LGBTQ+ studies literature and Brazilian activist nomenclature. Transgender identity is a gender identity, not a sexual orientation. A trans person may simultaneously be gay, lesbian, bisexual, or asexual. Collapsing these into a single “Trans” category for the primary classification preserves the analytically distinct dimension of gender identity, while the underlying data retains full detail for secondary analyses.</p>
+</div>
+</div>
+</section>
+<section id="match-quality-statistics" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="match-quality-statistics"><span class="header-section-number">2.4</span> Match Quality Statistics</h2>
+<p>The following tables summarize the results of the matching process across the identified LGBTQ+ population.</p>
+<section id="match-type-distribution" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="match-type-distribution"><span class="header-section-number">2.4.1</span> Match Type Distribution</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lgbtq <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(match_type, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="fu">format_pct</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">Match Type</span><span class="st">`</span> <span class="ot">=</span> match_type, <span class="at">N =</span> n, <span class="st">`</span><span class="at">%</span><span class="st">`</span> <span class="ot">=</span> pct) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-match-type" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-match-type-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: LGBTQ+ Candidates by Match Type
+</figcaption>
+<div aria-describedby="tbl-match-type-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Match Type</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">exact_full</td>
+<td style="text-align: right;">12528</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fuzzy</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="disclosure-source-distribution" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="disclosure-source-distribution"><span class="header-section-number">2.4.2</span> Disclosure Source Distribution</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lgbtq <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(disclosure_source, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="fu">format_pct</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n))) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">Disclosure Source</span><span class="st">`</span> <span class="ot">=</span> disclosure_source, <span class="at">N =</span> n, <span class="st">`</span><span class="at">%</span><span class="st">`</span> <span class="ot">=</span> pct) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-disclosure-source" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-disclosure-source-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: LGBTQ+ Candidates by Disclosure Source
+</figcaption>
+<div aria-describedby="tbl-disclosure-source-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Disclosure Source</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">TSE</td>
+<td style="text-align: right;">8860</td>
+<td style="text-align: right;">70.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VOTE + TSE</td>
+<td style="text-align: right;">2512</td>
+<td style="text-align: right;">20.0%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VOTE</td>
+<td style="text-align: right;">1160</td>
+<td style="text-align: right;">9.3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="cross-tabulation-match-type-x-disclosure-source" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="cross-tabulation-match-type-x-disclosure-source"><span class="header-section-number">2.4.3</span> Cross-Tabulation: Match Type x Disclosure Source</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lgbtq <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(match_type, disclosure_source) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> disclosure_source, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">`</span><span class="at">Match Type</span><span class="st">`</span> <span class="ot">=</span> match_type) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="fu">rep</span>(<span class="st">"r"</span>, <span class="fu">ncol</span>(.) <span class="sc">-</span> <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-match-source-cross" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-match-source-cross-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Match Type by Disclosure Source
+</figcaption>
+<div aria-describedby="tbl-match-source-cross-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Match Type</th>
+<th style="text-align: right;">TSE</th>
+<th style="text-align: right;">VOTE</th>
+<th style="text-align: right;">VOTE + TSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">exact_full</td>
+<td style="text-align: right;">8860</td>
+<td style="text-align: right;">1156</td>
+<td style="text-align: right;">2512</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fuzzy</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="match-quality-summary" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="match-quality-summary"><span class="header-section-number">2.4.4</span> Match Quality Summary</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lgbtq <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(match_quality)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">format_n</span>(<span class="fu">n</span>()),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, <span class="fu">mean</span>(match_quality)),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Median =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, <span class="fu">median</span>(match_quality)),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Min =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, <span class="fu">min</span>(match_quality)),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Max =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, <span class="fu">max</span>(match_quality))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">rep</span>(<span class="st">"r"</span>, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-match-quality-stats" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-match-quality-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Match Quality Score Summary (for Matched Candidates)
+</figcaption>
+<div aria-describedby="tbl-match-quality-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">12,532</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.974</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="campaign-finance-classification" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Campaign Finance Classification</h1>
+<p>Chapter 5 presents the results of the campaign finance analysis; this section documents the classification methodology that underpins it. The goal is to transform the raw TSE revenue file—which contains Portuguese-language category labels and complex institutional source codes—into a clean, analytically useful typology of funding sources.</p>
+<section id="raw-tse-categories" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="raw-tse-categories"><span class="header-section-number">3.1</span> Raw TSE Categories</h2>
+<p>The TSE classifies each revenue transaction by <code>DS_ORIGEM_RECEITA</code> (revenue source). The following table maps the raw Portuguese categories to our English-language classification:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Portuguese Category</th>
+<th>English Translation</th>
+<th>Our Classification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recursos de pessoas fisicas</td>
+<td>Own resources</td>
+<td><code>self_funding</code></td>
+</tr>
+<tr class="even">
+<td>Fundo Partidario / Fundo Especial (partido politico)</td>
+<td>Party fund / Special fund</td>
+<td><code>party_funding</code></td>
+</tr>
+<tr class="odd">
+<td>Doacoes de pessoas fisicas</td>
+<td>Individual donations</td>
+<td><code>individual_funding</code></td>
+</tr>
+<tr class="even">
+<td>Financiamento coletivo</td>
+<td>Crowdfunding</td>
+<td><code>crowdfunding</code></td>
+</tr>
+<tr class="odd">
+<td>Doacoes de outros candidatos/comites</td>
+<td>Other candidates/committees</td>
+<td><code>other_candidates</code></td>
+</tr>
+<tr class="even">
+<td>Everything else</td>
+<td>Various</td>
+<td><code>other</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="self-funding-detection" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="self-funding-detection"><span class="header-section-number">3.2</span> Self-Funding Detection</h2>
+<p>Self-funding is identified through two complementary methods, capturing cases that either source alone would miss:</p>
+<ol type="1">
+<li><strong>Revenue origin</strong>: The <code>DS_ORIGEM_RECEITA</code> field contains “recursos pr” (own resources), matched case-insensitively.</li>
+<li><strong>CPF match</strong>: The donor’s CPF (<code>NR_CPF_CNPJ_DOADOR</code>) matches the candidate’s own CPF (<code>NR_CPF_CANDIDATO</code>). This catches cases where a candidate donates to their own campaign but the transaction is categorized under a different revenue origin.</li>
+</ol>
+<p>A transaction satisfying either condition is classified as <code>self_funding</code>.</p>
+</section>
+<section id="classification-code" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="classification-code"><span class="header-section-number">3.3</span> Classification Code</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>funding_type <span class="ot">=</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(DS_ORIGEM_RECEITA, <span class="st">"(?i)recursos pr"</span>) <span class="sc">|</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    (NR_CPF_CNPJ_DOADOR <span class="sc">==</span> NR_CPF_CANDIDATO) <span class="sc">~</span> <span class="st">"self_funding"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(DS_ORIGEM_RECEITA, <span class="st">"(?i)partido pol"</span>) <span class="sc">~</span> <span class="st">"party_funding"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(DS_ORIGEM_RECEITA, <span class="st">"(?i)pessoas f"</span>) <span class="sc">~</span> <span class="st">"individual_funding"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(DS_ORIGEM_RECEITA, <span class="st">"(?i)financiamento coletivo"</span>) <span class="sc">~</span> <span class="st">"crowdfunding"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_detect</span>(DS_ORIGEM_RECEITA, <span class="st">"(?i)outros candidatos"</span>) <span class="sc">~</span> <span class="st">"other_candidates"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Order Matters in <code>case_when()</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>case_when()</code> function evaluates conditions in order and assigns the first matching category. Self-funding is tested first so that a candidate’s own donation is always classified as self-funding, even if the TSE recorded the revenue origin under a different label. This is a deliberate design choice that prioritizes economic substance (who provided the money) over institutional labeling.</p>
+</div>
+</div>
+</section>
+<section id="financial-vs.-in-kind-contributions" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="financial-vs.-in-kind-contributions"><span class="header-section-number">3.4</span> Financial vs.&nbsp;In-Kind Contributions</h2>
+<p>The TSE field <code>DS_NATUREZA_RECEITA</code> distinguishes between cash contributions (<code>"FINANCEIRO"</code>) and estimated or in-kind contributions (services, materials, event spaces, etc.). Our dataset preserves both the financial amount (<code>financial_amt</code>) and in-kind amount (<code>inkind_amt</code>) at the candidate level, along with their percentage shares of total revenue.</p>
+</section>
+<section id="validation" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="validation"><span class="header-section-number">3.5</span> Validation</h2>
+<p>Our raw aggregation from the ~5.5 million transaction-level records was validated against a pre-existing candidate-level aggregated file produced independently by the parent project. The two aggregations show near-perfect correlation, confirming that the raw processing pipeline faithfully reproduces the intended totals.</p>
+</section>
+</section>
+<section id="municipality-crosswalk" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Municipality Crosswalk</h1>
+<section id="the-tse-ibge-code-problem" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-tse-ibge-code-problem"><span class="header-section-number">4.1</span> The TSE-IBGE Code Problem</h2>
+<p>The TSE uses its own internal municipality coding system, which differs from the IBGE’s official 7-digit municipality codes used by statistical agencies, the census, and the <code>geobr</code> R package. To produce choropleth maps and spatial analyses, we need to bridge these two systems.</p>
+</section>
+<section id="solution" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="solution"><span class="header-section-number">4.2</span> Solution</h2>
+<p>The crosswalk file (<code>crosswalk_tse_to_geobr.csv</code>) resolves this mismatch through name-based matching within state. The procedure is:</p>
+<ol type="1">
+<li>Start with the TSE municipality code, name, and state</li>
+<li>Match to IBGE municipality codes via exact name match within state (~95% of cases)</li>
+<li>Apply fuzzy name matching for municipalities with accent or spelling differences</li>
+<li>Manually resolve remaining cases (municipality mergers, name changes)</li>
+</ol>
+<p>The resulting <code>geobr_code</code> (IBGE 7-digit code) enables spatial joins with <code>geobr</code> shapefiles via <code>code_muni</code>.</p>
+</section>
+<section id="match-rate" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="match-rate"><span class="header-section-number">4.3</span> Match Rate</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Municipality match rate:"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">format_pct</span>(<span class="fu">mean</span>(<span class="sc">!</span><span class="fu">is.na</span>(df<span class="sc">$</span>geobr_code))), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Municipality match rate: 99.9% </code></pre>
+</div>
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Candidates with geobr_code:"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">format_n</span>(<span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(df<span class="sc">$</span>geobr_code))), <span class="st">"of"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">format_n</span>(<span class="fu">nrow</span>(df)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Candidates with geobr_code: 932,932 of 933,466 </code></pre>
+</div>
+</div>
+<p>The small number of unmatched candidates (&lt;1%) are primarily from overseas voting sections or reflect rare discrepancies between TSE and IBGE municipality code systems.</p>
+</section>
+</section>
+<section id="variable-construction-reference" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Variable Construction Reference</h1>
+<p>The following table documents all derived variables in the analysis dataset, including the transformation logic and rationale for each.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Formula / Logic</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lgbt_category</code></td>
+<td>Trans &gt; Sexual Orientation (via <code>make_lgbt_category()</code>)</td>
+<td>Gender identity cross-cuts orientation; trans identity is analytically distinct</td>
+</tr>
+<tr class="even">
+<td><code>education_simple</code></td>
+<td>8 TSE codes collapsed to 3 levels: Less than HS, High School, College+</td>
+<td>Reduces sparse cells for meaningful group comparisons</td>
+</tr>
+<tr class="odd">
+<td><code>race_simple</code></td>
+<td>6 TSE codes collapsed to 4 levels: White, Brown, Black, Other</td>
+<td>Aligns with census conventions; preserves key distinctions</td>
+</tr>
+<tr class="even">
+<td><code>age_group</code></td>
+<td>5 bins: 18–29, 30–39, 40–49, 50–59, 60+</td>
+<td>Standard demographic grouping for age-stratified analysis</td>
+</tr>
+<tr class="odd">
+<td><code>region</code></td>
+<td>27 states mapped to 5 macro-regions</td>
+<td>Standard Brazilian geographic division (North, Northeast, Center-West, Southeast, South)</td>
+</tr>
+<tr class="even">
+<td><code>ideology_category</code></td>
+<td>&lt;4.0 Left, 4.0–7.1 Center, &gt;=7.1 Right</td>
+<td>Bolognesi et al.&nbsp;(2023) expert survey thresholds, anchored on PT, MDB, PL</td>
+</tr>
+<tr class="odd">
+<td><code>female</code></td>
+<td><code>gender == "FEMININO"</code></td>
+<td>Binary indicator for two-group gender comparisons</td>
+</tr>
+<tr class="even">
+<td><code>nonwhite</code></td>
+<td><code>race != "BRANCA"</code> (NA-safe)</td>
+<td>Binary indicator for two-group racial comparisons</td>
+</tr>
+<tr class="odd">
+<td><code>lgbtq_label</code></td>
+<td><code>"LGBTQ+"</code> / <code>"Non-LGBTQ+"</code> factor</td>
+<td>Clean label for plots and tables; ordered for consistent display</td>
+</tr>
+<tr class="even">
+<td><code>position_simple</code></td>
+<td>TSE position codes translated to English: City Councilor, Mayor, Vice-Mayor</td>
+<td>Readable labels for analysis and visualization</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+On Ideology Thresholds
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Left/Center/Right cutpoints are not arbitrary. They are derived from natural breaks in the Bolognesi et al.&nbsp;(2023) expert survey distribution and anchored on three parties that serve as ideological reference points: PT (<em>Partido dos Trabalhadores</em>, score ~2.0, clearly Left), MDB (<em>Movimento Democratico Brasileiro</em>, score ~5.5, centrist catch-all), and PL (<em>Partido Liberal</em>, score ~8.5, clearly Right under Bolsonaro). Approximately 2% of candidates belong to minor parties not covered by the survey and have <code>NA</code> ideology scores.</p>
+</div>
+</div>
+</section>
+<section id="reproducibility" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Reproducibility</h1>
+<section id="prerequisites" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">6.1</span> Prerequisites</h2>
+<p>The data pipeline depends on source files from the parent research project. If running on a machine other than the original development environment, set the <code>QPP_DATA_DIR</code> environment variable to point to the parent project directory:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">QPP_DATA_DIR =</span> <span class="st">"/path/to/Queer_politicians_project/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="execution-order" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="execution-order"><span class="header-section-number">6.2</span> Execution Order</h2>
+<p>Run the four data preparation scripts in sequence before rendering the Quarto site:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Load and prepare candidate data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"code"</span>, <span class="st">"01_load_candidates.R"</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   -&gt; data/derived/candidates_analysis.rds</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Process raw campaign finance data</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"code"</span>, <span class="st">"02_load_finance_raw.R"</span>))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   -&gt; data/derived/finance_by_candidate.rds</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   -&gt; data/derived/finance_transactions.rds</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   -&gt; output/tables/finance_revenue_source_categories.csv</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Download and cache geographic boundaries</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"code"</span>, <span class="st">"03_prepare_geography.R"</span>))</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   -&gt; data/geo_cache/municipalities.rds</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   -&gt; data/geo_cache/states.rds</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Merge all components into analysis dataset</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"code"</span>, <span class="st">"04_build_analysis_data.R"</span>))</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   -&gt; data/derived/analysis_full.rds</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: Render the Quarto website</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co"># quarto render docs/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="rendering" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="rendering"><span class="header-section-number">6.3</span> Rendering</h2>
+<p>Once <code>analysis_full.rds</code> exists, the Quarto site can be rendered with:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render docs/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All chapters source <code>code/00_setup.R</code> for shared paths, palettes, themes, and helper functions. The <code>freeze: auto</code> setting in <code>_quarto.yml</code> means that chapters whose source code has not changed will not be re-executed on subsequent renders.</p>
+</section>
+<section id="data-access" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="data-access"><span class="header-section-number">6.4</span> Data Access</h2>
+<p>The parent project data is stored on Dropbox and is not publicly available. Researchers wishing to replicate this analysis should:</p>
+<ol type="1">
+<li>Download raw TSE candidate registration files from <a href="https://dadosabertos.tse.jus.br/">https://dadosabertos.tse.jus.br/</a></li>
+<li>Download raw TSE campaign finance files from the same portal</li>
+<li>Contact VOTE LGBT for their candidate identification list</li>
+<li>Run the parent project’s integration scripts to produce the processed files</li>
+<li>Set <code>QPP_DATA_DIR</code> and run this project’s scripts 01–04 in order</li>
+<li>Render with <code>quarto render docs/</code></li>
+</ol>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb18" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "7. Data Pipeline &amp; Methodology"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "From Raw TSE Files to Analysis-Ready Data"</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("code", "00_setup.R"))</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="in">df &lt;- readRDS(paths$analysis_full_rds)</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># Pipeline Overview</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>This chapter documents the complete data pipeline that transforms raw electoral records into the analysis-ready dataset used throughout Chapters 1--6. Transparency and reproducibility are core objectives: every classification decision, matching algorithm, and variable derivation is described here so that other researchers can evaluate, replicate, or extend this work.</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>The pipeline consists of four R scripts, executed sequentially, each reading specific inputs and producing well-defined outputs. An upstream step in the parent research project handles the initial VOTE LGBT matching; all subsequent processing occurs within this descriptives project.</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Flow</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="in">    A["TSE Candidate Registration\n~933K rows, 61 cols"] --&gt; B["01_load_candidates.R"]</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="in">    C["VOTE LGBT List\n~1,300 candidates"] --&gt; D["07_merge_lgbtq_list.R\n(Parent Project)"]</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="in">    D --&gt; A</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="in">    E["TSE Finance Raw\n~5.5M transactions, 1.3GB"] --&gt; F["02_load_finance_raw.R"]</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="in">    G["IBGE Shapefiles\ngeobr package"] --&gt; H["03_prepare_geography.R"]</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="in">    B --&gt; I["04_build_analysis_data.R"]</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="in">    F --&gt; I</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="in">    H --&gt; I</span></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="in">    I --&gt; J["analysis_full.rds\n~933K rows, 80+ cols"]</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="in">    J --&gt; K["Quarto Website\nChapters 1-6"]</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="in">    J --&gt; L["Shiny Explorer"]</span></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Script Descriptions</span></span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>**`01_load_candidates.R`** reads the integrated candidate CSV from the parent project (~416 MB, ~933K rows x 61 columns). It creates derived variables---simplified demographics, age groups, regional assignments, ideology categories, and the disaggregated LGBTQ+ identity classification---and saves the result as <span class="in">`candidates_analysis.rds`</span>.</span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>**`02_load_finance_raw.R`** reads the raw TSE campaign finance file (<span class="in">`receitas_candidatos_2024_BRASIL.csv`</span>, ~1.3 GB, semicolon-delimited, Latin1 encoding). It documents every revenue source category in the raw data, classifies each transaction into funding types (self, party, individual, crowdfunding, other candidates, other), aggregates to the candidate level, validates the aggregation against a pre-existing aggregated file, and saves both candidate-level summaries (<span class="in">`finance_by_candidate.rds`</span>) and the full transaction-level data (<span class="in">`finance_transactions.rds`</span>).</span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>**`03_prepare_geography.R`** downloads and caches municipality and state boundary shapefiles from the IBGE via the <span class="in">`geobr`</span> R package. These are stored locally in <span class="in">`data/geo_cache/`</span> so that subsequent renders do not re-download. It also reads the municipality crosswalk that bridges TSE and IBGE coding systems.</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>**`04_build_analysis_data.R`** merges the three preceding outputs---candidates, finance, and geography---into a single analysis-ready file (<span class="in">`analysis_full.rds`</span>, ~933K rows, 80+ columns). Candidates without finance records have all financial variables filled with zeros rather than <span class="in">`NA`</span>, ensuring clean downstream analysis.</span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="fu"># LGBTQ+ Identification Methodology</span></span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>Identifying LGBTQ+ candidates in a population of nearly one million candidacies is the central methodological challenge of this project. We draw on two complementary sources, then apply a three-stage matching algorithm to link the external VOTE LGBT list to official TSE records.</span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two Sources of Identification</span></span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### TSE Self-Disclosure (New in 2024)</span></span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>For the first time in Brazilian electoral history, the *Tribunal Superior Eleitoral* (TSE) allowed candidates to voluntarily declare their sexual orientation and gender identity on the official registration form for the 2024 municipal elections. This was a landmark step in institutional recognition of LGBTQ+ political participation.</span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>The TSE registration data provides two relevant fields:</span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`DS_ORIENTACAO_SEXUAL`** --- sexual orientation (e.g., Heterossexual, Gay, Lesbica, Bissexual, Pansexual, Assexual, or open text)</span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`DS_IDENTIDADE_GENERO`** --- gender identity (e.g., Cisgenero, Transgenero/Travesti, Nao-binario, or open text)</span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>Candidates who reported any non-heterosexual orientation or non-cisgender identity are flagged as LGBTQ+.</span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Voluntary Disclosure</span></span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>Self-disclosure was entirely voluntary. Many LGBTQ+ candidates---particularly those in conservative regions or parties---may have chosen not to declare, meaning the TSE data alone substantially undercounts the true LGBTQ+ candidate population. This is why the VOTE LGBT list is an essential complement.</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a><span class="fu">### VOTE LGBT Candidate List</span></span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>VOTE LGBT (*Voto com Orgulho*) is a Brazilian civil society project that independently identifies LGBTQ+ candidates running in elections. Their identification methods include:</span>
+<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Direct self-identification to the organization</span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Public campaigning on LGBTQ+ issues or identity</span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Social media analysis and community referrals</span>
+<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Nominations from LGBTQ+ advocacy organizations</span>
+<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a>For the 2024 municipal elections, VOTE LGBT identified approximately 1,300 candidates. Their list provides: ballot name, state, municipality, position sought, party, gender identity, sexual orientation, and (for some candidates) vote counts.</span>
+<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a><span class="fu">## Complementary Coverage</span></span>
+<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a>The two sources have partially overlapping but distinct coverage. The TSE captures candidates who chose to declare on the official form regardless of public visibility, while VOTE LGBT captures publicly visible LGBTQ+ candidates regardless of whether they filed a TSE declaration. The union of both sources provides the most comprehensive identification achievable with available data.</span>
+<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Matching Algorithm (3 Stages)</span></span>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a>Linking the VOTE LGBT candidate list to TSE registration records requires reconciling informal names, varying municipality spellings, and approximate string matches. The matching proceeds in three stages, each applied only to candidates not yet matched by a prior stage.</span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stage 1: Exact Match (Name + State + Municipality)</span></span>
+<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a>The first and most restrictive stage joins on three standardized keys: ballot name, state, and municipality. Both datasets are preprocessed by removing accents, collapsing whitespace, and converting to uppercase.</span>
+<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stage-1-match}</span></span>
+<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a><span class="in"># Stage 1: Exact match (name + state + municipality)</span></span>
+<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a><span class="in">lgbt_matched_exact &lt;- lgbt_clean %&gt;%</span></span>
+<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a><span class="in">  inner_join(</span></span>
+<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a><span class="in">    candidates_std %&gt;%</span></span>
+<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a><span class="in">      select(candidate_id, ballot_name_std, state_std, municipality_std),</span></span>
+<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a><span class="in">    by = c("ballot_name_lgbt" = "ballot_name_std",</span></span>
+<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a><span class="in">           "state_lgbt" = "state_std",</span></span>
+<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a><span class="in">           "municipality_lgbt" = "municipality_std")</span></span>
+<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(match_type = "exact_full", match_quality = 1.0)</span></span>
+<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Join keys**: <span class="in">`ballot_name_lgbt = ballot_name_std`</span>, <span class="in">`state_lgbt = state_std`</span>, <span class="in">`municipality_lgbt = municipality_std`</span></span>
+<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Quality score**: 1.0 (perfect match on all three dimensions)</span>
+<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Expectation**: Captures the majority of matches, as most VOTE LGBT entries use the official ballot name and standard municipality spelling</span>
+<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stage 2: Exact Match (Name + State Only)</span></span>
+<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a>For candidates unmatched after Stage 1, we relax the municipality requirement and match on ballot name and state alone.</span>
+<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stage-2-match}</span></span>
+<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a><span class="in"># Stage 2: Exact match (name + state, relaxing municipality)</span></span>
+<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a><span class="in">lgbt_unmatched_s1 &lt;- lgbt_clean %&gt;%</span></span>
+<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a><span class="in">  anti_join(lgbt_matched_exact, by = "row_id")</span></span>
+<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a><span class="in">lgbt_matched_state &lt;- lgbt_unmatched_s1 %&gt;%</span></span>
+<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a><span class="in">  inner_join(</span></span>
+<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a><span class="in">    candidates_std %&gt;%</span></span>
+<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a><span class="in">      select(candidate_id, ballot_name_std, state_std),</span></span>
+<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a><span class="in">    by = c("ballot_name_lgbt" = "ballot_name_std",</span></span>
+<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a><span class="in">           "state_lgbt" = "state_std")</span></span>
+<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(match_type = "exact_state", match_quality = 0.9)</span></span>
+<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rationale**: The VOTE LGBT list sometimes records informal municipality names, abbreviated forms, or the name of a metropolitan area rather than the specific municipality where the candidate is registered. Matching on name + state resolves these cases while still requiring an exact name match as a safeguard.</span>
+<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Quality score**: 0.9</span>
+<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stage 3: Fuzzy Matching (Jaro-Winkler Distance)</span></span>
+<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a>For remaining unmatched candidates, we apply fuzzy string matching within the same state using the Jaro-Winkler distance metric, which is well-suited for name matching because it gives extra weight to matching prefixes---a useful property when ballot names share common first elements.</span>
+<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stage-3-match}</span></span>
+<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a><span class="in"># Stage 3: Fuzzy match using Jaro-Winkler distance within state</span></span>
+<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a><span class="in">library(stringdist)</span></span>
+<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a><span class="in">for (i in seq_len(nrow(lgbt_unmatched_s2))) {</span></span>
+<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a><span class="in">  state_candidates &lt;- candidates_std %&gt;%</span></span>
+<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(state_std == lgbt_unmatched_s2$state_lgbt[i])</span></span>
+<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a><span class="in">  distances &lt;- stringdist(</span></span>
+<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a><span class="in">    lgbt_unmatched_s2$ballot_name_lgbt[i],</span></span>
+<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a><span class="in">    state_candidates$ballot_name_std,</span></span>
+<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a><span class="in">    method = "jw"</span></span>
+<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a><span class="in">  best_idx &lt;- which.min(distances)</span></span>
+<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a><span class="in">  min_dist &lt;- distances[best_idx]</span></span>
+<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a><span class="in">  # Accept if distance &lt; 0.15 (high similarity)</span></span>
+<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a><span class="in">  if (min_dist &lt; 0.15) {</span></span>
+<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a><span class="in">    # Record match with quality = 1 - distance</span></span>
+<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a><span class="in">    match_quality &lt;- 1 - min_dist</span></span>
+<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a><span class="in">    # Match found: store candidate_id, match_type = "fuzzy_jw"</span></span>
+<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Threshold**: Matches are accepted only when the Jaro-Winkler distance is less than 0.15, corresponding to a similarity of at least 0.85. This conservative threshold minimizes false positives.</span>
+<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Quality score**: <span class="in">`1 - distance`</span> (ranges from 0.85 to ~0.99)</span>
+<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Manual review**: All fuzzy matches were manually inspected. State and party information served as additional disambiguation criteria in ambiguous cases.</span>
+<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Jaro-Winkler?</span></span>
+<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>The Jaro-Winkler distance is preferred over alternatives (Levenshtein, cosine similarity) for person-name matching because it (1) is normalized to <span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span>, (2) penalizes transpositions less harshly than insertions/deletions, and (3) applies a prefix bonus that rewards names sharing the same initial characters---common in Brazilian ballot names that begin with a first name or nickname.</span>
+<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## Identity Categorization</span></span>
+<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a>Once a candidate is identified as LGBTQ+ (from either source), they are assigned to a disaggregated identity category. The key design decision is that **trans identity is prioritized over sexual orientation**, because gender identity is a distinct dimension that cross-cuts orientation. A trans lesbian, for example, is categorized as "Trans" rather than "Lesbian" in our primary classification.</span>
+<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r identity-categorization}</span></span>
+<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a><span class="in">lcd_category = case_when(</span></span>
+<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a><span class="in">  trans_candidate ~ "Trans",</span></span>
+<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a><span class="in">  sexual_orientation == "Gay" ~ "Gay",</span></span>
+<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a><span class="in">  sexual_orientation == "Lésbica" ~ "Lesbian",</span></span>
+<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a><span class="in">  sexual_orientation %in% c("Bissexual", "Pansexual") ~ "Bisexual+",</span></span>
+<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a><span class="in">  sexual_orientation == "Assexual" ~ "Asexual",</span></span>
+<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a><span class="in">  TRUE ~ "Other LGBTQ+"</span></span>
+<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>The resulting categories are:</span>
+<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>| Category | Definition |</span>
+<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>|----------|-----------|</span>
+<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>| **Trans** | Any candidate with a transgender or travesti gender identity, regardless of sexual orientation |</span>
+<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>| **Gay** | Cisgender male candidates with gay sexual orientation |</span>
+<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>| **Lesbian** | Cisgender female candidates with lesbian (*Lesbica*) sexual orientation |</span>
+<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>| **Bisexual+** | Candidates with bisexual or pansexual orientation (collapsed because both describe attraction to more than one gender) |</span>
+<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a>| **Asexual** | Candidates with asexual orientation |</span>
+<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a>| **Other LGBTQ+** | Identified LGBTQ+ candidates whose specific identity does not map to the above categories |</span>
+<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Prioritize Trans?</span></span>
+<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a>This follows conventions in both the LGBTQ+ studies literature and Brazilian activist nomenclature. Transgender identity is a gender identity, not a sexual orientation. A trans person may simultaneously be gay, lesbian, bisexual, or asexual. Collapsing these into a single "Trans" category for the primary classification preserves the analytically distinct dimension of gender identity, while the underlying data retains full detail for secondary analyses.</span>
+<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Match Quality Statistics</span></span>
+<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a>The following tables summarize the results of the matching process across the identified LGBTQ+ population.</span>
+<span id="cb18-217"><a href="#cb18-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-218"><a href="#cb18-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r match-quality-data}</span></span>
+<span id="cb18-219"><a href="#cb18-219" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb18-220"><a href="#cb18-220" aria-hidden="true" tabindex="-1"></a><span class="in">lgbtq &lt;- df %&gt;% filter(lgbtq_candidate)</span></span>
+<span id="cb18-221"><a href="#cb18-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-222"><a href="#cb18-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-223"><a href="#cb18-223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Match Type Distribution</span></span>
+<span id="cb18-224"><a href="#cb18-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-225"><a href="#cb18-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-match-type}</span></span>
+<span id="cb18-226"><a href="#cb18-226" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-match-type</span></span>
+<span id="cb18-227"><a href="#cb18-227" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "LGBTQ+ Candidates by Match Type"</span></span>
+<span id="cb18-228"><a href="#cb18-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-229"><a href="#cb18-229" aria-hidden="true" tabindex="-1"></a><span class="in">lgbtq %&gt;%</span></span>
+<span id="cb18-230"><a href="#cb18-230" aria-hidden="true" tabindex="-1"></a><span class="in">  count(match_type, sort = TRUE) %&gt;%</span></span>
+<span id="cb18-231"><a href="#cb18-231" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = format_pct(n / sum(n))) %&gt;%</span></span>
+<span id="cb18-232"><a href="#cb18-232" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(`Match Type` = match_type, N = n, `%` = pct) %&gt;%</span></span>
+<span id="cb18-233"><a href="#cb18-233" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r"))</span></span>
+<span id="cb18-234"><a href="#cb18-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-235"><a href="#cb18-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-236"><a href="#cb18-236" aria-hidden="true" tabindex="-1"></a><span class="fu">### Disclosure Source Distribution</span></span>
+<span id="cb18-237"><a href="#cb18-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-238"><a href="#cb18-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-disclosure-source}</span></span>
+<span id="cb18-239"><a href="#cb18-239" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-disclosure-source</span></span>
+<span id="cb18-240"><a href="#cb18-240" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "LGBTQ+ Candidates by Disclosure Source"</span></span>
+<span id="cb18-241"><a href="#cb18-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-242"><a href="#cb18-242" aria-hidden="true" tabindex="-1"></a><span class="in">lgbtq %&gt;%</span></span>
+<span id="cb18-243"><a href="#cb18-243" aria-hidden="true" tabindex="-1"></a><span class="in">  count(disclosure_source, sort = TRUE) %&gt;%</span></span>
+<span id="cb18-244"><a href="#cb18-244" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = format_pct(n / sum(n))) %&gt;%</span></span>
+<span id="cb18-245"><a href="#cb18-245" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(`Disclosure Source` = disclosure_source, N = n, `%` = pct) %&gt;%</span></span>
+<span id="cb18-246"><a href="#cb18-246" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r"))</span></span>
+<span id="cb18-247"><a href="#cb18-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-248"><a href="#cb18-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-249"><a href="#cb18-249" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cross-Tabulation: Match Type x Disclosure Source</span></span>
+<span id="cb18-250"><a href="#cb18-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-251"><a href="#cb18-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-match-source-cross}</span></span>
+<span id="cb18-252"><a href="#cb18-252" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-match-source-cross</span></span>
+<span id="cb18-253"><a href="#cb18-253" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Match Type by Disclosure Source"</span></span>
+<span id="cb18-254"><a href="#cb18-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-255"><a href="#cb18-255" aria-hidden="true" tabindex="-1"></a><span class="in">lgbtq %&gt;%</span></span>
+<span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a><span class="in">  count(match_type, disclosure_source) %&gt;%</span></span>
+<span id="cb18-257"><a href="#cb18-257" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(names_from = disclosure_source, values_from = n, values_fill = 0) %&gt;%</span></span>
+<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(`Match Type` = match_type) %&gt;%</span></span>
+<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", rep("r", ncol(.) - 1)))</span></span>
+<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a><span class="fu">### Match Quality Summary</span></span>
+<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-match-quality-stats}</span></span>
+<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-match-quality-stats</span></span>
+<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Match Quality Score Summary (for Matched Candidates)"</span></span>
+<span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a><span class="in">lgbtq %&gt;%</span></span>
+<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(match_quality)) %&gt;%</span></span>
+<span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
+<span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a><span class="in">    N = format_n(n()),</span></span>
+<span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a><span class="in">    Mean = sprintf("%.3f", mean(match_quality)),</span></span>
+<span id="cb18-273"><a href="#cb18-273" aria-hidden="true" tabindex="-1"></a><span class="in">    Median = sprintf("%.3f", median(match_quality)),</span></span>
+<span id="cb18-274"><a href="#cb18-274" aria-hidden="true" tabindex="-1"></a><span class="in">    Min = sprintf("%.3f", min(match_quality)),</span></span>
+<span id="cb18-275"><a href="#cb18-275" aria-hidden="true" tabindex="-1"></a><span class="in">    Max = sprintf("%.3f", max(match_quality))</span></span>
+<span id="cb18-276"><a href="#cb18-276" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb18-277"><a href="#cb18-277" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = rep("r", 5))</span></span>
+<span id="cb18-278"><a href="#cb18-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-279"><a href="#cb18-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-280"><a href="#cb18-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-281"><a href="#cb18-281" aria-hidden="true" tabindex="-1"></a><span class="fu"># Campaign Finance Classification</span></span>
+<span id="cb18-282"><a href="#cb18-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-283"><a href="#cb18-283" aria-hidden="true" tabindex="-1"></a>Chapter 5 presents the results of the campaign finance analysis; this section documents the classification methodology that underpins it. The goal is to transform the raw TSE revenue file---which contains Portuguese-language category labels and complex institutional source codes---into a clean, analytically useful typology of funding sources.</span>
+<span id="cb18-284"><a href="#cb18-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-285"><a href="#cb18-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## Raw TSE Categories</span></span>
+<span id="cb18-286"><a href="#cb18-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-287"><a href="#cb18-287" aria-hidden="true" tabindex="-1"></a>The TSE classifies each revenue transaction by <span class="in">`DS_ORIGEM_RECEITA`</span> (revenue source). The following table maps the raw Portuguese categories to our English-language classification:</span>
+<span id="cb18-288"><a href="#cb18-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-289"><a href="#cb18-289" aria-hidden="true" tabindex="-1"></a>| Portuguese Category | English Translation | Our Classification |</span>
+<span id="cb18-290"><a href="#cb18-290" aria-hidden="true" tabindex="-1"></a>|---|---|---|</span>
+<span id="cb18-291"><a href="#cb18-291" aria-hidden="true" tabindex="-1"></a>| Recursos de pessoas fisicas | Own resources | <span class="in">`self_funding`</span> |</span>
+<span id="cb18-292"><a href="#cb18-292" aria-hidden="true" tabindex="-1"></a>| Fundo Partidario / Fundo Especial (partido politico) | Party fund / Special fund | <span class="in">`party_funding`</span> |</span>
+<span id="cb18-293"><a href="#cb18-293" aria-hidden="true" tabindex="-1"></a>| Doacoes de pessoas fisicas | Individual donations | <span class="in">`individual_funding`</span> |</span>
+<span id="cb18-294"><a href="#cb18-294" aria-hidden="true" tabindex="-1"></a>| Financiamento coletivo | Crowdfunding | <span class="in">`crowdfunding`</span> |</span>
+<span id="cb18-295"><a href="#cb18-295" aria-hidden="true" tabindex="-1"></a>| Doacoes de outros candidatos/comites | Other candidates/committees | <span class="in">`other_candidates`</span> |</span>
+<span id="cb18-296"><a href="#cb18-296" aria-hidden="true" tabindex="-1"></a>| Everything else | Various | <span class="in">`other`</span> |</span>
+<span id="cb18-297"><a href="#cb18-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-298"><a href="#cb18-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## Self-Funding Detection</span></span>
+<span id="cb18-299"><a href="#cb18-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-300"><a href="#cb18-300" aria-hidden="true" tabindex="-1"></a>Self-funding is identified through two complementary methods, capturing cases that either source alone would miss:</span>
+<span id="cb18-301"><a href="#cb18-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-302"><a href="#cb18-302" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Revenue origin**: The <span class="in">`DS_ORIGEM_RECEITA`</span> field contains "recursos pr" (own resources), matched case-insensitively.</span>
+<span id="cb18-303"><a href="#cb18-303" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**CPF match**: The donor's CPF (<span class="in">`NR_CPF_CNPJ_DOADOR`</span>) matches the candidate's own CPF (<span class="in">`NR_CPF_CANDIDATO`</span>). This catches cases where a candidate donates to their own campaign but the transaction is categorized under a different revenue origin.</span>
+<span id="cb18-304"><a href="#cb18-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-305"><a href="#cb18-305" aria-hidden="true" tabindex="-1"></a>A transaction satisfying either condition is classified as <span class="in">`self_funding`</span>.</span>
+<span id="cb18-306"><a href="#cb18-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-307"><a href="#cb18-307" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classification Code</span></span>
+<span id="cb18-308"><a href="#cb18-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-309"><a href="#cb18-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{r finance-classification}</span></span>
+<span id="cb18-310"><a href="#cb18-310" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb18-311"><a href="#cb18-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-312"><a href="#cb18-312" aria-hidden="true" tabindex="-1"></a><span class="in">funding_type = case_when(</span></span>
+<span id="cb18-313"><a href="#cb18-313" aria-hidden="true" tabindex="-1"></a><span class="in">  str_detect(DS_ORIGEM_RECEITA, "(?i)recursos pr") |</span></span>
+<span id="cb18-314"><a href="#cb18-314" aria-hidden="true" tabindex="-1"></a><span class="in">    (NR_CPF_CNPJ_DOADOR == NR_CPF_CANDIDATO) ~ "self_funding",</span></span>
+<span id="cb18-315"><a href="#cb18-315" aria-hidden="true" tabindex="-1"></a><span class="in">  str_detect(DS_ORIGEM_RECEITA, "(?i)partido pol") ~ "party_funding",</span></span>
+<span id="cb18-316"><a href="#cb18-316" aria-hidden="true" tabindex="-1"></a><span class="in">  str_detect(DS_ORIGEM_RECEITA, "(?i)pessoas f") ~ "individual_funding",</span></span>
+<span id="cb18-317"><a href="#cb18-317" aria-hidden="true" tabindex="-1"></a><span class="in">  str_detect(DS_ORIGEM_RECEITA, "(?i)financiamento coletivo") ~ "crowdfunding",</span></span>
+<span id="cb18-318"><a href="#cb18-318" aria-hidden="true" tabindex="-1"></a><span class="in">  str_detect(DS_ORIGEM_RECEITA, "(?i)outros candidatos") ~ "other_candidates",</span></span>
+<span id="cb18-319"><a href="#cb18-319" aria-hidden="true" tabindex="-1"></a><span class="in">  TRUE ~ "other"</span></span>
+<span id="cb18-320"><a href="#cb18-320" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-321"><a href="#cb18-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-322"><a href="#cb18-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-323"><a href="#cb18-323" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb18-324"><a href="#cb18-324" aria-hidden="true" tabindex="-1"></a><span class="fu">## Order Matters in `case_when()`</span></span>
+<span id="cb18-325"><a href="#cb18-325" aria-hidden="true" tabindex="-1"></a>The <span class="in">`case_when()`</span> function evaluates conditions in order and assigns the first matching category. Self-funding is tested first so that a candidate's own donation is always classified as self-funding, even if the TSE recorded the revenue origin under a different label. This is a deliberate design choice that prioritizes economic substance (who provided the money) over institutional labeling.</span>
+<span id="cb18-326"><a href="#cb18-326" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-327"><a href="#cb18-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-328"><a href="#cb18-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## Financial vs. In-Kind Contributions</span></span>
+<span id="cb18-329"><a href="#cb18-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-330"><a href="#cb18-330" aria-hidden="true" tabindex="-1"></a>The TSE field <span class="in">`DS_NATUREZA_RECEITA`</span> distinguishes between cash contributions (<span class="in">`"FINANCEIRO"`</span>) and estimated or in-kind contributions (services, materials, event spaces, etc.). Our dataset preserves both the financial amount (<span class="in">`financial_amt`</span>) and in-kind amount (<span class="in">`inkind_amt`</span>) at the candidate level, along with their percentage shares of total revenue.</span>
+<span id="cb18-331"><a href="#cb18-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-332"><a href="#cb18-332" aria-hidden="true" tabindex="-1"></a><span class="fu">## Validation</span></span>
+<span id="cb18-333"><a href="#cb18-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-334"><a href="#cb18-334" aria-hidden="true" tabindex="-1"></a>Our raw aggregation from the ~5.5 million transaction-level records was validated against a pre-existing candidate-level aggregated file produced independently by the parent project. The two aggregations show near-perfect correlation, confirming that the raw processing pipeline faithfully reproduces the intended totals.</span>
+<span id="cb18-335"><a href="#cb18-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-336"><a href="#cb18-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-337"><a href="#cb18-337" aria-hidden="true" tabindex="-1"></a><span class="fu"># Municipality Crosswalk</span></span>
+<span id="cb18-338"><a href="#cb18-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-339"><a href="#cb18-339" aria-hidden="true" tabindex="-1"></a><span class="fu">## The TSE-IBGE Code Problem</span></span>
+<span id="cb18-340"><a href="#cb18-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-341"><a href="#cb18-341" aria-hidden="true" tabindex="-1"></a>The TSE uses its own internal municipality coding system, which differs from the IBGE's official 7-digit municipality codes used by statistical agencies, the census, and the <span class="in">`geobr`</span> R package. To produce choropleth maps and spatial analyses, we need to bridge these two systems.</span>
+<span id="cb18-342"><a href="#cb18-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-343"><a href="#cb18-343" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution</span></span>
+<span id="cb18-344"><a href="#cb18-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-345"><a href="#cb18-345" aria-hidden="true" tabindex="-1"></a>The crosswalk file (<span class="in">`crosswalk_tse_to_geobr.csv`</span>) resolves this mismatch through name-based matching within state. The procedure is:</span>
+<span id="cb18-346"><a href="#cb18-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-347"><a href="#cb18-347" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Start with the TSE municipality code, name, and state</span>
+<span id="cb18-348"><a href="#cb18-348" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Match to IBGE municipality codes via exact name match within state (~95% of cases)</span>
+<span id="cb18-349"><a href="#cb18-349" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Apply fuzzy name matching for municipalities with accent or spelling differences</span>
+<span id="cb18-350"><a href="#cb18-350" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Manually resolve remaining cases (municipality mergers, name changes)</span>
+<span id="cb18-351"><a href="#cb18-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-352"><a href="#cb18-352" aria-hidden="true" tabindex="-1"></a>The resulting <span class="in">`geobr_code`</span> (IBGE 7-digit code) enables spatial joins with <span class="in">`geobr`</span> shapefiles via <span class="in">`code_muni`</span>.</span>
+<span id="cb18-353"><a href="#cb18-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-354"><a href="#cb18-354" aria-hidden="true" tabindex="-1"></a><span class="fu">## Match Rate</span></span>
+<span id="cb18-355"><a href="#cb18-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-356"><a href="#cb18-356" aria-hidden="true" tabindex="-1"></a><span class="in">```{r muni-match-rate}</span></span>
+<span id="cb18-357"><a href="#cb18-357" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: muni-match-rate</span></span>
+<span id="cb18-358"><a href="#cb18-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-359"><a href="#cb18-359" aria-hidden="true" tabindex="-1"></a><span class="in">cat("Municipality match rate:",</span></span>
+<span id="cb18-360"><a href="#cb18-360" aria-hidden="true" tabindex="-1"></a><span class="in">    format_pct(mean(!is.na(df$geobr_code))), "\n")</span></span>
+<span id="cb18-361"><a href="#cb18-361" aria-hidden="true" tabindex="-1"></a><span class="in">cat("Candidates with geobr_code:",</span></span>
+<span id="cb18-362"><a href="#cb18-362" aria-hidden="true" tabindex="-1"></a><span class="in">    format_n(sum(!is.na(df$geobr_code))), "of",</span></span>
+<span id="cb18-363"><a href="#cb18-363" aria-hidden="true" tabindex="-1"></a><span class="in">    format_n(nrow(df)), "\n")</span></span>
+<span id="cb18-364"><a href="#cb18-364" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-365"><a href="#cb18-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-366"><a href="#cb18-366" aria-hidden="true" tabindex="-1"></a>The small number of unmatched candidates (&lt;1%) are primarily from overseas voting sections or reflect rare discrepancies between TSE and IBGE municipality code systems.</span>
+<span id="cb18-367"><a href="#cb18-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-368"><a href="#cb18-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-369"><a href="#cb18-369" aria-hidden="true" tabindex="-1"></a><span class="fu"># Variable Construction Reference</span></span>
+<span id="cb18-370"><a href="#cb18-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-371"><a href="#cb18-371" aria-hidden="true" tabindex="-1"></a>The following table documents all derived variables in the analysis dataset, including the transformation logic and rationale for each.</span>
+<span id="cb18-372"><a href="#cb18-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-373"><a href="#cb18-373" aria-hidden="true" tabindex="-1"></a>| Variable | Formula / Logic | Rationale |</span>
+<span id="cb18-374"><a href="#cb18-374" aria-hidden="true" tabindex="-1"></a>|---|---|---|</span>
+<span id="cb18-375"><a href="#cb18-375" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbt_category`</span> | Trans &gt; Sexual Orientation (via <span class="in">`make_lgbt_category()`</span>) | Gender identity cross-cuts orientation; trans identity is analytically distinct |</span>
+<span id="cb18-376"><a href="#cb18-376" aria-hidden="true" tabindex="-1"></a>| <span class="in">`education_simple`</span> | 8 TSE codes collapsed to 3 levels: Less than HS, High School, College+ | Reduces sparse cells for meaningful group comparisons |</span>
+<span id="cb18-377"><a href="#cb18-377" aria-hidden="true" tabindex="-1"></a>| <span class="in">`race_simple`</span> | 6 TSE codes collapsed to 4 levels: White, Brown, Black, Other | Aligns with census conventions; preserves key distinctions |</span>
+<span id="cb18-378"><a href="#cb18-378" aria-hidden="true" tabindex="-1"></a>| <span class="in">`age_group`</span> | 5 bins: 18--29, 30--39, 40--49, 50--59, 60+ | Standard demographic grouping for age-stratified analysis |</span>
+<span id="cb18-379"><a href="#cb18-379" aria-hidden="true" tabindex="-1"></a>| <span class="in">`region`</span> | 27 states mapped to 5 macro-regions | Standard Brazilian geographic division (North, Northeast, Center-West, Southeast, South) |</span>
+<span id="cb18-380"><a href="#cb18-380" aria-hidden="true" tabindex="-1"></a>| <span class="in">`ideology_category`</span> | &lt;4.0 Left, 4.0--7.1 Center, &gt;=7.1 Right | Bolognesi et al. (2023) expert survey thresholds, anchored on PT, MDB, PL |</span>
+<span id="cb18-381"><a href="#cb18-381" aria-hidden="true" tabindex="-1"></a>| <span class="in">`female`</span> | <span class="in">`gender == "FEMININO"`</span> | Binary indicator for two-group gender comparisons |</span>
+<span id="cb18-382"><a href="#cb18-382" aria-hidden="true" tabindex="-1"></a>| <span class="in">`nonwhite`</span> | <span class="in">`race != "BRANCA"`</span> (NA-safe) | Binary indicator for two-group racial comparisons |</span>
+<span id="cb18-383"><a href="#cb18-383" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbtq_label`</span> | <span class="in">`"LGBTQ+"`</span> / <span class="in">`"Non-LGBTQ+"`</span> factor | Clean label for plots and tables; ordered for consistent display |</span>
+<span id="cb18-384"><a href="#cb18-384" aria-hidden="true" tabindex="-1"></a>| <span class="in">`position_simple`</span> | TSE position codes translated to English: City Councilor, Mayor, Vice-Mayor | Readable labels for analysis and visualization |</span>
+<span id="cb18-385"><a href="#cb18-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-386"><a href="#cb18-386" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb18-387"><a href="#cb18-387" aria-hidden="true" tabindex="-1"></a><span class="fu">## On Ideology Thresholds</span></span>
+<span id="cb18-388"><a href="#cb18-388" aria-hidden="true" tabindex="-1"></a>The Left/Center/Right cutpoints are not arbitrary. They are derived from natural breaks in the Bolognesi et al. (2023) expert survey distribution and anchored on three parties that serve as ideological reference points: PT (*Partido dos Trabalhadores*, score ~2.0, clearly Left), MDB (*Movimento Democratico Brasileiro*, score ~5.5, centrist catch-all), and PL (*Partido Liberal*, score ~8.5, clearly Right under Bolsonaro). Approximately 2% of candidates belong to minor parties not covered by the survey and have <span class="in">`NA`</span> ideology scores.</span>
+<span id="cb18-389"><a href="#cb18-389" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-390"><a href="#cb18-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-391"><a href="#cb18-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-392"><a href="#cb18-392" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reproducibility</span></span>
+<span id="cb18-393"><a href="#cb18-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-394"><a href="#cb18-394" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prerequisites</span></span>
+<span id="cb18-395"><a href="#cb18-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-396"><a href="#cb18-396" aria-hidden="true" tabindex="-1"></a>The data pipeline depends on source files from the parent research project. If running on a machine other than the original development environment, set the <span class="in">`QPP_DATA_DIR`</span> environment variable to point to the parent project directory:</span>
+<span id="cb18-397"><a href="#cb18-397" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb18-398"><a href="#cb18-398" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">QPP_DATA_DIR =</span> <span class="st">"/path/to/Queer_politicians_project/"</span>)</span>
+<span id="cb18-399"><a href="#cb18-399" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-400"><a href="#cb18-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-401"><a href="#cb18-401" aria-hidden="true" tabindex="-1"></a><span class="fu">## Execution Order</span></span>
+<span id="cb18-402"><a href="#cb18-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-403"><a href="#cb18-403" aria-hidden="true" tabindex="-1"></a>Run the four data preparation scripts in sequence before rendering the Quarto site:</span>
+<span id="cb18-404"><a href="#cb18-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-405"><a href="#cb18-405" aria-hidden="true" tabindex="-1"></a><span class="in">```{r execution-order}</span></span>
+<span id="cb18-406"><a href="#cb18-406" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb18-407"><a href="#cb18-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-408"><a href="#cb18-408" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 1: Load and prepare candidate data</span></span>
+<span id="cb18-409"><a href="#cb18-409" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("code", "01_load_candidates.R"))</span></span>
+<span id="cb18-410"><a href="#cb18-410" aria-hidden="true" tabindex="-1"></a><span class="in">#   -&gt; data/derived/candidates_analysis.rds</span></span>
+<span id="cb18-411"><a href="#cb18-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-412"><a href="#cb18-412" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 2: Process raw campaign finance data</span></span>
+<span id="cb18-413"><a href="#cb18-413" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("code", "02_load_finance_raw.R"))</span></span>
+<span id="cb18-414"><a href="#cb18-414" aria-hidden="true" tabindex="-1"></a><span class="in">#   -&gt; data/derived/finance_by_candidate.rds</span></span>
+<span id="cb18-415"><a href="#cb18-415" aria-hidden="true" tabindex="-1"></a><span class="in">#   -&gt; data/derived/finance_transactions.rds</span></span>
+<span id="cb18-416"><a href="#cb18-416" aria-hidden="true" tabindex="-1"></a><span class="in">#   -&gt; output/tables/finance_revenue_source_categories.csv</span></span>
+<span id="cb18-417"><a href="#cb18-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-418"><a href="#cb18-418" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 3: Download and cache geographic boundaries</span></span>
+<span id="cb18-419"><a href="#cb18-419" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("code", "03_prepare_geography.R"))</span></span>
+<span id="cb18-420"><a href="#cb18-420" aria-hidden="true" tabindex="-1"></a><span class="in">#   -&gt; data/geo_cache/municipalities.rds</span></span>
+<span id="cb18-421"><a href="#cb18-421" aria-hidden="true" tabindex="-1"></a><span class="in">#   -&gt; data/geo_cache/states.rds</span></span>
+<span id="cb18-422"><a href="#cb18-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-423"><a href="#cb18-423" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 4: Merge all components into analysis dataset</span></span>
+<span id="cb18-424"><a href="#cb18-424" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("code", "04_build_analysis_data.R"))</span></span>
+<span id="cb18-425"><a href="#cb18-425" aria-hidden="true" tabindex="-1"></a><span class="in">#   -&gt; data/derived/analysis_full.rds</span></span>
+<span id="cb18-426"><a href="#cb18-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-427"><a href="#cb18-427" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 5: Render the Quarto website</span></span>
+<span id="cb18-428"><a href="#cb18-428" aria-hidden="true" tabindex="-1"></a><span class="in"># quarto render docs/</span></span>
+<span id="cb18-429"><a href="#cb18-429" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-430"><a href="#cb18-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-431"><a href="#cb18-431" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rendering</span></span>
+<span id="cb18-432"><a href="#cb18-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-433"><a href="#cb18-433" aria-hidden="true" tabindex="-1"></a>Once <span class="in">`analysis_full.rds`</span> exists, the Quarto site can be rendered with:</span>
+<span id="cb18-434"><a href="#cb18-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-435"><a href="#cb18-435" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb18-436"><a href="#cb18-436" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render docs/</span>
+<span id="cb18-437"><a href="#cb18-437" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-438"><a href="#cb18-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-439"><a href="#cb18-439" aria-hidden="true" tabindex="-1"></a>All chapters source <span class="in">`code/00_setup.R`</span> for shared paths, palettes, themes, and helper functions. The <span class="in">`freeze: auto`</span> setting in <span class="in">`_quarto.yml`</span> means that chapters whose source code has not changed will not be re-executed on subsequent renders.</span>
+<span id="cb18-440"><a href="#cb18-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-441"><a href="#cb18-441" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Access</span></span>
+<span id="cb18-442"><a href="#cb18-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-443"><a href="#cb18-443" aria-hidden="true" tabindex="-1"></a>The parent project data is stored on Dropbox and is not publicly available. Researchers wishing to replicate this analysis should:</span>
+<span id="cb18-444"><a href="#cb18-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-445"><a href="#cb18-445" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Download raw TSE candidate registration files from <span class="co">[</span><span class="ot">https://dadosabertos.tse.jus.br/</span><span class="co">](https://dadosabertos.tse.jus.br/)</span></span>
+<span id="cb18-446"><a href="#cb18-446" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Download raw TSE campaign finance files from the same portal</span>
+<span id="cb18-447"><a href="#cb18-447" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Contact VOTE LGBT for their candidate identification list</span>
+<span id="cb18-448"><a href="#cb18-448" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Run the parent project's integration scripts to produce the processed files</span>
+<span id="cb18-449"><a href="#cb18-449" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Set <span class="in">`QPP_DATA_DIR`</span> and run this project's scripts 01--04 in order</span>
+<span id="cb18-450"><a href="#cb18-450" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Render with <span class="in">`quarto render docs/`</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
