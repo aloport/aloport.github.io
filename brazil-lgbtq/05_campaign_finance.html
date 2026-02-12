@@ -102,35 +102,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -243,7 +214,7 @@ window.Quarto = {
   <li><a href="#revenue-distribution-by-category" id="toc-revenue-distribution-by-category" class="nav-link" data-scroll-target="#revenue-distribution-by-category"><span class="header-section-number">5.2</span> Revenue Distribution by Category</a></li>
   <li><a href="#funding-composition-by-identity-category" id="toc-funding-composition-by-identity-category" class="nav-link" data-scroll-target="#funding-composition-by-identity-category"><span class="header-section-number">5.3</span> Funding Composition by Identity Category</a></li>
   </ul></li>
-  <li><a href="#within-party-comparison" id="toc-within-party-comparison" class="nav-link" data-scroll-target="#within-party-comparison"><span class="header-section-number">6</span> Within-Party Comparison</a></li>
+  <li><a href="#within-ideology-comparison" id="toc-within-ideology-comparison" class="nav-link" data-scroll-target="#within-ideology-comparison"><span class="header-section-number">6</span> Within-Ideology Comparison</a></li>
   <li><a href="#financial-vs-in-kind-contributions" id="toc-financial-vs-in-kind-contributions" class="nav-link" data-scroll-target="#financial-vs-in-kind-contributions"><span class="header-section-number">7</span> Financial vs In-Kind Contributions</a>
   <ul class="collapse">
   <li><a href="#types-of-in-kind-contributions" id="toc-types-of-in-kind-contributions" class="nav-link" data-scroll-target="#types-of-in-kind-contributions"><span class="header-section-number">7.1</span> Types of In-Kind Contributions</a></li>
@@ -331,21 +302,14 @@ Table&nbsp;1: Complete TSE Revenue Source Categories with Classification
 </figcaption>
 <div aria-describedby="tbl-raw-categories-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 37%">
-<col style="width: 14%">
-<col style="width: 11%">
-<col style="width: 15%">
-<col style="width: 19%">
-</colgroup>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;">TSE Category</th>
-<th style="text-align: right;">N Transactions</th>
-<th style="text-align: right;">% of Trans.</th>
-<th style="text-align: right;">Total (R$)</th>
-<th style="text-align: left;">Our Label</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">TSE Category</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N Transactions</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% of Trans.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Total (R$)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Our Label</th>
 </tr>
 </thead>
 <tbody>
@@ -353,75 +317,83 @@ Table&nbsp;1: Complete TSE Revenue Source Categories with Classification
 <td style="text-align: left;">Recursos de outros candidatos</td>
 <td style="text-align: right;">669606</td>
 <td style="text-align: right;">32.9%</td>
-<td style="text-align: right;">R$260,338,476</td>
+<td style="text-align: right;">R$ 260,338,476</td>
 <td style="text-align: left;">Other candidates</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Recursos de pessoas físicas</td>
 <td style="text-align: right;">561708</td>
 <td style="text-align: right;">27.6%</td>
-<td style="text-align: right;">R<span class="math inline">\(1,221,519,516|Individual donation |
-|Recursos de partido político          |         377468|       18.5%|            R\)</span>NA</td>
-<td style="text-align: left;">Party funding</td>
+<td style="text-align: right;">R$1,221,519,516</td>
+<td style="text-align: left;">Individual donation</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Recursos de partido político</td>
+<td style="text-align: right;">377468</td>
+<td style="text-align: right;">18.5%</td>
+<td style="text-align: right;">R$5,104,749,805</td>
+<td style="text-align: left;">Party funding</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Recursos próprios</td>
 <td style="text-align: right;">263827</td>
 <td style="text-align: right;">12.9%</td>
-<td style="text-align: right;">R$426,344,883</td>
+<td style="text-align: right;">R$ 426,344,883</td>
 <td style="text-align: left;">Self-funding</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Doações pela Internet</td>
 <td style="text-align: right;">90850</td>
 <td style="text-align: right;">4.5%</td>
-<td style="text-align: right;">R$6,457,032</td>
+<td style="text-align: right;">R$ 6,457,032</td>
 <td style="text-align: left;">Online donations</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">#NULO</td>
 <td style="text-align: right;">66718</td>
 <td style="text-align: right;">3.3%</td>
-<td style="text-align: right;">R$0</td>
+<td style="text-align: right;">R$ 0</td>
 <td style="text-align: left;">Null/Unclassified</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Recursos de Financiamento Coletivo</td>
 <td style="text-align: right;">4324</td>
 <td style="text-align: right;">0.2%</td>
-<td style="text-align: right;">R$8,092,035</td>
+<td style="text-align: right;">R$ 8,092,035</td>
 <td style="text-align: left;">Crowdfunding</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Recursos de origens não identificadas</td>
 <td style="text-align: right;">2687</td>
 <td style="text-align: right;">0.1%</td>
-<td style="text-align: right;">R$1,071,403</td>
-<td style="text-align: left;">Other</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Rendimentos de aplicações financeiras</td>
-<td style="text-align: right;">263</td>
-<td style="text-align: right;">0.0%</td>
-<td style="text-align: right;">R$115,533</td>
+<td style="text-align: right;">R$ 1,071,403</td>
 <td style="text-align: left;">Other</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Comercialização de Bens com OR</td>
-<td style="text-align: right;">109</td>
+<td style="text-align: left;">Rendimentos de aplicações financeiras</td>
+<td style="text-align: right;">263</td>
 <td style="text-align: right;">0.0%</td>
-<td style="text-align: right;">R$37,252</td>
+<td style="text-align: right;">R$ 115,533</td>
 <td style="text-align: left;">Other</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">Comercialização de Bens com OR</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">0.0%</td>
+<td style="text-align: right;">R$ 37,252</td>
+<td style="text-align: left;">Other</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">Comercialização de Bens com FEFC</td>
 <td style="text-align: right;">17</td>
 <td style="text-align: right;">0.0%</td>
-<td style="text-align: right;">R$18,289</td>
+<td style="text-align: right;">R$ 18,289</td>
 <td style="text-align: left;">Other</td>
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
@@ -475,11 +447,11 @@ Table&nbsp;2: Revenue Summary Statistics (All Candidates)
 </figcaption>
 <div aria-describedby="tbl-overall-revenue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Statistic</th>
-<th style="text-align: right;">Value</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Statistic</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Value</th>
 </tr>
 </thead>
 <tbody>
@@ -525,6 +497,8 @@ Table&nbsp;2: Revenue Summary Statistics (All Candidates)
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
@@ -667,12 +641,12 @@ Table&nbsp;3: Revenue Comparison: LGBTQ+ vs Non-LGBTQ+ Candidates
 </figcaption>
 <div aria-describedby="tbl-lgbtq-revenue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Metric</th>
-<th style="text-align: right;">LGBTQ+</th>
-<th style="text-align: right;">Non-LGBTQ+</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Metric</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">LGBTQ+</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Non-LGBTQ+</th>
 </tr>
 </thead>
 <tbody>
@@ -733,22 +707,24 @@ Table&nbsp;3: Revenue Comparison: LGBTQ+ vs Non-LGBTQ+ Candidates
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The Financing Gap
+Aggregate Revenue Comparison
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The median revenue for LGBTQ+ candidates is R$3,701, compared to R$1,746 for non-LGBTQ+ candidates — a ratio of 2.12, indicating that LGBTQ+ candidates actually raise more at the median. At the mean, LGBTQ+ candidates raise R$24,007 versus R$16,522 for non-LGBTQ+ candidates (ratio: 1.45). These figures suggest that LGBTQ+ candidates do not face an obvious aggregate financing disadvantage, though within-group and within-party patterns may differ.</p>
+<p>The median revenue for LGBTQ+ candidates is R$3,701, compared to R$1,746 for non-LGBTQ+ candidates (ratio: 2.12). At the mean, LGBTQ+ candidates raise R$24,007 versus R$16,522 for non-LGBTQ+ candidates (ratio: 1.45).</p>
 </div>
 </div>
 </section>
@@ -920,25 +896,16 @@ Table&nbsp;4: Revenue Summary by LGBTQ+ Identity Category
 </figcaption>
 <div aria-describedby="tbl-revenue-identity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 10%">
-<col style="width: 8%">
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 15%">
-</colgroup>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Category</th>
-<th style="text-align: right;">N</th>
-<th style="text-align: right;">% Zero</th>
-<th style="text-align: right;">Mean Rev.</th>
-<th style="text-align: right;">Median Rev.</th>
-<th style="text-align: right;">Mean Trans.</th>
-<th style="text-align: right;">Mean Donors</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Category</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Zero</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Rev.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median Rev.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Trans.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Donors</th>
 </tr>
 </thead>
 <tbody>
@@ -998,6 +965,8 @@ Table&nbsp;4: Revenue Summary by LGBTQ+ Identity Category
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
@@ -1114,153 +1083,117 @@ Within-Group Differences
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The LGBTQ+ umbrella encompasses different financing realities. Among identity categories, Bisexual+ candidates have the highest average party funding share (58.9%), while Asexual candidates have the highest average individual donor share (15.6%). These differences have implications for candidate autonomy and campaign capacity.</p>
+<p>Funding composition varies across identity categories. Bisexual+ candidates have the highest average party funding share (58.9%), while Asexual candidates have the highest average individual donor share (15.6%).</p>
 </div>
 </div>
 </section>
 </section>
-<section id="within-party-comparison" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Within-Party Comparison</h1>
-<p>The within-party revenue ratio compares LGBTQ+ and non-LGBTQ+ candidates <em>within the same party</em>. The ratio is computed as LGBTQ+ mean (or median) revenue divided by non-LGBTQ+ mean (or median) revenue for each party. A ratio below 1 means LGBTQ+ candidates raise less than their co-partisans; a ratio above 1 means they raise more. This analysis focuses on the top five parties ranked by number of LGBTQ+ candidates to ensure adequate sample sizes.</p>
-<p>A critical question is whether any aggregate LGBTQ+ financing difference persists <em>within</em> the same party. If LGBTQ+ candidates in Party X raise less than non-LGBTQ+ candidates in Party X, the difference cannot be attributed solely to party ideology or institutional resources.</p>
+<section id="within-ideology-comparison" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Within-Ideology Comparison</h1>
+<p>The within-ideology revenue ratio compares LGBTQ+ and non-LGBTQ+ candidates <em>within the same ideological bloc</em> (Left, Center, Right). The ratio is computed as LGBTQ+ mean (or median) revenue divided by non-LGBTQ+ mean (or median) revenue for each bloc. A ratio below 1 means LGBTQ+ candidates raise less than their ideological peers; a ratio above 1 means they raise more.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify top 5 parties by number of LGBTQ+ candidates</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>top_parties <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lgbtq_candidate) <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(party_abbrev, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(party_abbrev)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>within_party <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(party_abbrev <span class="sc">%in%</span> top_parties) <span class="sc">%&gt;%</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">if_else</span>(lgbtq_candidate, <span class="st">"LGBTQ+"</span>, <span class="st">"Non-LGBTQ+"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(party_abbrev, group) <span class="sc">%&gt;%</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">N          =</span> <span class="fu">n</span>(),</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_rev   =</span> <span class="fu">mean</span>(total_revenue, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_rev =</span> <span class="fu">median</span>(total_revenue, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups    =</span> <span class="st">"drop"</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the LGBTQ+/Non-LGBTQ+ ratio</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>within_party_wide <span class="ot">&lt;-</span> within_party <span class="sc">%&gt;%</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(party_abbrev, group, N, mean_rev, median_rev) <span class="sc">%&gt;%</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from  =</span> group,</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(N, mean_rev, median_rev),</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue  =</span> <span class="st">"{group}_{.value}"</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_ratio   =</span> <span class="fu">round</span>(<span class="st">`</span><span class="at">LGBTQ+_mean_rev</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">Non-LGBTQ+_mean_rev</span><span class="st">`</span>, <span class="dv">2</span>),</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_ratio =</span> <span class="fu">round</span>(<span class="st">`</span><span class="at">LGBTQ+_median_rev</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">Non-LGBTQ+_median_rev</span><span class="st">`</span>, <span class="dv">2</span>)</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>within_party_wide <span class="sc">%&gt;%</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">Party                     =</span> party_abbrev,</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">N LGBTQ+</span><span class="st">`</span>               <span class="ot">=</span> <span class="fu">format_n</span>(<span class="st">`</span><span class="at">LGBTQ+_N</span><span class="st">`</span>),</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">N Non-LGBTQ+</span><span class="st">`</span>           <span class="ot">=</span> <span class="fu">format_n</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_N</span><span class="st">`</span>),</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Mean Rev. LGBTQ+</span><span class="st">`</span>       <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">LGBTQ+_mean_rev</span><span class="st">`</span>),</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Mean Rev. Non-LGBTQ+</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_mean_rev</span><span class="st">`</span>),</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Mean Ratio (L/NL)</span><span class="st">`</span>      <span class="ot">=</span> mean_ratio,</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Median Rev. LGBTQ+</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">LGBTQ+_median_rev</span><span class="st">`</span>),</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Median Rev. Non-LGBTQ+</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_median_rev</span><span class="st">`</span>),</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Median Ratio (L/NL)</span><span class="st">`</span>    <span class="ot">=</span> median_ratio</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>within_ideo <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ideology_category)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">if_else</span>(lgbtq_candidate, <span class="st">"LGBTQ+"</span>, <span class="st">"Non-LGBTQ+"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ideology_category, group) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">N          =</span> <span class="fu">n</span>(),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_rev   =</span> <span class="fu">mean</span>(total_revenue, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_rev =</span> <span class="fu">median</span>(total_revenue, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups    =</span> <span class="st">"drop"</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>within_ideo_wide <span class="ot">&lt;-</span> within_ideo <span class="sc">%&gt;%</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ideology_category, group, N, mean_rev, median_rev) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from  =</span> group,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(N, mean_rev, median_rev),</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue  =</span> <span class="st">"{group}_{.value}"</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_ratio   =</span> <span class="fu">if_else</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_mean_rev</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">round</span>(<span class="st">`</span><span class="at">LGBTQ+_mean_rev</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">Non-LGBTQ+_mean_rev</span><span class="st">`</span>, <span class="dv">2</span>), <span class="cn">NA_real_</span>),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_ratio =</span> <span class="fu">if_else</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_median_rev</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">round</span>(<span class="st">`</span><span class="at">LGBTQ+_median_rev</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">Non-LGBTQ+_median_rev</span><span class="st">`</span>, <span class="dv">2</span>), <span class="cn">NA_real_</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ideology_category =</span> <span class="fu">factor</span>(ideology_category, <span class="at">levels =</span> ideology_levels)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ideology_category)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>within_ideo_wide <span class="sc">%&gt;%</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ideology                  =</span> ideology_category,</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">N LGBTQ+</span><span class="st">`</span>               <span class="ot">=</span> <span class="fu">format_n</span>(<span class="st">`</span><span class="at">LGBTQ+_N</span><span class="st">`</span>),</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">N Non-LGBTQ+</span><span class="st">`</span>           <span class="ot">=</span> <span class="fu">format_n</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_N</span><span class="st">`</span>),</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Mean Rev. LGBTQ+</span><span class="st">`</span>       <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">LGBTQ+_mean_rev</span><span class="st">`</span>),</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Mean Rev. Non-LGBTQ+</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_mean_rev</span><span class="st">`</span>),</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Mean Ratio (L/NL)</span><span class="st">`</span>      <span class="ot">=</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(mean_ratio), <span class="st">"---"</span>, <span class="fu">as.character</span>(mean_ratio)),</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Median Rev. LGBTQ+</span><span class="st">`</span>     <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">LGBTQ+_median_rev</span><span class="st">`</span>),</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Median Rev. Non-LGBTQ+</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">format_brl</span>(<span class="st">`</span><span class="at">Non-LGBTQ+_median_rev</span><span class="st">`</span>),</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Median Ratio (L/NL)</span><span class="st">`</span>    <span class="ot">=</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(median_ratio), <span class="st">"---"</span>, <span class="fu">as.character</span>(median_ratio))</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>, <span class="st">"r"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="tbl-within-party" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div id="tbl-within-ideology" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-within-party-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5: Revenue Comparison Within Top Parties (LGBTQ+ vs Non-LGBTQ+)
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-within-ideology-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Revenue Comparison Within Ideological Blocs (LGBTQ+ vs Non-LGBTQ+)
 </figcaption>
-<div aria-describedby="tbl-within-party-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="tbl-within-ideology-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 4%">
-<col style="width: 6%">
-<col style="width: 8%">
-<col style="width: 11%">
-<col style="width: 14%">
-<col style="width: 12%">
-<col style="width: 13%">
-<col style="width: 15%">
-<col style="width: 13%">
-</colgroup>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Party</th>
-<th style="text-align: right;">N LGBTQ+</th>
-<th style="text-align: right;">N Non-LGBTQ+</th>
-<th style="text-align: right;">Mean Rev.&nbsp;LGBTQ+</th>
-<th style="text-align: right;">Mean Rev.&nbsp;Non-LGBTQ+</th>
-<th style="text-align: right;">Mean Ratio (L/NL)</th>
-<th style="text-align: right;">Median Rev.&nbsp;LGBTQ+</th>
-<th style="text-align: right;">Median Rev.&nbsp;Non-LGBTQ+</th>
-<th style="text-align: right;">Median Ratio (L/NL)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Ideology</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N LGBTQ+</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N Non-LGBTQ+</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Rev. LGBTQ+</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Rev. Non-LGBTQ+</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean Ratio (L/NL)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median Rev. LGBTQ+</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median Rev. Non-LGBTQ+</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median Ratio (L/NL)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">MDB</td>
-<td style="text-align: right;">788</td>
-<td style="text-align: right;">88,616</td>
-<td style="text-align: right;">R$30,245</td>
-<td style="text-align: right;">R$17,649</td>
-<td style="text-align: right;">1.71</td>
-<td style="text-align: right;">R$2,500</td>
-<td style="text-align: right;">R$2,221</td>
-<td style="text-align: right;">1.13</td>
+<td style="text-align: left;">Left</td>
+<td style="text-align: right;">5,022</td>
+<td style="text-align: right;">118,948</td>
+<td style="text-align: right;">R$42,162</td>
+<td style="text-align: right;">R$21,966</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">R$9,107</td>
+<td style="text-align: right;">R$2,437</td>
+<td style="text-align: right;">3.74</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">PDT</td>
-<td style="text-align: right;">740</td>
-<td style="text-align: right;">45,504</td>
-<td style="text-align: right;">R$54,662</td>
-<td style="text-align: right;">R$11,783</td>
-<td style="text-align: right;">4.64</td>
-<td style="text-align: right;">R$2,742</td>
-<td style="text-align: right;">R$1,374</td>
-<td style="text-align: right;">1.99</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PSB</td>
-<td style="text-align: right;">932</td>
-<td style="text-align: right;">52,654</td>
-<td style="text-align: right;">R$9,542</td>
-<td style="text-align: right;">R$11,335</td>
-<td style="text-align: right;">0.84</td>
+<td style="text-align: left;">Center</td>
+<td style="text-align: right;">3,962</td>
+<td style="text-align: right;">331,510</td>
+<td style="text-align: right;">R$13,333</td>
+<td style="text-align: right;">R$14,014</td>
+<td style="text-align: right;">0.95</td>
 <td style="text-align: right;">R$2,000</td>
-<td style="text-align: right;">R$1,490</td>
-<td style="text-align: right;">1.34</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PSOL</td>
-<td style="text-align: right;">1,336</td>
-<td style="text-align: right;">7,272</td>
-<td style="text-align: right;">R$46,612</td>
-<td style="text-align: right;">R$66,953</td>
-<td style="text-align: right;">0.70</td>
-<td style="text-align: right;">R$13,273</td>
-<td style="text-align: right;">R$5,095</td>
-<td style="text-align: right;">2.61</td>
+<td style="text-align: right;">R$1,455</td>
+<td style="text-align: right;">1.37</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">PT</td>
-<td style="text-align: right;">2,530</td>
-<td style="text-align: right;">59,034</td>
-<td style="text-align: right;">R$36,264</td>
-<td style="text-align: right;">R$24,538</td>
-<td style="text-align: right;">1.48</td>
-<td style="text-align: right;">R$9,198</td>
-<td style="text-align: right;">R$3,000</td>
-<td style="text-align: right;">3.07</td>
+<td style="text-align: left;">Right</td>
+<td style="text-align: right;">3,548</td>
+<td style="text-align: right;">470,476</td>
+<td style="text-align: right;">R$10,231</td>
+<td style="text-align: right;">R$16,913</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">R$1,841</td>
+<td style="text-align: right;">R$1,800</td>
+<td style="text-align: right;">1.02</td>
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
@@ -1269,52 +1202,55 @@ Table&nbsp;5: Revenue Comparison Within Top Parties (LGBTQ+ vs Non-LGBTQ+)
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>within_party_wide <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(party_abbrev, <span class="st">`</span><span class="at">Mean ratio</span><span class="st">`</span> <span class="ot">=</span> mean_ratio, <span class="st">`</span><span class="at">Median ratio</span><span class="st">`</span> <span class="ot">=</span> median_ratio) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>party_abbrev, <span class="at">names_to =</span> <span class="st">"metric"</span>, <span class="at">values_to =</span> <span class="st">"ratio"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(party_abbrev, ratio), <span class="at">y =</span> ratio,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> metric, <span class="at">shape =</span> metric)) <span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray50"</span>) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.4</span>)) <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Mean ratio"</span> <span class="ot">=</span> <span class="st">"#E74C3C"</span>, <span class="st">"Median ratio"</span> <span class="ot">=</span> <span class="st">"#3498DB"</span>),</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Mean ratio"</span> <span class="ot">=</span> <span class="dv">16</span>, <span class="st">"Median ratio"</span> <span class="ot">=</span> <span class="dv">17</span>),</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x       =</span> <span class="cn">NULL</span>,</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y       =</span> <span class="st">"Revenue Ratio (LGBTQ+ / Non-LGBTQ+)"</span>,</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title   =</span> <span class="st">"Within-Party Revenue Ratios"</span>,</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Ratio &lt; 1 means LGBTQ+ candidates raise less than co-partisans"</span>,</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption  =</span> <span class="st">"Dashed line = parity (ratio = 1). Only top 5 parties by LGBTQ+ N shown."</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="fu">save_figure</span>(<span class="fu">last_plot</span>(), <span class="st">"05_within_party_ratio"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> within_ideo_wide <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mean_ratio) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.na</span>(median_ratio)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ideology_category, <span class="st">`</span><span class="at">Mean ratio</span><span class="st">`</span> <span class="ot">=</span> mean_ratio, <span class="st">`</span><span class="at">Median ratio</span><span class="st">`</span> <span class="ot">=</span> median_ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>ideology_category, <span class="at">names_to =</span> <span class="st">"metric"</span>, <span class="at">values_to =</span> <span class="st">"ratio"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ratio))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> ideology_category, <span class="at">y =</span> ratio,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> metric, <span class="at">shape =</span> metric)) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray50"</span>) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.4</span>)) <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Mean ratio"</span> <span class="ot">=</span> <span class="st">"#E74C3C"</span>, <span class="st">"Median ratio"</span> <span class="ot">=</span> <span class="st">"#3498DB"</span>),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Mean ratio"</span> <span class="ot">=</span> <span class="dv">16</span>, <span class="st">"Median ratio"</span> <span class="ot">=</span> <span class="dv">17</span>),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x       =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y       =</span> <span class="st">"Revenue Ratio (LGBTQ+ / Non-LGBTQ+)"</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title   =</span> <span class="st">"Within-Ideology Revenue Ratios"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Ratio &lt; 1 means LGBTQ+ candidates raise less than ideological peers"</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption  =</span> <span class="st">"Dashed line = parity (ratio = 1). Only candidates with assigned ideology included."</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">save_figure</span>(<span class="fu">last_plot</span>(), <span class="st">"05_within_ideology_ratio"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-within-party" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-within-ideology" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-within-party-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="05_campaign_finance_files/figure-html/fig-within-party-1.png" class="img-fluid figure-img" width="3000">
+<div aria-describedby="fig-within-ideology-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_campaign_finance_files/figure-html/fig-within-ideology-1.png" class="img-fluid figure-img" width="3000">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-within-party-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: LGBTQ+/Non-LGBTQ+ Revenue Ratio Within Top Parties
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-within-ideology-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: LGBTQ+/Non-LGBTQ+ Revenue Ratio Within Ideological Blocs
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Within-Party Gap
+Within-Ideology Revenue Ratios
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Of the 5 parties examined, 2 show a mean revenue ratio below 1 (LGBTQ+ candidates raising less than co-partisans) and 3 show a mean ratio above 1. At the median, 0 of 5 parties have ratios below 1. The pattern suggests LGBTQ+ candidates do not systematically raise less than co-partisans in these parties.</p>
+<p>Of the 3 ideological blocs, 2 show a mean revenue ratio below 1 (LGBTQ+ candidates raising less than ideological peers) and 1 show a mean ratio above 1. At the median, 0 of 3 blocs have ratios below 1.</p>
 </div>
 </div>
 </section>
@@ -1347,27 +1283,17 @@ Table&nbsp;6: Financial vs In-Kind Revenue: LGBTQ+ vs Non-LGBTQ+
 </figcaption>
 <div aria-describedby="tbl-financial-inkind-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 6%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 14%">
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 14%">
-</colgroup>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Group</th>
-<th style="text-align: right;">N</th>
-<th style="text-align: right;">Total Financial</th>
-<th style="text-align: right;">Total In-Kind</th>
-<th style="text-align: right;">Mean % Financial</th>
-<th style="text-align: right;">Mean % In-Kind</th>
-<th style="text-align: right;">Median % Financial</th>
-<th style="text-align: right;">Median % In-Kind</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Group</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Total Financial</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Total In-Kind</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean % Financial</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean % In-Kind</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median % Financial</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median % In-Kind</th>
 </tr>
 </thead>
 <tbody>
@@ -1375,15 +1301,26 @@ Table&nbsp;6: Financial vs In-Kind Revenue: LGBTQ+ vs Non-LGBTQ+
 <td style="text-align: left;">LGBTQ+</td>
 <td style="text-align: right;">12,532</td>
 <td style="text-align: right;">R$274,756,541</td>
-<td style="text-align: right;">R<span class="math inline">\(26,102,970|            60.6%|          25.9%|              81.9%|             4.9%|
-|Non-LGBTQ+ | 920,934|            R\)</span>NA</td>
+<td style="text-align: right;">R$26,102,970</td>
+<td style="text-align: right;">60.6%</td>
+<td style="text-align: right;">25.9%</td>
+<td style="text-align: right;">81.9%</td>
+<td style="text-align: right;">4.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Non-LGBTQ+</td>
+<td style="text-align: right;">920,934</td>
+<td style="text-align: right;">R$13,938,798,785</td>
 <td style="text-align: right;">R$1,276,808,462</td>
 <td style="text-align: right;">49.6%</td>
 <td style="text-align: right;">31.9%</td>
 <td style="text-align: right;">57.6%</td>
+<td style="text-align: right;">7.7%</td>
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
@@ -1475,17 +1412,17 @@ Figure&nbsp;10: Financial vs In-Kind Composition by Identity Category
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-What In-Kind Reveals
+Financial vs.&nbsp;In-Kind
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A higher share of in-kind contributions could signal either (a) grassroots support through volunteer labor and donated goods, or (b) a lack of access to cash-based funding. The interpretation depends on the absolute level: a candidate with high total revenue and a modest in-kind share has a very different profile from one who relies primarily on estimated resource contributions.</p>
+<p>Financial contributions are direct monetary transfers (cash, PIX, bank transfers). In-kind contributions are non-monetary goods and services assigned a monetary value for accounting purposes. The table and density plot above compare these two categories across LGBTQ+ and non-LGBTQ+ candidates.</p>
 </div>
 </div>
 <section id="types-of-in-kind-contributions" class="level2" data-number="7.1">
@@ -1526,13 +1463,13 @@ Table&nbsp;7: Top In-Kind Contribution Types (All Candidates)
 </figcaption>
 <div aria-describedby="tbl-inkind-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;">In-Kind Type</th>
-<th style="text-align: right;">N Transactions</th>
-<th style="text-align: right;">%</th>
-<th style="text-align: right;">Cum. %</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">In-Kind Type</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N Transactions</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">%</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cum. %</th>
 </tr>
 </thead>
 <tbody>
@@ -1610,6 +1547,8 @@ Table&nbsp;7: Top In-Kind Contribution Types (All Candidates)
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
@@ -1673,10 +1612,10 @@ Figure&nbsp;11: Top In-Kind Contribution Types: LGBTQ+ vs Non-LGBTQ+
 <li><p><strong>Revenue scale</strong>: Campaign finance in municipal elections spans several orders of magnitude, from 172,156 candidates (18.4%) with zero reported revenue to a maximum of R$81,590,273. The median campaign raised R$1,764.</p></li>
 <li><p><strong>LGBTQ+ revenue comparison</strong>: LGBTQ+ candidates have a median revenue of R$3,701, which is higher than the non-LGBTQ+ median of R$1,746 (ratio: 2.12). At the mean, LGBTQ+ candidates raise R$24,007 versus R$16,522 (ratio: 1.45).</p></li>
 <li><p><strong>Funding composition</strong>: LGBTQ+ candidates have a higher average party funding share (47.6% vs 27.2%) and a lower average individual donor share (12.6% vs 17.3%) compared to non-LGBTQ+ candidates.</p></li>
-<li><p><strong>Within-party patterns</strong>: Of 5 top parties examined, 0 show a median revenue ratio below 1 (LGBTQ+ candidates raising less than co-partisans). The within-party patterns do not show a consistent disadvantage for LGBTQ+ candidates.</p></li>
+<li><p><strong>Within-ideology patterns</strong>: Of 3 ideological blocs examined, 2 show a mean revenue ratio below 1 (LGBTQ+ candidates raising less than ideological peers) and 1 show a ratio above 1.</p></li>
 <li><p><strong>Identity-specific patterns</strong>: Across 5 identity categories, Bisexual+ candidates have the highest median revenue (R$6,445) and Asexual candidates the lowest (R$1,330). Bisexual+ candidates rely most heavily on party funding (58.9% of revenue on average).</p></li>
 </ol>
-<p>These descriptive patterns set the stage for subsequent regression analysis that can control for confounders such as municipality size, position type, incumbency, and party fixed effects.</p>
+<p>The next chapters examine intersectional patterns and geographic variation.</p>
 
 
 <!-- -->
@@ -2431,9 +2370,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r"))</span></span>
 <span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Financing Gap</span></span>
-<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a>The median revenue for LGBTQ+ candidates is <span class="in">`r format_brl(lgbtq_median)`</span>, compared to <span class="in">`r format_brl(nonlgbtq_median)`</span> for non-LGBTQ+ candidates --- <span class="in">`r if (median_direction == "lower") paste0("a ratio of ", sprintf("%.2f", median_ratio_overall), ", indicating that LGBTQ+ candidates raise less at the median.") else if (median_direction == "higher") paste0("a ratio of ", sprintf("%.2f", median_ratio_overall), ", indicating that LGBTQ+ candidates actually raise more at the median.") else "the two groups have identical median revenue."`</span> At the mean, LGBTQ+ candidates raise <span class="in">`r format_brl(lgbtq_mean)`</span> versus <span class="in">`r format_brl(nonlgbtq_mean)`</span> for non-LGBTQ+ candidates (ratio: <span class="in">`r sprintf("%.2f", mean_ratio_overall)`</span>). <span class="in">`r if (median_direction == "lower" || mean_direction == "lower") "To the extent a gap exists, it may signal structural financing constraints that limit electoral competitiveness --- independent of voter preferences." else "These figures suggest that LGBTQ+ candidates do not face an obvious aggregate financing disadvantage, though within-group and within-party patterns may differ."`</span></span>
+<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a><span class="fu">## Aggregate Revenue Comparison</span></span>
+<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a>The median revenue for LGBTQ+ candidates is <span class="in">`r format_brl(lgbtq_median)`</span>, compared to <span class="in">`r format_brl(nonlgbtq_median)`</span> for non-LGBTQ+ candidates (ratio: <span class="in">`r sprintf("%.2f", median_ratio_overall)`</span>). At the mean, LGBTQ+ candidates raise <span class="in">`r format_brl(lgbtq_mean)`</span> versus <span class="in">`r format_brl(nonlgbtq_mean)`</span> for non-LGBTQ+ candidates (ratio: <span class="in">`r sprintf("%.2f", mean_ratio_overall)`</span>).</span>
 <span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## Revenue Distribution Comparison</span></span>
@@ -2643,398 +2582,393 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb19-486"><a href="#cb19-486" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-487"><a href="#cb19-487" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
 <span id="cb19-488"><a href="#cb19-488" aria-hidden="true" tabindex="-1"></a><span class="fu">## Within-Group Differences</span></span>
-<span id="cb19-489"><a href="#cb19-489" aria-hidden="true" tabindex="-1"></a>The LGBTQ+ umbrella encompasses different financing realities. Among identity categories, <span class="in">`r top_party_cat`</span> candidates have the highest average party funding share (<span class="in">`r format_pct100(top_party_val)`</span>), while <span class="in">`r top_indiv_cat`</span> candidates have the highest average individual donor share (<span class="in">`r format_pct100(top_indiv_val)`</span>). These differences have implications for candidate autonomy and campaign capacity.</span>
+<span id="cb19-489"><a href="#cb19-489" aria-hidden="true" tabindex="-1"></a>Funding composition varies across identity categories. <span class="in">`r top_party_cat`</span> candidates have the highest average party funding share (<span class="in">`r format_pct100(top_party_val)`</span>), while <span class="in">`r top_indiv_cat`</span> candidates have the highest average individual donor share (<span class="in">`r format_pct100(top_indiv_val)`</span>).</span>
 <span id="cb19-490"><a href="#cb19-490" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb19-491"><a href="#cb19-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-492"><a href="#cb19-492" aria-hidden="true" tabindex="-1"></a><span class="fu"># Within-Party Comparison</span></span>
+<span id="cb19-492"><a href="#cb19-492" aria-hidden="true" tabindex="-1"></a><span class="fu"># Within-Ideology Comparison</span></span>
 <span id="cb19-493"><a href="#cb19-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-494"><a href="#cb19-494" aria-hidden="true" tabindex="-1"></a>The within-party revenue ratio compares LGBTQ+ and non-LGBTQ+ candidates *within the same party*. The ratio is computed as LGBTQ+ mean (or median) revenue divided by non-LGBTQ+ mean (or median) revenue for each party. A ratio below 1 means LGBTQ+ candidates raise less than their co-partisans; a ratio above 1 means they raise more. This analysis focuses on the top five parties ranked by number of LGBTQ+ candidates to ensure adequate sample sizes.</span>
+<span id="cb19-494"><a href="#cb19-494" aria-hidden="true" tabindex="-1"></a>The within-ideology revenue ratio compares LGBTQ+ and non-LGBTQ+ candidates *within the same ideological bloc* (Left, Center, Right). The ratio is computed as LGBTQ+ mean (or median) revenue divided by non-LGBTQ+ mean (or median) revenue for each bloc. A ratio below 1 means LGBTQ+ candidates raise less than their ideological peers; a ratio above 1 means they raise more.</span>
 <span id="cb19-495"><a href="#cb19-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-496"><a href="#cb19-496" aria-hidden="true" tabindex="-1"></a>A critical question is whether any aggregate LGBTQ+ financing difference persists *within* the same party. If LGBTQ+ candidates in Party X raise less than non-LGBTQ+ candidates in Party X, the difference cannot be attributed solely to party ideology or institutional resources.</span>
-<span id="cb19-497"><a href="#cb19-497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-498"><a href="#cb19-498" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-within-party}</span></span>
-<span id="cb19-499"><a href="#cb19-499" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-within-party</span></span>
-<span id="cb19-500"><a href="#cb19-500" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Revenue Comparison Within Top Parties (LGBTQ+ vs Non-LGBTQ+)"</span></span>
-<span id="cb19-501"><a href="#cb19-501" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-502"><a href="#cb19-502" aria-hidden="true" tabindex="-1"></a><span class="in"># Identify top 5 parties by number of LGBTQ+ candidates</span></span>
-<span id="cb19-503"><a href="#cb19-503" aria-hidden="true" tabindex="-1"></a><span class="in">top_parties &lt;- df %&gt;%</span></span>
-<span id="cb19-504"><a href="#cb19-504" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(lgbtq_candidate) %&gt;%</span></span>
-<span id="cb19-505"><a href="#cb19-505" aria-hidden="true" tabindex="-1"></a><span class="in">  count(party_abbrev, sort = TRUE) %&gt;%</span></span>
-<span id="cb19-506"><a href="#cb19-506" aria-hidden="true" tabindex="-1"></a><span class="in">  head(5) %&gt;%</span></span>
-<span id="cb19-507"><a href="#cb19-507" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(party_abbrev)</span></span>
-<span id="cb19-508"><a href="#cb19-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-509"><a href="#cb19-509" aria-hidden="true" tabindex="-1"></a><span class="in">within_party &lt;- df %&gt;%</span></span>
-<span id="cb19-510"><a href="#cb19-510" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(party_abbrev %in% top_parties) %&gt;%</span></span>
-<span id="cb19-511"><a href="#cb19-511" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+")) %&gt;%</span></span>
-<span id="cb19-512"><a href="#cb19-512" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(party_abbrev, group) %&gt;%</span></span>
-<span id="cb19-513"><a href="#cb19-513" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
-<span id="cb19-514"><a href="#cb19-514" aria-hidden="true" tabindex="-1"></a><span class="in">    N          = n(),</span></span>
-<span id="cb19-515"><a href="#cb19-515" aria-hidden="true" tabindex="-1"></a><span class="in">    mean_rev   = mean(total_revenue, na.rm = TRUE),</span></span>
-<span id="cb19-516"><a href="#cb19-516" aria-hidden="true" tabindex="-1"></a><span class="in">    median_rev = median(total_revenue, na.rm = TRUE),</span></span>
-<span id="cb19-517"><a href="#cb19-517" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups    = "drop"</span></span>
-<span id="cb19-518"><a href="#cb19-518" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-519"><a href="#cb19-519" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-520"><a href="#cb19-520" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the LGBTQ+/Non-LGBTQ+ ratio</span></span>
-<span id="cb19-521"><a href="#cb19-521" aria-hidden="true" tabindex="-1"></a><span class="in">within_party_wide &lt;- within_party %&gt;%</span></span>
-<span id="cb19-522"><a href="#cb19-522" aria-hidden="true" tabindex="-1"></a><span class="in">  select(party_abbrev, group, N, mean_rev, median_rev) %&gt;%</span></span>
-<span id="cb19-523"><a href="#cb19-523" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(</span></span>
-<span id="cb19-524"><a href="#cb19-524" aria-hidden="true" tabindex="-1"></a><span class="in">    names_from  = group,</span></span>
-<span id="cb19-525"><a href="#cb19-525" aria-hidden="true" tabindex="-1"></a><span class="in">    values_from = c(N, mean_rev, median_rev),</span></span>
-<span id="cb19-526"><a href="#cb19-526" aria-hidden="true" tabindex="-1"></a><span class="in">    names_glue  = "{group}_{.value}"</span></span>
-<span id="cb19-527"><a href="#cb19-527" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-528"><a href="#cb19-528" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb19-529"><a href="#cb19-529" aria-hidden="true" tabindex="-1"></a><span class="in">    mean_ratio   = round(`LGBTQ+_mean_rev` / `Non-LGBTQ+_mean_rev`, 2),</span></span>
-<span id="cb19-530"><a href="#cb19-530" aria-hidden="true" tabindex="-1"></a><span class="in">    median_ratio = round(`LGBTQ+_median_rev` / `Non-LGBTQ+_median_rev`, 2)</span></span>
-<span id="cb19-531"><a href="#cb19-531" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-532"><a href="#cb19-532" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-533"><a href="#cb19-533" aria-hidden="true" tabindex="-1"></a><span class="in">within_party_wide %&gt;%</span></span>
-<span id="cb19-534"><a href="#cb19-534" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(</span></span>
-<span id="cb19-535"><a href="#cb19-535" aria-hidden="true" tabindex="-1"></a><span class="in">    Party                     = party_abbrev,</span></span>
-<span id="cb19-536"><a href="#cb19-536" aria-hidden="true" tabindex="-1"></a><span class="in">    `N LGBTQ+`               = format_n(`LGBTQ+_N`),</span></span>
-<span id="cb19-537"><a href="#cb19-537" aria-hidden="true" tabindex="-1"></a><span class="in">    `N Non-LGBTQ+`           = format_n(`Non-LGBTQ+_N`),</span></span>
-<span id="cb19-538"><a href="#cb19-538" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean Rev. LGBTQ+`       = format_brl(`LGBTQ+_mean_rev`),</span></span>
-<span id="cb19-539"><a href="#cb19-539" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean Rev. Non-LGBTQ+`   = format_brl(`Non-LGBTQ+_mean_rev`),</span></span>
-<span id="cb19-540"><a href="#cb19-540" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean Ratio (L/NL)`      = mean_ratio,</span></span>
-<span id="cb19-541"><a href="#cb19-541" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median Rev. LGBTQ+`     = format_brl(`LGBTQ+_median_rev`),</span></span>
-<span id="cb19-542"><a href="#cb19-542" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median Rev. Non-LGBTQ+` = format_brl(`Non-LGBTQ+_median_rev`),</span></span>
-<span id="cb19-543"><a href="#cb19-543" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median Ratio (L/NL)`    = median_ratio</span></span>
-<span id="cb19-544"><a href="#cb19-544" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-545"><a href="#cb19-545" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r", "r", "r", "r", "r"))</span></span>
-<span id="cb19-546"><a href="#cb19-546" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-547"><a href="#cb19-547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-548"><a href="#cb19-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-within-party}</span></span>
-<span id="cb19-549"><a href="#cb19-549" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-within-party</span></span>
-<span id="cb19-550"><a href="#cb19-550" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "LGBTQ+/Non-LGBTQ+ Revenue Ratio Within Top Parties"</span></span>
+<span id="cb19-496"><a href="#cb19-496" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-within-ideology}</span></span>
+<span id="cb19-497"><a href="#cb19-497" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-within-ideology</span></span>
+<span id="cb19-498"><a href="#cb19-498" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Revenue Comparison Within Ideological Blocs (LGBTQ+ vs Non-LGBTQ+)"</span></span>
+<span id="cb19-499"><a href="#cb19-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-500"><a href="#cb19-500" aria-hidden="true" tabindex="-1"></a><span class="in">within_ideo &lt;- df %&gt;%</span></span>
+<span id="cb19-501"><a href="#cb19-501" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(ideology_category)) %&gt;%</span></span>
+<span id="cb19-502"><a href="#cb19-502" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+")) %&gt;%</span></span>
+<span id="cb19-503"><a href="#cb19-503" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(ideology_category, group) %&gt;%</span></span>
+<span id="cb19-504"><a href="#cb19-504" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
+<span id="cb19-505"><a href="#cb19-505" aria-hidden="true" tabindex="-1"></a><span class="in">    N          = n(),</span></span>
+<span id="cb19-506"><a href="#cb19-506" aria-hidden="true" tabindex="-1"></a><span class="in">    mean_rev   = mean(total_revenue, na.rm = TRUE),</span></span>
+<span id="cb19-507"><a href="#cb19-507" aria-hidden="true" tabindex="-1"></a><span class="in">    median_rev = median(total_revenue, na.rm = TRUE),</span></span>
+<span id="cb19-508"><a href="#cb19-508" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups    = "drop"</span></span>
+<span id="cb19-509"><a href="#cb19-509" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-510"><a href="#cb19-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-511"><a href="#cb19-511" aria-hidden="true" tabindex="-1"></a><span class="in">within_ideo_wide &lt;- within_ideo %&gt;%</span></span>
+<span id="cb19-512"><a href="#cb19-512" aria-hidden="true" tabindex="-1"></a><span class="in">  select(ideology_category, group, N, mean_rev, median_rev) %&gt;%</span></span>
+<span id="cb19-513"><a href="#cb19-513" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(</span></span>
+<span id="cb19-514"><a href="#cb19-514" aria-hidden="true" tabindex="-1"></a><span class="in">    names_from  = group,</span></span>
+<span id="cb19-515"><a href="#cb19-515" aria-hidden="true" tabindex="-1"></a><span class="in">    values_from = c(N, mean_rev, median_rev),</span></span>
+<span id="cb19-516"><a href="#cb19-516" aria-hidden="true" tabindex="-1"></a><span class="in">    names_glue  = "{group}_{.value}"</span></span>
+<span id="cb19-517"><a href="#cb19-517" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-518"><a href="#cb19-518" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb19-519"><a href="#cb19-519" aria-hidden="true" tabindex="-1"></a><span class="in">    mean_ratio   = if_else(`Non-LGBTQ+_mean_rev` &gt; 0,</span></span>
+<span id="cb19-520"><a href="#cb19-520" aria-hidden="true" tabindex="-1"></a><span class="in">                           round(`LGBTQ+_mean_rev` / `Non-LGBTQ+_mean_rev`, 2), NA_real_),</span></span>
+<span id="cb19-521"><a href="#cb19-521" aria-hidden="true" tabindex="-1"></a><span class="in">    median_ratio = if_else(`Non-LGBTQ+_median_rev` &gt; 0,</span></span>
+<span id="cb19-522"><a href="#cb19-522" aria-hidden="true" tabindex="-1"></a><span class="in">                           round(`LGBTQ+_median_rev` / `Non-LGBTQ+_median_rev`, 2), NA_real_)</span></span>
+<span id="cb19-523"><a href="#cb19-523" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-524"><a href="#cb19-524" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(ideology_category = factor(ideology_category, levels = ideology_levels)) %&gt;%</span></span>
+<span id="cb19-525"><a href="#cb19-525" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(ideology_category)</span></span>
+<span id="cb19-526"><a href="#cb19-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-527"><a href="#cb19-527" aria-hidden="true" tabindex="-1"></a><span class="in">within_ideo_wide %&gt;%</span></span>
+<span id="cb19-528"><a href="#cb19-528" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(</span></span>
+<span id="cb19-529"><a href="#cb19-529" aria-hidden="true" tabindex="-1"></a><span class="in">    Ideology                  = ideology_category,</span></span>
+<span id="cb19-530"><a href="#cb19-530" aria-hidden="true" tabindex="-1"></a><span class="in">    `N LGBTQ+`               = format_n(`LGBTQ+_N`),</span></span>
+<span id="cb19-531"><a href="#cb19-531" aria-hidden="true" tabindex="-1"></a><span class="in">    `N Non-LGBTQ+`           = format_n(`Non-LGBTQ+_N`),</span></span>
+<span id="cb19-532"><a href="#cb19-532" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean Rev. LGBTQ+`       = format_brl(`LGBTQ+_mean_rev`),</span></span>
+<span id="cb19-533"><a href="#cb19-533" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean Rev. Non-LGBTQ+`   = format_brl(`Non-LGBTQ+_mean_rev`),</span></span>
+<span id="cb19-534"><a href="#cb19-534" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean Ratio (L/NL)`      = if_else(is.na(mean_ratio), "---", as.character(mean_ratio)),</span></span>
+<span id="cb19-535"><a href="#cb19-535" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median Rev. LGBTQ+`     = format_brl(`LGBTQ+_median_rev`),</span></span>
+<span id="cb19-536"><a href="#cb19-536" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median Rev. Non-LGBTQ+` = format_brl(`Non-LGBTQ+_median_rev`),</span></span>
+<span id="cb19-537"><a href="#cb19-537" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median Ratio (L/NL)`    = if_else(is.na(median_ratio), "---", as.character(median_ratio))</span></span>
+<span id="cb19-538"><a href="#cb19-538" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-539"><a href="#cb19-539" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r", "r", "r", "r", "r"))</span></span>
+<span id="cb19-540"><a href="#cb19-540" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-541"><a href="#cb19-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-542"><a href="#cb19-542" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-within-ideology}</span></span>
+<span id="cb19-543"><a href="#cb19-543" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-within-ideology</span></span>
+<span id="cb19-544"><a href="#cb19-544" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "LGBTQ+/Non-LGBTQ+ Revenue Ratio Within Ideological Blocs"</span></span>
+<span id="cb19-545"><a href="#cb19-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-546"><a href="#cb19-546" aria-hidden="true" tabindex="-1"></a><span class="in">plot_data &lt;- within_ideo_wide %&gt;%</span></span>
+<span id="cb19-547"><a href="#cb19-547" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(mean_ratio) | !is.na(median_ratio)) %&gt;%</span></span>
+<span id="cb19-548"><a href="#cb19-548" aria-hidden="true" tabindex="-1"></a><span class="in">  select(ideology_category, `Mean ratio` = mean_ratio, `Median ratio` = median_ratio) %&gt;%</span></span>
+<span id="cb19-549"><a href="#cb19-549" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(-ideology_category, names_to = "metric", values_to = "ratio") %&gt;%</span></span>
+<span id="cb19-550"><a href="#cb19-550" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(ratio))</span></span>
 <span id="cb19-551"><a href="#cb19-551" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-552"><a href="#cb19-552" aria-hidden="true" tabindex="-1"></a><span class="in">within_party_wide %&gt;%</span></span>
-<span id="cb19-553"><a href="#cb19-553" aria-hidden="true" tabindex="-1"></a><span class="in">  select(party_abbrev, `Mean ratio` = mean_ratio, `Median ratio` = median_ratio) %&gt;%</span></span>
-<span id="cb19-554"><a href="#cb19-554" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(-party_abbrev, names_to = "metric", values_to = "ratio") %&gt;%</span></span>
-<span id="cb19-555"><a href="#cb19-555" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = reorder(party_abbrev, ratio), y = ratio,</span></span>
-<span id="cb19-556"><a href="#cb19-556" aria-hidden="true" tabindex="-1"></a><span class="in">             color = metric, shape = metric)) +</span></span>
-<span id="cb19-557"><a href="#cb19-557" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_hline(yintercept = 1, linetype = "dashed", color = "gray50") +</span></span>
-<span id="cb19-558"><a href="#cb19-558" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size = 4, position = position_dodge(width = 0.4)) +</span></span>
-<span id="cb19-559"><a href="#cb19-559" aria-hidden="true" tabindex="-1"></a><span class="in">  coord_flip() +</span></span>
-<span id="cb19-560"><a href="#cb19-560" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("Mean ratio" = "#E74C3C", "Median ratio" = "#3498DB"),</span></span>
-<span id="cb19-561"><a href="#cb19-561" aria-hidden="true" tabindex="-1"></a><span class="in">                     name = NULL) +</span></span>
-<span id="cb19-562"><a href="#cb19-562" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_shape_manual(values = c("Mean ratio" = 16, "Median ratio" = 17),</span></span>
-<span id="cb19-563"><a href="#cb19-563" aria-hidden="true" tabindex="-1"></a><span class="in">                     name = NULL) +</span></span>
-<span id="cb19-564"><a href="#cb19-564" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb19-565"><a href="#cb19-565" aria-hidden="true" tabindex="-1"></a><span class="in">    x       = NULL,</span></span>
-<span id="cb19-566"><a href="#cb19-566" aria-hidden="true" tabindex="-1"></a><span class="in">    y       = "Revenue Ratio (LGBTQ+ / Non-LGBTQ+)",</span></span>
-<span id="cb19-567"><a href="#cb19-567" aria-hidden="true" tabindex="-1"></a><span class="in">    title   = "Within-Party Revenue Ratios",</span></span>
-<span id="cb19-568"><a href="#cb19-568" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Ratio &lt; 1 means LGBTQ+ candidates raise less than co-partisans",</span></span>
-<span id="cb19-569"><a href="#cb19-569" aria-hidden="true" tabindex="-1"></a><span class="in">    caption  = "Dashed line = parity (ratio = 1). Only top 5 parties by LGBTQ+ N shown."</span></span>
-<span id="cb19-570"><a href="#cb19-570" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-552"><a href="#cb19-552" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(plot_data, aes(x = ideology_category, y = ratio,</span></span>
+<span id="cb19-553"><a href="#cb19-553" aria-hidden="true" tabindex="-1"></a><span class="in">           color = metric, shape = metric)) +</span></span>
+<span id="cb19-554"><a href="#cb19-554" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_hline(yintercept = 1, linetype = "dashed", color = "gray50") +</span></span>
+<span id="cb19-555"><a href="#cb19-555" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size = 4, position = position_dodge(width = 0.4)) +</span></span>
+<span id="cb19-556"><a href="#cb19-556" aria-hidden="true" tabindex="-1"></a><span class="in">  coord_flip() +</span></span>
+<span id="cb19-557"><a href="#cb19-557" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = c("Mean ratio" = "#E74C3C", "Median ratio" = "#3498DB"),</span></span>
+<span id="cb19-558"><a href="#cb19-558" aria-hidden="true" tabindex="-1"></a><span class="in">                     name = NULL) +</span></span>
+<span id="cb19-559"><a href="#cb19-559" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_shape_manual(values = c("Mean ratio" = 16, "Median ratio" = 17),</span></span>
+<span id="cb19-560"><a href="#cb19-560" aria-hidden="true" tabindex="-1"></a><span class="in">                     name = NULL) +</span></span>
+<span id="cb19-561"><a href="#cb19-561" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb19-562"><a href="#cb19-562" aria-hidden="true" tabindex="-1"></a><span class="in">    x       = NULL,</span></span>
+<span id="cb19-563"><a href="#cb19-563" aria-hidden="true" tabindex="-1"></a><span class="in">    y       = "Revenue Ratio (LGBTQ+ / Non-LGBTQ+)",</span></span>
+<span id="cb19-564"><a href="#cb19-564" aria-hidden="true" tabindex="-1"></a><span class="in">    title   = "Within-Ideology Revenue Ratios",</span></span>
+<span id="cb19-565"><a href="#cb19-565" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Ratio &lt; 1 means LGBTQ+ candidates raise less than ideological peers",</span></span>
+<span id="cb19-566"><a href="#cb19-566" aria-hidden="true" tabindex="-1"></a><span class="in">    caption  = "Dashed line = parity (ratio = 1). Only candidates with assigned ideology included."</span></span>
+<span id="cb19-567"><a href="#cb19-567" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-568"><a href="#cb19-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-569"><a href="#cb19-569" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_within_ideology_ratio")</span></span>
+<span id="cb19-570"><a href="#cb19-570" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-571"><a href="#cb19-571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-572"><a href="#cb19-572" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_within_party_ratio")</span></span>
-<span id="cb19-573"><a href="#cb19-573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-572"><a href="#cb19-572" aria-hidden="true" tabindex="-1"></a><span class="in">```{r within-ideology-inline}</span></span>
+<span id="cb19-573"><a href="#cb19-573" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
 <span id="cb19-574"><a href="#cb19-574" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-575"><a href="#cb19-575" aria-hidden="true" tabindex="-1"></a><span class="in">```{r within-party-inline}</span></span>
-<span id="cb19-576"><a href="#cb19-576" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb19-577"><a href="#cb19-577" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-578"><a href="#cb19-578" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute inline stats for the callout</span></span>
-<span id="cb19-579"><a href="#cb19-579" aria-hidden="true" tabindex="-1"></a><span class="in">n_parties_below1_mean   &lt;- sum(within_party_wide$mean_ratio &lt; 1, na.rm = TRUE)</span></span>
-<span id="cb19-580"><a href="#cb19-580" aria-hidden="true" tabindex="-1"></a><span class="in">n_parties_above1_mean   &lt;- sum(within_party_wide$mean_ratio &gt; 1, na.rm = TRUE)</span></span>
-<span id="cb19-581"><a href="#cb19-581" aria-hidden="true" tabindex="-1"></a><span class="in">n_parties_below1_median &lt;- sum(within_party_wide$median_ratio &lt; 1, na.rm = TRUE)</span></span>
-<span id="cb19-582"><a href="#cb19-582" aria-hidden="true" tabindex="-1"></a><span class="in">n_parties_above1_median &lt;- sum(within_party_wide$median_ratio &gt; 1, na.rm = TRUE)</span></span>
-<span id="cb19-583"><a href="#cb19-583" aria-hidden="true" tabindex="-1"></a><span class="in">n_parties_total         &lt;- nrow(within_party_wide)</span></span>
-<span id="cb19-584"><a href="#cb19-584" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-575"><a href="#cb19-575" aria-hidden="true" tabindex="-1"></a><span class="in">n_ideo_below1_mean   &lt;- sum(within_ideo_wide$mean_ratio &lt; 1, na.rm = TRUE)</span></span>
+<span id="cb19-576"><a href="#cb19-576" aria-hidden="true" tabindex="-1"></a><span class="in">n_ideo_above1_mean   &lt;- sum(within_ideo_wide$mean_ratio &gt; 1, na.rm = TRUE)</span></span>
+<span id="cb19-577"><a href="#cb19-577" aria-hidden="true" tabindex="-1"></a><span class="in">n_ideo_below1_median &lt;- sum(within_ideo_wide$median_ratio &lt; 1, na.rm = TRUE)</span></span>
+<span id="cb19-578"><a href="#cb19-578" aria-hidden="true" tabindex="-1"></a><span class="in">n_ideo_total         &lt;- nrow(within_ideo_wide)</span></span>
+<span id="cb19-579"><a href="#cb19-579" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-580"><a href="#cb19-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-581"><a href="#cb19-581" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb19-582"><a href="#cb19-582" aria-hidden="true" tabindex="-1"></a><span class="fu">## Within-Ideology Revenue Ratios</span></span>
+<span id="cb19-583"><a href="#cb19-583" aria-hidden="true" tabindex="-1"></a>Of the <span class="in">`r n_ideo_total`</span> ideological blocs, <span class="in">`r n_ideo_below1_mean`</span> show a mean revenue ratio below 1 (LGBTQ+ candidates raising less than ideological peers) and <span class="in">`r n_ideo_above1_mean`</span> show a mean ratio above 1. At the median, <span class="in">`r n_ideo_below1_median`</span> of <span class="in">`r n_ideo_total`</span> blocs have ratios below 1.</span>
+<span id="cb19-584"><a href="#cb19-584" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb19-585"><a href="#cb19-585" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-586"><a href="#cb19-586" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb19-587"><a href="#cb19-587" aria-hidden="true" tabindex="-1"></a><span class="fu">## Within-Party Gap</span></span>
-<span id="cb19-588"><a href="#cb19-588" aria-hidden="true" tabindex="-1"></a>Of the <span class="in">`r n_parties_total`</span> parties examined, <span class="in">`r n_parties_below1_mean`</span> show a mean revenue ratio below 1 (LGBTQ+ candidates raising less than co-partisans) and <span class="in">`r n_parties_above1_mean`</span> show a mean ratio above 1. At the median, <span class="in">`r n_parties_below1_median`</span> of <span class="in">`r n_parties_total`</span> parties have ratios below 1. <span class="in">`r if (n_parties_below1_mean &gt;= ceiling(n_parties_total / 2)) "The pattern is consistent with an LGBTQ+ financing disadvantage that operates within --- not just across --- partisan networks." else if (n_parties_above1_mean &gt;= ceiling(n_parties_total / 2)) "The pattern suggests LGBTQ+ candidates do not systematically raise less than co-partisans in these parties." else "The results are mixed across parties, with no clear systematic pattern."`</span></span>
-<span id="cb19-589"><a href="#cb19-589" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb19-590"><a href="#cb19-590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-591"><a href="#cb19-591" aria-hidden="true" tabindex="-1"></a><span class="fu"># Financial vs In-Kind Contributions</span></span>
-<span id="cb19-592"><a href="#cb19-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-593"><a href="#cb19-593" aria-hidden="true" tabindex="-1"></a>The TSE classifies each transaction's <span class="in">`DS_NATUREZA_RECEITA`</span> as either "FINANCEIRO" (financial) or a non-financial category. **Financial contributions** are direct monetary transfers: cash, PIX, bank deposits, and electronic transfers. **In-kind contributions** (*recursos estimaveis*) are non-monetary --- goods, services, or volunteer labor that the campaign assigns a monetary value to for accounting purposes. Examples include donated office space, printing services, vehicles for campaign use, or professional labor contributed without charge. The variables <span class="in">`pct_financial`</span> and <span class="in">`pct_inkind`</span> express each type's share of a candidate's total revenue on a 0--100 scale.</span>
-<span id="cb19-594"><a href="#cb19-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-595"><a href="#cb19-595" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-financial-inkind}</span></span>
-<span id="cb19-596"><a href="#cb19-596" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-financial-inkind</span></span>
-<span id="cb19-597"><a href="#cb19-597" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Financial vs In-Kind Revenue: LGBTQ+ vs Non-LGBTQ+"</span></span>
-<span id="cb19-598"><a href="#cb19-598" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-599"><a href="#cb19-599" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
-<span id="cb19-600"><a href="#cb19-600" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+")) %&gt;%</span></span>
-<span id="cb19-601"><a href="#cb19-601" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(group) %&gt;%</span></span>
-<span id="cb19-602"><a href="#cb19-602" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
-<span id="cb19-603"><a href="#cb19-603" aria-hidden="true" tabindex="-1"></a><span class="in">    N                     = format_n(n()),</span></span>
-<span id="cb19-604"><a href="#cb19-604" aria-hidden="true" tabindex="-1"></a><span class="in">    `Total Financial`     = format_brl(sum(financial_amt, na.rm = TRUE)),</span></span>
-<span id="cb19-605"><a href="#cb19-605" aria-hidden="true" tabindex="-1"></a><span class="in">    `Total In-Kind`       = format_brl(sum(inkind_amt, na.rm = TRUE)),</span></span>
-<span id="cb19-606"><a href="#cb19-606" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean % Financial`    = format_pct100(mean(pct_financial, na.rm = TRUE)),</span></span>
-<span id="cb19-607"><a href="#cb19-607" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean % In-Kind`      = format_pct100(mean(pct_inkind, na.rm = TRUE)),</span></span>
-<span id="cb19-608"><a href="#cb19-608" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median % Financial`  = format_pct100(median(pct_financial, na.rm = TRUE)),</span></span>
-<span id="cb19-609"><a href="#cb19-609" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median % In-Kind`    = format_pct100(median(pct_inkind, na.rm = TRUE)),</span></span>
-<span id="cb19-610"><a href="#cb19-610" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
-<span id="cb19-611"><a href="#cb19-611" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-612"><a href="#cb19-612" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(Group = group) %&gt;%</span></span>
-<span id="cb19-613"><a href="#cb19-613" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r", "r", "r", "r"))</span></span>
-<span id="cb19-614"><a href="#cb19-614" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-615"><a href="#cb19-615" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-616"><a href="#cb19-616" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-financial-inkind}</span></span>
-<span id="cb19-617"><a href="#cb19-617" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-financial-inkind</span></span>
-<span id="cb19-618"><a href="#cb19-618" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Distribution of Financial vs In-Kind Share by LGBTQ+ Status"</span></span>
-<span id="cb19-619"><a href="#cb19-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-620"><a href="#cb19-620" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
-<span id="cb19-621"><a href="#cb19-621" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(total_revenue &gt; 0) %&gt;%</span></span>
-<span id="cb19-622"><a href="#cb19-622" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+")) %&gt;%</span></span>
-<span id="cb19-623"><a href="#cb19-623" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = pct_financial / 100, fill = group, color = group)) +</span></span>
-<span id="cb19-624"><a href="#cb19-624" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_density(alpha = 0.3, linewidth = 0.8) +</span></span>
-<span id="cb19-625"><a href="#cb19-625" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = pal_lgbtq, name = NULL) +</span></span>
-<span id="cb19-626"><a href="#cb19-626" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = pal_lgbtq, name = NULL) +</span></span>
-<span id="cb19-627"><a href="#cb19-627" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = percent, limits = c(0, 1)) +</span></span>
-<span id="cb19-628"><a href="#cb19-628" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb19-629"><a href="#cb19-629" aria-hidden="true" tabindex="-1"></a><span class="in">    x        = "Financial Revenue as % of Total Revenue",</span></span>
-<span id="cb19-630"><a href="#cb19-630" aria-hidden="true" tabindex="-1"></a><span class="in">    y        = "Density",</span></span>
-<span id="cb19-631"><a href="#cb19-631" aria-hidden="true" tabindex="-1"></a><span class="in">    title    = "Share of Financial (vs In-Kind) Revenue",</span></span>
-<span id="cb19-632"><a href="#cb19-632" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Among candidates with positive revenue"</span></span>
-<span id="cb19-633"><a href="#cb19-633" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-634"><a href="#cb19-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-635"><a href="#cb19-635" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_financial_inkind_density")</span></span>
-<span id="cb19-636"><a href="#cb19-636" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-637"><a href="#cb19-637" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-638"><a href="#cb19-638" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-financial-inkind-identity}</span></span>
-<span id="cb19-639"><a href="#cb19-639" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-financial-inkind-identity</span></span>
-<span id="cb19-640"><a href="#cb19-640" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Financial vs In-Kind Composition by Identity Category"</span></span>
-<span id="cb19-641"><a href="#cb19-641" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-642"><a href="#cb19-642" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
-<span id="cb19-643"><a href="#cb19-643" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(total_revenue &gt; 0) %&gt;%</span></span>
-<span id="cb19-644"><a href="#cb19-644" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb19-645"><a href="#cb19-645" aria-hidden="true" tabindex="-1"></a><span class="in">    plot_category = if_else(lgbtq_candidate, as.character(lgbt_category), "Non-LGBTQ+"),</span></span>
-<span id="cb19-646"><a href="#cb19-646" aria-hidden="true" tabindex="-1"></a><span class="in">    plot_category = factor(plot_category,</span></span>
-<span id="cb19-647"><a href="#cb19-647" aria-hidden="true" tabindex="-1"></a><span class="in">                           levels = c("Non-LGBTQ+", "Gay", "Lesbian", "Bisexual+",</span></span>
-<span id="cb19-648"><a href="#cb19-648" aria-hidden="true" tabindex="-1"></a><span class="in">                                      "Trans", "Asexual"))</span></span>
-<span id="cb19-649"><a href="#cb19-649" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-650"><a href="#cb19-650" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(plot_category)) %&gt;%</span></span>
-<span id="cb19-651"><a href="#cb19-651" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(plot_category) %&gt;%</span></span>
-<span id="cb19-652"><a href="#cb19-652" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
-<span id="cb19-653"><a href="#cb19-653" aria-hidden="true" tabindex="-1"></a><span class="in">    Financial = sum(financial_amt, na.rm = TRUE),</span></span>
-<span id="cb19-654"><a href="#cb19-654" aria-hidden="true" tabindex="-1"></a><span class="in">    `In-Kind` = sum(inkind_amt, na.rm = TRUE),</span></span>
-<span id="cb19-655"><a href="#cb19-655" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
-<span id="cb19-656"><a href="#cb19-656" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-657"><a href="#cb19-657" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(-plot_category, names_to = "type", values_to = "total") %&gt;%</span></span>
-<span id="cb19-658"><a href="#cb19-658" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(plot_category) %&gt;%</span></span>
-<span id="cb19-659"><a href="#cb19-659" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = total / sum(total)) %&gt;%</span></span>
-<span id="cb19-660"><a href="#cb19-660" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
-<span id="cb19-661"><a href="#cb19-661" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = plot_category, y = pct, fill = type)) +</span></span>
-<span id="cb19-662"><a href="#cb19-662" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col(alpha = 0.9) +</span></span>
-<span id="cb19-663"><a href="#cb19-663" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(aes(label = format_pct(pct)),</span></span>
-<span id="cb19-664"><a href="#cb19-664" aria-hidden="true" tabindex="-1"></a><span class="in">            position = position_stack(vjust = 0.5), size = 3.5, color = "white",</span></span>
-<span id="cb19-665"><a href="#cb19-665" aria-hidden="true" tabindex="-1"></a><span class="in">            fontface = "bold") +</span></span>
-<span id="cb19-666"><a href="#cb19-666" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("Financial" = "#3498DB", "In-Kind" = "#E67E22"),</span></span>
-<span id="cb19-667"><a href="#cb19-667" aria-hidden="true" tabindex="-1"></a><span class="in">                    name = "Revenue Type") +</span></span>
-<span id="cb19-668"><a href="#cb19-668" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(labels = percent) +</span></span>
-<span id="cb19-669"><a href="#cb19-669" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb19-670"><a href="#cb19-670" aria-hidden="true" tabindex="-1"></a><span class="in">    x        = NULL,</span></span>
-<span id="cb19-671"><a href="#cb19-671" aria-hidden="true" tabindex="-1"></a><span class="in">    y        = "Share of Revenue",</span></span>
-<span id="cb19-672"><a href="#cb19-672" aria-hidden="true" tabindex="-1"></a><span class="in">    title    = "Financial vs In-Kind Revenue Composition",</span></span>
-<span id="cb19-673"><a href="#cb19-673" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "By identity category (among candidates with positive revenue)"</span></span>
-<span id="cb19-674"><a href="#cb19-674" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb19-675"><a href="#cb19-675" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(axis.text.x = element_text(angle = 30, hjust = 1))</span></span>
-<span id="cb19-676"><a href="#cb19-676" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-677"><a href="#cb19-677" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_financial_inkind_identity")</span></span>
-<span id="cb19-678"><a href="#cb19-678" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-586"><a href="#cb19-586" aria-hidden="true" tabindex="-1"></a><span class="fu"># Financial vs In-Kind Contributions</span></span>
+<span id="cb19-587"><a href="#cb19-587" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-588"><a href="#cb19-588" aria-hidden="true" tabindex="-1"></a>The TSE classifies each transaction's <span class="in">`DS_NATUREZA_RECEITA`</span> as either "FINANCEIRO" (financial) or a non-financial category. **Financial contributions** are direct monetary transfers: cash, PIX, bank deposits, and electronic transfers. **In-kind contributions** (*recursos estimaveis*) are non-monetary --- goods, services, or volunteer labor that the campaign assigns a monetary value to for accounting purposes. Examples include donated office space, printing services, vehicles for campaign use, or professional labor contributed without charge. The variables <span class="in">`pct_financial`</span> and <span class="in">`pct_inkind`</span> express each type's share of a candidate's total revenue on a 0--100 scale.</span>
+<span id="cb19-589"><a href="#cb19-589" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-590"><a href="#cb19-590" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-financial-inkind}</span></span>
+<span id="cb19-591"><a href="#cb19-591" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-financial-inkind</span></span>
+<span id="cb19-592"><a href="#cb19-592" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Financial vs In-Kind Revenue: LGBTQ+ vs Non-LGBTQ+"</span></span>
+<span id="cb19-593"><a href="#cb19-593" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-594"><a href="#cb19-594" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
+<span id="cb19-595"><a href="#cb19-595" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+")) %&gt;%</span></span>
+<span id="cb19-596"><a href="#cb19-596" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(group) %&gt;%</span></span>
+<span id="cb19-597"><a href="#cb19-597" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
+<span id="cb19-598"><a href="#cb19-598" aria-hidden="true" tabindex="-1"></a><span class="in">    N                     = format_n(n()),</span></span>
+<span id="cb19-599"><a href="#cb19-599" aria-hidden="true" tabindex="-1"></a><span class="in">    `Total Financial`     = format_brl(sum(financial_amt, na.rm = TRUE)),</span></span>
+<span id="cb19-600"><a href="#cb19-600" aria-hidden="true" tabindex="-1"></a><span class="in">    `Total In-Kind`       = format_brl(sum(inkind_amt, na.rm = TRUE)),</span></span>
+<span id="cb19-601"><a href="#cb19-601" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean % Financial`    = format_pct100(mean(pct_financial, na.rm = TRUE)),</span></span>
+<span id="cb19-602"><a href="#cb19-602" aria-hidden="true" tabindex="-1"></a><span class="in">    `Mean % In-Kind`      = format_pct100(mean(pct_inkind, na.rm = TRUE)),</span></span>
+<span id="cb19-603"><a href="#cb19-603" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median % Financial`  = format_pct100(median(pct_financial, na.rm = TRUE)),</span></span>
+<span id="cb19-604"><a href="#cb19-604" aria-hidden="true" tabindex="-1"></a><span class="in">    `Median % In-Kind`    = format_pct100(median(pct_inkind, na.rm = TRUE)),</span></span>
+<span id="cb19-605"><a href="#cb19-605" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
+<span id="cb19-606"><a href="#cb19-606" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-607"><a href="#cb19-607" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(Group = group) %&gt;%</span></span>
+<span id="cb19-608"><a href="#cb19-608" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r", "r", "r", "r"))</span></span>
+<span id="cb19-609"><a href="#cb19-609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-610"><a href="#cb19-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-611"><a href="#cb19-611" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-financial-inkind}</span></span>
+<span id="cb19-612"><a href="#cb19-612" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-financial-inkind</span></span>
+<span id="cb19-613"><a href="#cb19-613" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Distribution of Financial vs In-Kind Share by LGBTQ+ Status"</span></span>
+<span id="cb19-614"><a href="#cb19-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-615"><a href="#cb19-615" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
+<span id="cb19-616"><a href="#cb19-616" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(total_revenue &gt; 0) %&gt;%</span></span>
+<span id="cb19-617"><a href="#cb19-617" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+")) %&gt;%</span></span>
+<span id="cb19-618"><a href="#cb19-618" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = pct_financial / 100, fill = group, color = group)) +</span></span>
+<span id="cb19-619"><a href="#cb19-619" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_density(alpha = 0.3, linewidth = 0.8) +</span></span>
+<span id="cb19-620"><a href="#cb19-620" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = pal_lgbtq, name = NULL) +</span></span>
+<span id="cb19-621"><a href="#cb19-621" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_manual(values = pal_lgbtq, name = NULL) +</span></span>
+<span id="cb19-622"><a href="#cb19-622" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = percent, limits = c(0, 1)) +</span></span>
+<span id="cb19-623"><a href="#cb19-623" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb19-624"><a href="#cb19-624" aria-hidden="true" tabindex="-1"></a><span class="in">    x        = "Financial Revenue as % of Total Revenue",</span></span>
+<span id="cb19-625"><a href="#cb19-625" aria-hidden="true" tabindex="-1"></a><span class="in">    y        = "Density",</span></span>
+<span id="cb19-626"><a href="#cb19-626" aria-hidden="true" tabindex="-1"></a><span class="in">    title    = "Share of Financial (vs In-Kind) Revenue",</span></span>
+<span id="cb19-627"><a href="#cb19-627" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Among candidates with positive revenue"</span></span>
+<span id="cb19-628"><a href="#cb19-628" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-629"><a href="#cb19-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-630"><a href="#cb19-630" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_financial_inkind_density")</span></span>
+<span id="cb19-631"><a href="#cb19-631" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-632"><a href="#cb19-632" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-633"><a href="#cb19-633" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-financial-inkind-identity}</span></span>
+<span id="cb19-634"><a href="#cb19-634" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-financial-inkind-identity</span></span>
+<span id="cb19-635"><a href="#cb19-635" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Financial vs In-Kind Composition by Identity Category"</span></span>
+<span id="cb19-636"><a href="#cb19-636" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-637"><a href="#cb19-637" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
+<span id="cb19-638"><a href="#cb19-638" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(total_revenue &gt; 0) %&gt;%</span></span>
+<span id="cb19-639"><a href="#cb19-639" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb19-640"><a href="#cb19-640" aria-hidden="true" tabindex="-1"></a><span class="in">    plot_category = if_else(lgbtq_candidate, as.character(lgbt_category), "Non-LGBTQ+"),</span></span>
+<span id="cb19-641"><a href="#cb19-641" aria-hidden="true" tabindex="-1"></a><span class="in">    plot_category = factor(plot_category,</span></span>
+<span id="cb19-642"><a href="#cb19-642" aria-hidden="true" tabindex="-1"></a><span class="in">                           levels = c("Non-LGBTQ+", "Gay", "Lesbian", "Bisexual+",</span></span>
+<span id="cb19-643"><a href="#cb19-643" aria-hidden="true" tabindex="-1"></a><span class="in">                                      "Trans", "Asexual"))</span></span>
+<span id="cb19-644"><a href="#cb19-644" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-645"><a href="#cb19-645" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(plot_category)) %&gt;%</span></span>
+<span id="cb19-646"><a href="#cb19-646" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(plot_category) %&gt;%</span></span>
+<span id="cb19-647"><a href="#cb19-647" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
+<span id="cb19-648"><a href="#cb19-648" aria-hidden="true" tabindex="-1"></a><span class="in">    Financial = sum(financial_amt, na.rm = TRUE),</span></span>
+<span id="cb19-649"><a href="#cb19-649" aria-hidden="true" tabindex="-1"></a><span class="in">    `In-Kind` = sum(inkind_amt, na.rm = TRUE),</span></span>
+<span id="cb19-650"><a href="#cb19-650" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
+<span id="cb19-651"><a href="#cb19-651" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-652"><a href="#cb19-652" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(-plot_category, names_to = "type", values_to = "total") %&gt;%</span></span>
+<span id="cb19-653"><a href="#cb19-653" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(plot_category) %&gt;%</span></span>
+<span id="cb19-654"><a href="#cb19-654" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = total / sum(total)) %&gt;%</span></span>
+<span id="cb19-655"><a href="#cb19-655" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb19-656"><a href="#cb19-656" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = plot_category, y = pct, fill = type)) +</span></span>
+<span id="cb19-657"><a href="#cb19-657" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col(alpha = 0.9) +</span></span>
+<span id="cb19-658"><a href="#cb19-658" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(aes(label = format_pct(pct)),</span></span>
+<span id="cb19-659"><a href="#cb19-659" aria-hidden="true" tabindex="-1"></a><span class="in">            position = position_stack(vjust = 0.5), size = 3.5, color = "white",</span></span>
+<span id="cb19-660"><a href="#cb19-660" aria-hidden="true" tabindex="-1"></a><span class="in">            fontface = "bold") +</span></span>
+<span id="cb19-661"><a href="#cb19-661" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c("Financial" = "#3498DB", "In-Kind" = "#E67E22"),</span></span>
+<span id="cb19-662"><a href="#cb19-662" aria-hidden="true" tabindex="-1"></a><span class="in">                    name = "Revenue Type") +</span></span>
+<span id="cb19-663"><a href="#cb19-663" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(labels = percent) +</span></span>
+<span id="cb19-664"><a href="#cb19-664" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb19-665"><a href="#cb19-665" aria-hidden="true" tabindex="-1"></a><span class="in">    x        = NULL,</span></span>
+<span id="cb19-666"><a href="#cb19-666" aria-hidden="true" tabindex="-1"></a><span class="in">    y        = "Share of Revenue",</span></span>
+<span id="cb19-667"><a href="#cb19-667" aria-hidden="true" tabindex="-1"></a><span class="in">    title    = "Financial vs In-Kind Revenue Composition",</span></span>
+<span id="cb19-668"><a href="#cb19-668" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "By identity category (among candidates with positive revenue)"</span></span>
+<span id="cb19-669"><a href="#cb19-669" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb19-670"><a href="#cb19-670" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(axis.text.x = element_text(angle = 30, hjust = 1))</span></span>
+<span id="cb19-671"><a href="#cb19-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-672"><a href="#cb19-672" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_financial_inkind_identity")</span></span>
+<span id="cb19-673"><a href="#cb19-673" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-674"><a href="#cb19-674" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-675"><a href="#cb19-675" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb19-676"><a href="#cb19-676" aria-hidden="true" tabindex="-1"></a><span class="fu">## Financial vs. In-Kind</span></span>
+<span id="cb19-677"><a href="#cb19-677" aria-hidden="true" tabindex="-1"></a>Financial contributions are direct monetary transfers (cash, PIX, bank transfers). In-kind contributions are non-monetary goods and services assigned a monetary value for accounting purposes. The table and density plot above compare these two categories across LGBTQ+ and non-LGBTQ+ candidates.</span>
+<span id="cb19-678"><a href="#cb19-678" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb19-679"><a href="#cb19-679" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-680"><a href="#cb19-680" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb19-681"><a href="#cb19-681" aria-hidden="true" tabindex="-1"></a><span class="fu">## What In-Kind Reveals</span></span>
-<span id="cb19-682"><a href="#cb19-682" aria-hidden="true" tabindex="-1"></a>A higher share of in-kind contributions could signal either (a) grassroots support through volunteer labor and donated goods, or (b) a lack of access to cash-based funding. The interpretation depends on the absolute level: a candidate with high total revenue and a modest in-kind share has a very different profile from one who relies primarily on estimated resource contributions.</span>
-<span id="cb19-683"><a href="#cb19-683" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb19-684"><a href="#cb19-684" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-685"><a href="#cb19-685" aria-hidden="true" tabindex="-1"></a><span class="fu">## Types of In-Kind Contributions</span></span>
+<span id="cb19-680"><a href="#cb19-680" aria-hidden="true" tabindex="-1"></a><span class="fu">## Types of In-Kind Contributions</span></span>
+<span id="cb19-681"><a href="#cb19-681" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-682"><a href="#cb19-682" aria-hidden="true" tabindex="-1"></a>The TSE records the specific type of each in-kind contribution in the field <span class="in">`DS_NATUREZA_RECURSO_ESTIMAVEL`</span>. This variable is only populated for non-financial transactions and describes the nature of the donated good or service (e.g., advertising materials, vehicles, professional services). This section examines which types of in-kind support are most common and whether the composition differs between LGBTQ+ and non-LGBTQ+ candidates.</span>
+<span id="cb19-683"><a href="#cb19-683" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-684"><a href="#cb19-684" aria-hidden="true" tabindex="-1"></a><span class="in">```{r inkind-data}</span></span>
+<span id="cb19-685"><a href="#cb19-685" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
 <span id="cb19-686"><a href="#cb19-686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-687"><a href="#cb19-687" aria-hidden="true" tabindex="-1"></a>The TSE records the specific type of each in-kind contribution in the field <span class="in">`DS_NATUREZA_RECURSO_ESTIMAVEL`</span>. This variable is only populated for non-financial transactions and describes the nature of the donated good or service (e.g., advertising materials, vehicles, professional services). This section examines which types of in-kind support are most common and whether the composition differs between LGBTQ+ and non-LGBTQ+ candidates.</span>
-<span id="cb19-688"><a href="#cb19-688" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-689"><a href="#cb19-689" aria-hidden="true" tabindex="-1"></a><span class="in">```{r inkind-data}</span></span>
-<span id="cb19-690"><a href="#cb19-690" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb19-691"><a href="#cb19-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-692"><a href="#cb19-692" aria-hidden="true" tabindex="-1"></a><span class="in"># Load transaction-level data and filter to in-kind</span></span>
-<span id="cb19-693"><a href="#cb19-693" aria-hidden="true" tabindex="-1"></a><span class="in">receitas &lt;- readRDS(paths$finance_trans_rds)</span></span>
-<span id="cb19-694"><a href="#cb19-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-695"><a href="#cb19-695" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_trans &lt;- receitas %&gt;%</span></span>
-<span id="cb19-696"><a href="#cb19-696" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(DS_NATUREZA_RECEITA != "FINANCEIRO") %&gt;%</span></span>
-<span id="cb19-697"><a href="#cb19-697" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(DS_NATUREZA_RECURSO_ESTIMAVEL),</span></span>
-<span id="cb19-698"><a href="#cb19-698" aria-hidden="true" tabindex="-1"></a><span class="in">         DS_NATUREZA_RECURSO_ESTIMAVEL != "#NULO#",</span></span>
-<span id="cb19-699"><a href="#cb19-699" aria-hidden="true" tabindex="-1"></a><span class="in">         DS_NATUREZA_RECURSO_ESTIMAVEL != "#NULO")</span></span>
-<span id="cb19-700"><a href="#cb19-700" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-701"><a href="#cb19-701" aria-hidden="true" tabindex="-1"></a><span class="in"># Join with df to get LGBTQ+ flag (candidate_id in df == SQ_CANDIDATO in transactions)</span></span>
-<span id="cb19-702"><a href="#cb19-702" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_trans &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-703"><a href="#cb19-703" aria-hidden="true" tabindex="-1"></a><span class="in">  inner_join(</span></span>
-<span id="cb19-704"><a href="#cb19-704" aria-hidden="true" tabindex="-1"></a><span class="in">    df %&gt;% select(candidate_id, lgbtq_candidate),</span></span>
-<span id="cb19-705"><a href="#cb19-705" aria-hidden="true" tabindex="-1"></a><span class="in">    by = c("SQ_CANDIDATO" = "candidate_id")</span></span>
-<span id="cb19-706"><a href="#cb19-706" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-707"><a href="#cb19-707" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+"))</span></span>
-<span id="cb19-708"><a href="#cb19-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-709"><a href="#cb19-709" aria-hidden="true" tabindex="-1"></a><span class="in"># Translate and group Portuguese categories into English labels</span></span>
-<span id="cb19-710"><a href="#cb19-710" aria-hidden="true" tabindex="-1"></a><span class="in"># Top categories get their own label; rare categories are grouped</span></span>
-<span id="cb19-711"><a href="#cb19-711" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_trans &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-712"><a href="#cb19-712" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb19-713"><a href="#cb19-713" aria-hidden="true" tabindex="-1"></a><span class="in">    inkind_en = case_when(</span></span>
-<span id="cb19-714"><a href="#cb19-714" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "materiais impressos")   ~ "Printed materials",</span></span>
-<span id="cb19-715"><a href="#cb19-715" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "adesivos")              ~ "Stickers/decals",</span></span>
-<span id="cb19-716"><a href="#cb19-716" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "veículos")              ~ "Vehicle use",</span></span>
-<span id="cb19-717"><a href="#cb19-717" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "contábeis")             ~ "Accounting services",</span></span>
-<span id="cb19-718"><a href="#cb19-718" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "advocatícios")          ~ "Legal services",</span></span>
-<span id="cb19-719"><a href="#cb19-719" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "militância")            ~ "Grassroots mobilization",</span></span>
-<span id="cb19-720"><a href="#cb19-720" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "rádio|televisão|vídeo") ~ "Media production",</span></span>
-<span id="cb19-721"><a href="#cb19-721" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "terceiros")             ~ "Third-party services",</span></span>
-<span id="cb19-722"><a href="#cb19-722" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "pessoal")               ~ "Personnel costs",</span></span>
-<span id="cb19-723"><a href="#cb19-723" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "jingles|vinhetas")      ~ "Jingles/slogans",</span></span>
-<span id="cb19-724"><a href="#cb19-724" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "bens imóveis")          ~ "Property rental",</span></span>
-<span id="cb19-725"><a href="#cb19-725" aria-hidden="true" tabindex="-1"></a><span class="in">      TRUE                                                               ~ "Other"</span></span>
-<span id="cb19-726"><a href="#cb19-726" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb19-727"><a href="#cb19-727" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-728"><a href="#cb19-728" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-729"><a href="#cb19-729" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-730"><a href="#cb19-730" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-inkind-types}</span></span>
-<span id="cb19-731"><a href="#cb19-731" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-inkind-types</span></span>
-<span id="cb19-732"><a href="#cb19-732" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Top In-Kind Contribution Types (All Candidates)"</span></span>
-<span id="cb19-733"><a href="#cb19-733" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-734"><a href="#cb19-734" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_freq &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-735"><a href="#cb19-735" aria-hidden="true" tabindex="-1"></a><span class="in">  count(inkind_en, sort = TRUE) %&gt;%</span></span>
-<span id="cb19-736"><a href="#cb19-736" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb19-737"><a href="#cb19-737" aria-hidden="true" tabindex="-1"></a><span class="in">    pct = n / sum(n),</span></span>
-<span id="cb19-738"><a href="#cb19-738" aria-hidden="true" tabindex="-1"></a><span class="in">    cum_pct = cumsum(pct)</span></span>
-<span id="cb19-739"><a href="#cb19-739" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-740"><a href="#cb19-740" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-741"><a href="#cb19-741" aria-hidden="true" tabindex="-1"></a><span class="in">n_inkind_types_raw &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-742"><a href="#cb19-742" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(DS_NATUREZA_RECURSO_ESTIMAVEL) %&gt;%</span></span>
-<span id="cb19-743"><a href="#cb19-743" aria-hidden="true" tabindex="-1"></a><span class="in">  n_distinct()</span></span>
-<span id="cb19-744"><a href="#cb19-744" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-745"><a href="#cb19-745" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_freq %&gt;%</span></span>
-<span id="cb19-746"><a href="#cb19-746" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb19-747"><a href="#cb19-747" aria-hidden="true" tabindex="-1"></a><span class="in">    `N Transactions` = format_n(n),</span></span>
-<span id="cb19-748"><a href="#cb19-748" aria-hidden="true" tabindex="-1"></a><span class="in">    `%` = format_pct(pct),</span></span>
-<span id="cb19-749"><a href="#cb19-749" aria-hidden="true" tabindex="-1"></a><span class="in">    `Cum. %` = format_pct(cum_pct)</span></span>
-<span id="cb19-750"><a href="#cb19-750" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-751"><a href="#cb19-751" aria-hidden="true" tabindex="-1"></a><span class="in">  select(</span></span>
-<span id="cb19-752"><a href="#cb19-752" aria-hidden="true" tabindex="-1"></a><span class="in">    `In-Kind Type` = inkind_en,</span></span>
-<span id="cb19-753"><a href="#cb19-753" aria-hidden="true" tabindex="-1"></a><span class="in">    `N Transactions`,</span></span>
-<span id="cb19-754"><a href="#cb19-754" aria-hidden="true" tabindex="-1"></a><span class="in">    `%`,</span></span>
-<span id="cb19-755"><a href="#cb19-755" aria-hidden="true" tabindex="-1"></a><span class="in">    `Cum. %`</span></span>
-<span id="cb19-756"><a href="#cb19-756" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-757"><a href="#cb19-757" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r"))</span></span>
-<span id="cb19-758"><a href="#cb19-758" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-759"><a href="#cb19-759" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-760"><a href="#cb19-760" aria-hidden="true" tabindex="-1"></a><span class="in">```{r inkind-inline}</span></span>
-<span id="cb19-761"><a href="#cb19-761" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb19-762"><a href="#cb19-762" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-763"><a href="#cb19-763" aria-hidden="true" tabindex="-1"></a><span class="in"># Top in-kind type</span></span>
-<span id="cb19-764"><a href="#cb19-764" aria-hidden="true" tabindex="-1"></a><span class="in">top_inkind_type &lt;- inkind_freq$inkind_en[1]</span></span>
-<span id="cb19-765"><a href="#cb19-765" aria-hidden="true" tabindex="-1"></a><span class="in">top_inkind_pct  &lt;- inkind_freq$pct[1]</span></span>
-<span id="cb19-766"><a href="#cb19-766" aria-hidden="true" tabindex="-1"></a><span class="in">second_inkind_type &lt;- inkind_freq$inkind_en[2]</span></span>
-<span id="cb19-767"><a href="#cb19-767" aria-hidden="true" tabindex="-1"></a><span class="in">second_inkind_pct  &lt;- inkind_freq$pct[2]</span></span>
-<span id="cb19-768"><a href="#cb19-768" aria-hidden="true" tabindex="-1"></a><span class="in">top6_cum &lt;- inkind_freq$cum_pct[min(6, nrow(inkind_freq))]</span></span>
-<span id="cb19-769"><a href="#cb19-769" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-770"><a href="#cb19-770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-771"><a href="#cb19-771" aria-hidden="true" tabindex="-1"></a>The TSE records <span class="in">`r n_inkind_types_raw`</span> distinct in-kind categories; we group these into <span class="in">`r nrow(inkind_freq)`</span> English-translated types for readability. The two largest --- **`r top_inkind_type`** (`r format_pct(top_inkind_pct)`) and **`r second_inkind_type`** (<span class="in">`r format_pct(second_inkind_pct)`</span>) --- together account for nearly <span class="in">`r format_pct(inkind_freq$cum_pct[2])`</span> of all in-kind transactions. The top six types cover <span class="in">`r format_pct(top6_cum)`</span>.</span>
+<span id="cb19-687"><a href="#cb19-687" aria-hidden="true" tabindex="-1"></a><span class="in"># Load transaction-level data and filter to in-kind</span></span>
+<span id="cb19-688"><a href="#cb19-688" aria-hidden="true" tabindex="-1"></a><span class="in">receitas &lt;- readRDS(paths$finance_trans_rds)</span></span>
+<span id="cb19-689"><a href="#cb19-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-690"><a href="#cb19-690" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_trans &lt;- receitas %&gt;%</span></span>
+<span id="cb19-691"><a href="#cb19-691" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(DS_NATUREZA_RECEITA != "FINANCEIRO") %&gt;%</span></span>
+<span id="cb19-692"><a href="#cb19-692" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(DS_NATUREZA_RECURSO_ESTIMAVEL),</span></span>
+<span id="cb19-693"><a href="#cb19-693" aria-hidden="true" tabindex="-1"></a><span class="in">         DS_NATUREZA_RECURSO_ESTIMAVEL != "#NULO#",</span></span>
+<span id="cb19-694"><a href="#cb19-694" aria-hidden="true" tabindex="-1"></a><span class="in">         DS_NATUREZA_RECURSO_ESTIMAVEL != "#NULO")</span></span>
+<span id="cb19-695"><a href="#cb19-695" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-696"><a href="#cb19-696" aria-hidden="true" tabindex="-1"></a><span class="in"># Join with df to get LGBTQ+ flag (candidate_id in df == SQ_CANDIDATO in transactions)</span></span>
+<span id="cb19-697"><a href="#cb19-697" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_trans &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-698"><a href="#cb19-698" aria-hidden="true" tabindex="-1"></a><span class="in">  inner_join(</span></span>
+<span id="cb19-699"><a href="#cb19-699" aria-hidden="true" tabindex="-1"></a><span class="in">    df %&gt;% select(candidate_id, lgbtq_candidate),</span></span>
+<span id="cb19-700"><a href="#cb19-700" aria-hidden="true" tabindex="-1"></a><span class="in">    by = c("SQ_CANDIDATO" = "candidate_id")</span></span>
+<span id="cb19-701"><a href="#cb19-701" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-702"><a href="#cb19-702" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(group = if_else(lgbtq_candidate, "LGBTQ+", "Non-LGBTQ+"))</span></span>
+<span id="cb19-703"><a href="#cb19-703" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-704"><a href="#cb19-704" aria-hidden="true" tabindex="-1"></a><span class="in"># Translate and group Portuguese categories into English labels</span></span>
+<span id="cb19-705"><a href="#cb19-705" aria-hidden="true" tabindex="-1"></a><span class="in"># Top categories get their own label; rare categories are grouped</span></span>
+<span id="cb19-706"><a href="#cb19-706" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_trans &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-707"><a href="#cb19-707" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb19-708"><a href="#cb19-708" aria-hidden="true" tabindex="-1"></a><span class="in">    inkind_en = case_when(</span></span>
+<span id="cb19-709"><a href="#cb19-709" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "materiais impressos")   ~ "Printed materials",</span></span>
+<span id="cb19-710"><a href="#cb19-710" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "adesivos")              ~ "Stickers/decals",</span></span>
+<span id="cb19-711"><a href="#cb19-711" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "veículos")              ~ "Vehicle use",</span></span>
+<span id="cb19-712"><a href="#cb19-712" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "contábeis")             ~ "Accounting services",</span></span>
+<span id="cb19-713"><a href="#cb19-713" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "advocatícios")          ~ "Legal services",</span></span>
+<span id="cb19-714"><a href="#cb19-714" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "militância")            ~ "Grassroots mobilization",</span></span>
+<span id="cb19-715"><a href="#cb19-715" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "rádio|televisão|vídeo") ~ "Media production",</span></span>
+<span id="cb19-716"><a href="#cb19-716" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "terceiros")             ~ "Third-party services",</span></span>
+<span id="cb19-717"><a href="#cb19-717" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "pessoal")               ~ "Personnel costs",</span></span>
+<span id="cb19-718"><a href="#cb19-718" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "jingles|vinhetas")      ~ "Jingles/slogans",</span></span>
+<span id="cb19-719"><a href="#cb19-719" aria-hidden="true" tabindex="-1"></a><span class="in">      str_detect(DS_NATUREZA_RECURSO_ESTIMAVEL, "bens imóveis")          ~ "Property rental",</span></span>
+<span id="cb19-720"><a href="#cb19-720" aria-hidden="true" tabindex="-1"></a><span class="in">      TRUE                                                               ~ "Other"</span></span>
+<span id="cb19-721"><a href="#cb19-721" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb19-722"><a href="#cb19-722" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-723"><a href="#cb19-723" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-724"><a href="#cb19-724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-725"><a href="#cb19-725" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-inkind-types}</span></span>
+<span id="cb19-726"><a href="#cb19-726" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-inkind-types</span></span>
+<span id="cb19-727"><a href="#cb19-727" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Top In-Kind Contribution Types (All Candidates)"</span></span>
+<span id="cb19-728"><a href="#cb19-728" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-729"><a href="#cb19-729" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_freq &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-730"><a href="#cb19-730" aria-hidden="true" tabindex="-1"></a><span class="in">  count(inkind_en, sort = TRUE) %&gt;%</span></span>
+<span id="cb19-731"><a href="#cb19-731" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb19-732"><a href="#cb19-732" aria-hidden="true" tabindex="-1"></a><span class="in">    pct = n / sum(n),</span></span>
+<span id="cb19-733"><a href="#cb19-733" aria-hidden="true" tabindex="-1"></a><span class="in">    cum_pct = cumsum(pct)</span></span>
+<span id="cb19-734"><a href="#cb19-734" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-735"><a href="#cb19-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-736"><a href="#cb19-736" aria-hidden="true" tabindex="-1"></a><span class="in">n_inkind_types_raw &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-737"><a href="#cb19-737" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(DS_NATUREZA_RECURSO_ESTIMAVEL) %&gt;%</span></span>
+<span id="cb19-738"><a href="#cb19-738" aria-hidden="true" tabindex="-1"></a><span class="in">  n_distinct()</span></span>
+<span id="cb19-739"><a href="#cb19-739" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-740"><a href="#cb19-740" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_freq %&gt;%</span></span>
+<span id="cb19-741"><a href="#cb19-741" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb19-742"><a href="#cb19-742" aria-hidden="true" tabindex="-1"></a><span class="in">    `N Transactions` = format_n(n),</span></span>
+<span id="cb19-743"><a href="#cb19-743" aria-hidden="true" tabindex="-1"></a><span class="in">    `%` = format_pct(pct),</span></span>
+<span id="cb19-744"><a href="#cb19-744" aria-hidden="true" tabindex="-1"></a><span class="in">    `Cum. %` = format_pct(cum_pct)</span></span>
+<span id="cb19-745"><a href="#cb19-745" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-746"><a href="#cb19-746" aria-hidden="true" tabindex="-1"></a><span class="in">  select(</span></span>
+<span id="cb19-747"><a href="#cb19-747" aria-hidden="true" tabindex="-1"></a><span class="in">    `In-Kind Type` = inkind_en,</span></span>
+<span id="cb19-748"><a href="#cb19-748" aria-hidden="true" tabindex="-1"></a><span class="in">    `N Transactions`,</span></span>
+<span id="cb19-749"><a href="#cb19-749" aria-hidden="true" tabindex="-1"></a><span class="in">    `%`,</span></span>
+<span id="cb19-750"><a href="#cb19-750" aria-hidden="true" tabindex="-1"></a><span class="in">    `Cum. %`</span></span>
+<span id="cb19-751"><a href="#cb19-751" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-752"><a href="#cb19-752" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r"))</span></span>
+<span id="cb19-753"><a href="#cb19-753" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-754"><a href="#cb19-754" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-755"><a href="#cb19-755" aria-hidden="true" tabindex="-1"></a><span class="in">```{r inkind-inline}</span></span>
+<span id="cb19-756"><a href="#cb19-756" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb19-757"><a href="#cb19-757" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-758"><a href="#cb19-758" aria-hidden="true" tabindex="-1"></a><span class="in"># Top in-kind type</span></span>
+<span id="cb19-759"><a href="#cb19-759" aria-hidden="true" tabindex="-1"></a><span class="in">top_inkind_type &lt;- inkind_freq$inkind_en[1]</span></span>
+<span id="cb19-760"><a href="#cb19-760" aria-hidden="true" tabindex="-1"></a><span class="in">top_inkind_pct  &lt;- inkind_freq$pct[1]</span></span>
+<span id="cb19-761"><a href="#cb19-761" aria-hidden="true" tabindex="-1"></a><span class="in">second_inkind_type &lt;- inkind_freq$inkind_en[2]</span></span>
+<span id="cb19-762"><a href="#cb19-762" aria-hidden="true" tabindex="-1"></a><span class="in">second_inkind_pct  &lt;- inkind_freq$pct[2]</span></span>
+<span id="cb19-763"><a href="#cb19-763" aria-hidden="true" tabindex="-1"></a><span class="in">top6_cum &lt;- inkind_freq$cum_pct[min(6, nrow(inkind_freq))]</span></span>
+<span id="cb19-764"><a href="#cb19-764" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-765"><a href="#cb19-765" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-766"><a href="#cb19-766" aria-hidden="true" tabindex="-1"></a>The TSE records <span class="in">`r n_inkind_types_raw`</span> distinct in-kind categories; we group these into <span class="in">`r nrow(inkind_freq)`</span> English-translated types for readability. The two largest --- **`r top_inkind_type`** (`r format_pct(top_inkind_pct)`) and **`r second_inkind_type`** (<span class="in">`r format_pct(second_inkind_pct)`</span>) --- together account for nearly <span class="in">`r format_pct(inkind_freq$cum_pct[2])`</span> of all in-kind transactions. The top six types cover <span class="in">`r format_pct(top6_cum)`</span>.</span>
+<span id="cb19-767"><a href="#cb19-767" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-768"><a href="#cb19-768" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-inkind-types}</span></span>
+<span id="cb19-769"><a href="#cb19-769" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-inkind-types</span></span>
+<span id="cb19-770"><a href="#cb19-770" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Top In-Kind Contribution Types: LGBTQ+ vs Non-LGBTQ+"</span></span>
+<span id="cb19-771"><a href="#cb19-771" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 7</span></span>
 <span id="cb19-772"><a href="#cb19-772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-773"><a href="#cb19-773" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-inkind-types}</span></span>
-<span id="cb19-774"><a href="#cb19-774" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-inkind-types</span></span>
-<span id="cb19-775"><a href="#cb19-775" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Top In-Kind Contribution Types: LGBTQ+ vs Non-LGBTQ+"</span></span>
-<span id="cb19-776"><a href="#cb19-776" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 7</span></span>
-<span id="cb19-777"><a href="#cb19-777" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-778"><a href="#cb19-778" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute shares by group for the top types (excluding "Other")</span></span>
-<span id="cb19-779"><a href="#cb19-779" aria-hidden="true" tabindex="-1"></a><span class="in">top_labels &lt;- inkind_freq %&gt;%</span></span>
-<span id="cb19-780"><a href="#cb19-780" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(inkind_en != "Other") %&gt;%</span></span>
-<span id="cb19-781"><a href="#cb19-781" aria-hidden="true" tabindex="-1"></a><span class="in">  head(8) %&gt;%</span></span>
-<span id="cb19-782"><a href="#cb19-782" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(inkind_en)</span></span>
-<span id="cb19-783"><a href="#cb19-783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-784"><a href="#cb19-784" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_by_group &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-785"><a href="#cb19-785" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(inkind_en %in% top_labels) %&gt;%</span></span>
-<span id="cb19-786"><a href="#cb19-786" aria-hidden="true" tabindex="-1"></a><span class="in">  count(group, inkind_en) %&gt;%</span></span>
-<span id="cb19-787"><a href="#cb19-787" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(group) %&gt;%</span></span>
-<span id="cb19-788"><a href="#cb19-788" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
-<span id="cb19-789"><a href="#cb19-789" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
-<span id="cb19-790"><a href="#cb19-790" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(inkind_en = factor(inkind_en, levels = rev(top_labels)))</span></span>
-<span id="cb19-791"><a href="#cb19-791" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-792"><a href="#cb19-792" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(inkind_by_group, aes(x = pct, y = inkind_en, fill = group)) +</span></span>
-<span id="cb19-793"><a href="#cb19-793" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col(position = "dodge", alpha = 0.85, width = 0.7) +</span></span>
-<span id="cb19-794"><a href="#cb19-794" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(aes(label = format_pct(pct)),</span></span>
-<span id="cb19-795"><a href="#cb19-795" aria-hidden="true" tabindex="-1"></a><span class="in">            position = position_dodge(width = 0.7), hjust = -0.1,</span></span>
-<span id="cb19-796"><a href="#cb19-796" aria-hidden="true" tabindex="-1"></a><span class="in">            size = 3) +</span></span>
-<span id="cb19-797"><a href="#cb19-797" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = pal_lgbtq, name = NULL) +</span></span>
-<span id="cb19-798"><a href="#cb19-798" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = percent, expand = expansion(mult = c(0, 0.15))) +</span></span>
-<span id="cb19-799"><a href="#cb19-799" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb19-800"><a href="#cb19-800" aria-hidden="true" tabindex="-1"></a><span class="in">    x        = "Share of In-Kind Transactions (within group)",</span></span>
-<span id="cb19-801"><a href="#cb19-801" aria-hidden="true" tabindex="-1"></a><span class="in">    y        = NULL,</span></span>
-<span id="cb19-802"><a href="#cb19-802" aria-hidden="true" tabindex="-1"></a><span class="in">    title    = "In-Kind Contribution Types: LGBTQ+ vs Non-LGBTQ+",</span></span>
-<span id="cb19-803"><a href="#cb19-803" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Top 8 types shown; shares computed within each group's in-kind total",</span></span>
-<span id="cb19-804"><a href="#cb19-804" aria-hidden="true" tabindex="-1"></a><span class="in">    caption  = "Categories translated from TSE's DS_NATUREZA_RECURSO_ESTIMAVEL field."</span></span>
-<span id="cb19-805"><a href="#cb19-805" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-806"><a href="#cb19-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-807"><a href="#cb19-807" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_inkind_types_comparison", height = 7)</span></span>
-<span id="cb19-808"><a href="#cb19-808" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-809"><a href="#cb19-809" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-810"><a href="#cb19-810" aria-hidden="true" tabindex="-1"></a><span class="in">```{r inkind-comparison-inline}</span></span>
-<span id="cb19-811"><a href="#cb19-811" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb19-812"><a href="#cb19-812" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-813"><a href="#cb19-813" aria-hidden="true" tabindex="-1"></a><span class="in"># Compare top type across groups</span></span>
-<span id="cb19-814"><a href="#cb19-814" aria-hidden="true" tabindex="-1"></a><span class="in">lgbtq_top &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-815"><a href="#cb19-815" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(group == "LGBTQ+") %&gt;%</span></span>
-<span id="cb19-816"><a href="#cb19-816" aria-hidden="true" tabindex="-1"></a><span class="in">  count(inkind_en, sort = TRUE) %&gt;%</span></span>
-<span id="cb19-817"><a href="#cb19-817" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
-<span id="cb19-818"><a href="#cb19-818" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(pct, n = 1)</span></span>
-<span id="cb19-819"><a href="#cb19-819" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-820"><a href="#cb19-820" aria-hidden="true" tabindex="-1"></a><span class="in">nonlgbtq_top &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-821"><a href="#cb19-821" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(group == "Non-LGBTQ+") %&gt;%</span></span>
-<span id="cb19-822"><a href="#cb19-822" aria-hidden="true" tabindex="-1"></a><span class="in">  count(inkind_en, sort = TRUE) %&gt;%</span></span>
-<span id="cb19-823"><a href="#cb19-823" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
-<span id="cb19-824"><a href="#cb19-824" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(pct, n = 1)</span></span>
-<span id="cb19-825"><a href="#cb19-825" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-826"><a href="#cb19-826" aria-hidden="true" tabindex="-1"></a><span class="in"># Find biggest difference between groups</span></span>
-<span id="cb19-827"><a href="#cb19-827" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_diff &lt;- inkind_trans %&gt;%</span></span>
-<span id="cb19-828"><a href="#cb19-828" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(inkind_en %in% top_labels) %&gt;%</span></span>
-<span id="cb19-829"><a href="#cb19-829" aria-hidden="true" tabindex="-1"></a><span class="in">  count(group, inkind_en) %&gt;%</span></span>
-<span id="cb19-830"><a href="#cb19-830" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(group) %&gt;%</span></span>
-<span id="cb19-831"><a href="#cb19-831" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
-<span id="cb19-832"><a href="#cb19-832" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
-<span id="cb19-833"><a href="#cb19-833" aria-hidden="true" tabindex="-1"></a><span class="in">  select(group, inkind_en, pct) %&gt;%</span></span>
-<span id="cb19-834"><a href="#cb19-834" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(names_from = group, values_from = pct, values_fill = 0) %&gt;%</span></span>
-<span id="cb19-835"><a href="#cb19-835" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(diff = `LGBTQ+` - `Non-LGBTQ+`) %&gt;%</span></span>
-<span id="cb19-836"><a href="#cb19-836" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(abs(diff), n = 1)</span></span>
-<span id="cb19-837"><a href="#cb19-837" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-838"><a href="#cb19-838" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-839"><a href="#cb19-839" aria-hidden="true" tabindex="-1"></a>Among LGBTQ+ candidates, the most common in-kind type is **`r lgbtq_top$inkind_en`** (`r format_pct(lgbtq_top$pct)`), while for non-LGBTQ+ candidates it is **`r nonlgbtq_top$inkind_en`** (`r format_pct(nonlgbtq_top$pct)`). The largest compositional difference is in **`r inkind_diff$inkind_en`**, where the LGBTQ+ share is <span class="in">`r sprintf("%.1f", abs(inkind_diff$diff) * 100)`</span> percentage points <span class="in">`r if (inkind_diff$diff &gt; 0) "higher" else "lower"`</span> than the non-LGBTQ+ share.</span>
+<span id="cb19-773"><a href="#cb19-773" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute shares by group for the top types (excluding "Other")</span></span>
+<span id="cb19-774"><a href="#cb19-774" aria-hidden="true" tabindex="-1"></a><span class="in">top_labels &lt;- inkind_freq %&gt;%</span></span>
+<span id="cb19-775"><a href="#cb19-775" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(inkind_en != "Other") %&gt;%</span></span>
+<span id="cb19-776"><a href="#cb19-776" aria-hidden="true" tabindex="-1"></a><span class="in">  head(8) %&gt;%</span></span>
+<span id="cb19-777"><a href="#cb19-777" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(inkind_en)</span></span>
+<span id="cb19-778"><a href="#cb19-778" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-779"><a href="#cb19-779" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_by_group &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-780"><a href="#cb19-780" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(inkind_en %in% top_labels) %&gt;%</span></span>
+<span id="cb19-781"><a href="#cb19-781" aria-hidden="true" tabindex="-1"></a><span class="in">  count(group, inkind_en) %&gt;%</span></span>
+<span id="cb19-782"><a href="#cb19-782" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(group) %&gt;%</span></span>
+<span id="cb19-783"><a href="#cb19-783" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
+<span id="cb19-784"><a href="#cb19-784" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb19-785"><a href="#cb19-785" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(inkind_en = factor(inkind_en, levels = rev(top_labels)))</span></span>
+<span id="cb19-786"><a href="#cb19-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-787"><a href="#cb19-787" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(inkind_by_group, aes(x = pct, y = inkind_en, fill = group)) +</span></span>
+<span id="cb19-788"><a href="#cb19-788" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col(position = "dodge", alpha = 0.85, width = 0.7) +</span></span>
+<span id="cb19-789"><a href="#cb19-789" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(aes(label = format_pct(pct)),</span></span>
+<span id="cb19-790"><a href="#cb19-790" aria-hidden="true" tabindex="-1"></a><span class="in">            position = position_dodge(width = 0.7), hjust = -0.1,</span></span>
+<span id="cb19-791"><a href="#cb19-791" aria-hidden="true" tabindex="-1"></a><span class="in">            size = 3) +</span></span>
+<span id="cb19-792"><a href="#cb19-792" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = pal_lgbtq, name = NULL) +</span></span>
+<span id="cb19-793"><a href="#cb19-793" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = percent, expand = expansion(mult = c(0, 0.15))) +</span></span>
+<span id="cb19-794"><a href="#cb19-794" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb19-795"><a href="#cb19-795" aria-hidden="true" tabindex="-1"></a><span class="in">    x        = "Share of In-Kind Transactions (within group)",</span></span>
+<span id="cb19-796"><a href="#cb19-796" aria-hidden="true" tabindex="-1"></a><span class="in">    y        = NULL,</span></span>
+<span id="cb19-797"><a href="#cb19-797" aria-hidden="true" tabindex="-1"></a><span class="in">    title    = "In-Kind Contribution Types: LGBTQ+ vs Non-LGBTQ+",</span></span>
+<span id="cb19-798"><a href="#cb19-798" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Top 8 types shown; shares computed within each group's in-kind total",</span></span>
+<span id="cb19-799"><a href="#cb19-799" aria-hidden="true" tabindex="-1"></a><span class="in">    caption  = "Categories translated from TSE's DS_NATUREZA_RECURSO_ESTIMAVEL field."</span></span>
+<span id="cb19-800"><a href="#cb19-800" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-801"><a href="#cb19-801" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-802"><a href="#cb19-802" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "05_inkind_types_comparison", height = 7)</span></span>
+<span id="cb19-803"><a href="#cb19-803" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-804"><a href="#cb19-804" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-805"><a href="#cb19-805" aria-hidden="true" tabindex="-1"></a><span class="in">```{r inkind-comparison-inline}</span></span>
+<span id="cb19-806"><a href="#cb19-806" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb19-807"><a href="#cb19-807" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-808"><a href="#cb19-808" aria-hidden="true" tabindex="-1"></a><span class="in"># Compare top type across groups</span></span>
+<span id="cb19-809"><a href="#cb19-809" aria-hidden="true" tabindex="-1"></a><span class="in">lgbtq_top &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-810"><a href="#cb19-810" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(group == "LGBTQ+") %&gt;%</span></span>
+<span id="cb19-811"><a href="#cb19-811" aria-hidden="true" tabindex="-1"></a><span class="in">  count(inkind_en, sort = TRUE) %&gt;%</span></span>
+<span id="cb19-812"><a href="#cb19-812" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
+<span id="cb19-813"><a href="#cb19-813" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(pct, n = 1)</span></span>
+<span id="cb19-814"><a href="#cb19-814" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-815"><a href="#cb19-815" aria-hidden="true" tabindex="-1"></a><span class="in">nonlgbtq_top &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-816"><a href="#cb19-816" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(group == "Non-LGBTQ+") %&gt;%</span></span>
+<span id="cb19-817"><a href="#cb19-817" aria-hidden="true" tabindex="-1"></a><span class="in">  count(inkind_en, sort = TRUE) %&gt;%</span></span>
+<span id="cb19-818"><a href="#cb19-818" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
+<span id="cb19-819"><a href="#cb19-819" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(pct, n = 1)</span></span>
+<span id="cb19-820"><a href="#cb19-820" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-821"><a href="#cb19-821" aria-hidden="true" tabindex="-1"></a><span class="in"># Find biggest difference between groups</span></span>
+<span id="cb19-822"><a href="#cb19-822" aria-hidden="true" tabindex="-1"></a><span class="in">inkind_diff &lt;- inkind_trans %&gt;%</span></span>
+<span id="cb19-823"><a href="#cb19-823" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(inkind_en %in% top_labels) %&gt;%</span></span>
+<span id="cb19-824"><a href="#cb19-824" aria-hidden="true" tabindex="-1"></a><span class="in">  count(group, inkind_en) %&gt;%</span></span>
+<span id="cb19-825"><a href="#cb19-825" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(group) %&gt;%</span></span>
+<span id="cb19-826"><a href="#cb19-826" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = n / sum(n)) %&gt;%</span></span>
+<span id="cb19-827"><a href="#cb19-827" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb19-828"><a href="#cb19-828" aria-hidden="true" tabindex="-1"></a><span class="in">  select(group, inkind_en, pct) %&gt;%</span></span>
+<span id="cb19-829"><a href="#cb19-829" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(names_from = group, values_from = pct, values_fill = 0) %&gt;%</span></span>
+<span id="cb19-830"><a href="#cb19-830" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(diff = `LGBTQ+` - `Non-LGBTQ+`) %&gt;%</span></span>
+<span id="cb19-831"><a href="#cb19-831" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(abs(diff), n = 1)</span></span>
+<span id="cb19-832"><a href="#cb19-832" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-833"><a href="#cb19-833" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-834"><a href="#cb19-834" aria-hidden="true" tabindex="-1"></a>Among LGBTQ+ candidates, the most common in-kind type is **`r lgbtq_top$inkind_en`** (`r format_pct(lgbtq_top$pct)`), while for non-LGBTQ+ candidates it is **`r nonlgbtq_top$inkind_en`** (`r format_pct(nonlgbtq_top$pct)`). The largest compositional difference is in **`r inkind_diff$inkind_en`**, where the LGBTQ+ share is <span class="in">`r sprintf("%.1f", abs(inkind_diff$diff) * 100)`</span> percentage points <span class="in">`r if (inkind_diff$diff &gt; 0) "higher" else "lower"`</span> than the non-LGBTQ+ share.</span>
+<span id="cb19-835"><a href="#cb19-835" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-836"><a href="#cb19-836" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary</span></span>
+<span id="cb19-837"><a href="#cb19-837" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-838"><a href="#cb19-838" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-computations}</span></span>
+<span id="cb19-839"><a href="#cb19-839" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
 <span id="cb19-840"><a href="#cb19-840" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-841"><a href="#cb19-841" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary</span></span>
-<span id="cb19-842"><a href="#cb19-842" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-843"><a href="#cb19-843" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-computations}</span></span>
-<span id="cb19-844"><a href="#cb19-844" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb19-845"><a href="#cb19-845" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-846"><a href="#cb19-846" aria-hidden="true" tabindex="-1"></a><span class="in"># Funding composition differences</span></span>
-<span id="cb19-847"><a href="#cb19-847" aria-hidden="true" tabindex="-1"></a><span class="in">party_diff_direction &lt;- if (lgbtq_pct_party &gt; nonlgbtq_pct_party) "higher" else if (lgbtq_pct_party &lt; nonlgbtq_pct_party) "lower" else "similar"</span></span>
-<span id="cb19-848"><a href="#cb19-848" aria-hidden="true" tabindex="-1"></a><span class="in">indiv_diff_direction &lt;- if (lgbtq_pct_individual &gt; nonlgbtq_pct_individual) "higher" else if (lgbtq_pct_individual &lt; nonlgbtq_pct_individual) "lower" else "similar"</span></span>
-<span id="cb19-849"><a href="#cb19-849" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-850"><a href="#cb19-850" aria-hidden="true" tabindex="-1"></a><span class="in"># Identity categories</span></span>
-<span id="cb19-851"><a href="#cb19-851" aria-hidden="true" tabindex="-1"></a><span class="in">n_identity_cats &lt;- df %&gt;%</span></span>
-<span id="cb19-852"><a href="#cb19-852" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(lgbtq_candidate, lgbt_category != "Other LGBTQ+") %&gt;%</span></span>
-<span id="cb19-853"><a href="#cb19-853" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(lgbt_category) %&gt;%</span></span>
-<span id="cb19-854"><a href="#cb19-854" aria-hidden="true" tabindex="-1"></a><span class="in">  n_distinct()</span></span>
-<span id="cb19-855"><a href="#cb19-855" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-856"><a href="#cb19-856" aria-hidden="true" tabindex="-1"></a><span class="in"># Highest and lowest median revenue among identity categories</span></span>
-<span id="cb19-857"><a href="#cb19-857" aria-hidden="true" tabindex="-1"></a><span class="in">identity_median_stats &lt;- df %&gt;%</span></span>
-<span id="cb19-858"><a href="#cb19-858" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(lgbtq_candidate, lgbt_category != "Other LGBTQ+") %&gt;%</span></span>
-<span id="cb19-859"><a href="#cb19-859" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(lgbt_category) %&gt;%</span></span>
-<span id="cb19-860"><a href="#cb19-860" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(median_rev = median(total_revenue), .groups = "drop")</span></span>
-<span id="cb19-861"><a href="#cb19-861" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-862"><a href="#cb19-862" aria-hidden="true" tabindex="-1"></a><span class="in">top_median_cat    &lt;- identity_median_stats %&gt;% slice_max(median_rev, n = 1) %&gt;% pull(lgbt_category)</span></span>
-<span id="cb19-863"><a href="#cb19-863" aria-hidden="true" tabindex="-1"></a><span class="in">top_median_val    &lt;- identity_median_stats %&gt;% slice_max(median_rev, n = 1) %&gt;% pull(median_rev)</span></span>
-<span id="cb19-864"><a href="#cb19-864" aria-hidden="true" tabindex="-1"></a><span class="in">bottom_median_cat &lt;- identity_median_stats %&gt;% slice_min(median_rev, n = 1) %&gt;% pull(lgbt_category)</span></span>
-<span id="cb19-865"><a href="#cb19-865" aria-hidden="true" tabindex="-1"></a><span class="in">bottom_median_val &lt;- identity_median_stats %&gt;% slice_min(median_rev, n = 1) %&gt;% pull(median_rev)</span></span>
-<span id="cb19-866"><a href="#cb19-866" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-867"><a href="#cb19-867" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-868"><a href="#cb19-868" aria-hidden="true" tabindex="-1"></a>This chapter documents the financial landscape of LGBTQ+ candidacies in Brazil's 2024 municipal elections. The key patterns are:</span>
-<span id="cb19-869"><a href="#cb19-869" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-870"><a href="#cb19-870" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Revenue scale**: Campaign finance in municipal elections spans several orders of magnitude, from <span class="in">`r format_n(n_zero_rev)`</span> candidates (<span class="in">`r format_pct(pct_zero_rev)`</span>) with zero reported revenue to a maximum of <span class="in">`r format_brl(max(df$total_revenue))`</span>. The median campaign raised <span class="in">`r format_brl(median_rev_all)`</span>.</span>
-<span id="cb19-871"><a href="#cb19-871" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-872"><a href="#cb19-872" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**LGBTQ+ revenue comparison**: LGBTQ+ candidates have a median revenue of <span class="in">`r format_brl(lgbtq_median)`</span>, which is <span class="in">`r median_direction`</span> than the non-LGBTQ+ median of <span class="in">`r format_brl(nonlgbtq_median)`</span> (ratio: <span class="in">`r sprintf("%.2f", median_ratio_overall)`</span>). At the mean, LGBTQ+ candidates raise <span class="in">`r format_brl(lgbtq_mean)`</span> versus <span class="in">`r format_brl(nonlgbtq_mean)`</span> (ratio: <span class="in">`r sprintf("%.2f", mean_ratio_overall)`</span>).</span>
-<span id="cb19-873"><a href="#cb19-873" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-874"><a href="#cb19-874" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Funding composition**: LGBTQ+ candidates have a <span class="in">`r party_diff_direction`</span> average party funding share (<span class="in">`r format_pct100(lgbtq_pct_party)`</span> vs <span class="in">`r format_pct100(nonlgbtq_pct_party)`</span>) and a <span class="in">`r indiv_diff_direction`</span> average individual donor share (<span class="in">`r format_pct100(lgbtq_pct_individual)`</span> vs <span class="in">`r format_pct100(nonlgbtq_pct_individual)`</span>) compared to non-LGBTQ+ candidates.</span>
-<span id="cb19-875"><a href="#cb19-875" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-876"><a href="#cb19-876" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Within-party patterns**: Of <span class="in">`r n_parties_total`</span> top parties examined, <span class="in">`r n_parties_below1_median`</span> show a median revenue ratio below 1 (LGBTQ+ candidates raising less than co-partisans). <span class="in">`r if (n_parties_below1_median &gt;= ceiling(n_parties_total / 2)) "This suggests the revenue difference is not purely a function of party affiliation." else "The within-party patterns do not show a consistent disadvantage for LGBTQ+ candidates."`</span></span>
-<span id="cb19-877"><a href="#cb19-877" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-878"><a href="#cb19-878" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Identity-specific patterns**: Across <span class="in">`r n_identity_cats`</span> identity categories, <span class="in">`r top_median_cat`</span> candidates have the highest median revenue (<span class="in">`r format_brl(top_median_val)`</span>) and <span class="in">`r bottom_median_cat`</span> candidates the lowest (<span class="in">`r format_brl(bottom_median_val)`</span>). <span class="in">`r top_party_cat`</span> candidates rely most heavily on party funding (<span class="in">`r format_pct100(top_party_val)`</span> of revenue on average).</span>
-<span id="cb19-879"><a href="#cb19-879" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-880"><a href="#cb19-880" aria-hidden="true" tabindex="-1"></a>These descriptive patterns set the stage for subsequent regression analysis that can control for confounders such as municipality size, position type, incumbency, and party fixed effects.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb19-841"><a href="#cb19-841" aria-hidden="true" tabindex="-1"></a><span class="in"># Funding composition differences</span></span>
+<span id="cb19-842"><a href="#cb19-842" aria-hidden="true" tabindex="-1"></a><span class="in">party_diff_direction &lt;- if (lgbtq_pct_party &gt; nonlgbtq_pct_party) "higher" else if (lgbtq_pct_party &lt; nonlgbtq_pct_party) "lower" else "similar"</span></span>
+<span id="cb19-843"><a href="#cb19-843" aria-hidden="true" tabindex="-1"></a><span class="in">indiv_diff_direction &lt;- if (lgbtq_pct_individual &gt; nonlgbtq_pct_individual) "higher" else if (lgbtq_pct_individual &lt; nonlgbtq_pct_individual) "lower" else "similar"</span></span>
+<span id="cb19-844"><a href="#cb19-844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-845"><a href="#cb19-845" aria-hidden="true" tabindex="-1"></a><span class="in"># Identity categories</span></span>
+<span id="cb19-846"><a href="#cb19-846" aria-hidden="true" tabindex="-1"></a><span class="in">n_identity_cats &lt;- df %&gt;%</span></span>
+<span id="cb19-847"><a href="#cb19-847" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(lgbtq_candidate, lgbt_category != "Other LGBTQ+") %&gt;%</span></span>
+<span id="cb19-848"><a href="#cb19-848" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(lgbt_category) %&gt;%</span></span>
+<span id="cb19-849"><a href="#cb19-849" aria-hidden="true" tabindex="-1"></a><span class="in">  n_distinct()</span></span>
+<span id="cb19-850"><a href="#cb19-850" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-851"><a href="#cb19-851" aria-hidden="true" tabindex="-1"></a><span class="in"># Highest and lowest median revenue among identity categories</span></span>
+<span id="cb19-852"><a href="#cb19-852" aria-hidden="true" tabindex="-1"></a><span class="in">identity_median_stats &lt;- df %&gt;%</span></span>
+<span id="cb19-853"><a href="#cb19-853" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(lgbtq_candidate, lgbt_category != "Other LGBTQ+") %&gt;%</span></span>
+<span id="cb19-854"><a href="#cb19-854" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(lgbt_category) %&gt;%</span></span>
+<span id="cb19-855"><a href="#cb19-855" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(median_rev = median(total_revenue), .groups = "drop")</span></span>
+<span id="cb19-856"><a href="#cb19-856" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-857"><a href="#cb19-857" aria-hidden="true" tabindex="-1"></a><span class="in">top_median_cat    &lt;- identity_median_stats %&gt;% slice_max(median_rev, n = 1) %&gt;% pull(lgbt_category)</span></span>
+<span id="cb19-858"><a href="#cb19-858" aria-hidden="true" tabindex="-1"></a><span class="in">top_median_val    &lt;- identity_median_stats %&gt;% slice_max(median_rev, n = 1) %&gt;% pull(median_rev)</span></span>
+<span id="cb19-859"><a href="#cb19-859" aria-hidden="true" tabindex="-1"></a><span class="in">bottom_median_cat &lt;- identity_median_stats %&gt;% slice_min(median_rev, n = 1) %&gt;% pull(lgbt_category)</span></span>
+<span id="cb19-860"><a href="#cb19-860" aria-hidden="true" tabindex="-1"></a><span class="in">bottom_median_val &lt;- identity_median_stats %&gt;% slice_min(median_rev, n = 1) %&gt;% pull(median_rev)</span></span>
+<span id="cb19-861"><a href="#cb19-861" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-862"><a href="#cb19-862" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-863"><a href="#cb19-863" aria-hidden="true" tabindex="-1"></a>This chapter documents the financial landscape of LGBTQ+ candidacies in Brazil's 2024 municipal elections. The key patterns are:</span>
+<span id="cb19-864"><a href="#cb19-864" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-865"><a href="#cb19-865" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Revenue scale**: Campaign finance in municipal elections spans several orders of magnitude, from <span class="in">`r format_n(n_zero_rev)`</span> candidates (<span class="in">`r format_pct(pct_zero_rev)`</span>) with zero reported revenue to a maximum of <span class="in">`r format_brl(max(df$total_revenue))`</span>. The median campaign raised <span class="in">`r format_brl(median_rev_all)`</span>.</span>
+<span id="cb19-866"><a href="#cb19-866" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-867"><a href="#cb19-867" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**LGBTQ+ revenue comparison**: LGBTQ+ candidates have a median revenue of <span class="in">`r format_brl(lgbtq_median)`</span>, which is <span class="in">`r median_direction`</span> than the non-LGBTQ+ median of <span class="in">`r format_brl(nonlgbtq_median)`</span> (ratio: <span class="in">`r sprintf("%.2f", median_ratio_overall)`</span>). At the mean, LGBTQ+ candidates raise <span class="in">`r format_brl(lgbtq_mean)`</span> versus <span class="in">`r format_brl(nonlgbtq_mean)`</span> (ratio: <span class="in">`r sprintf("%.2f", mean_ratio_overall)`</span>).</span>
+<span id="cb19-868"><a href="#cb19-868" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-869"><a href="#cb19-869" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Funding composition**: LGBTQ+ candidates have a <span class="in">`r party_diff_direction`</span> average party funding share (<span class="in">`r format_pct100(lgbtq_pct_party)`</span> vs <span class="in">`r format_pct100(nonlgbtq_pct_party)`</span>) and a <span class="in">`r indiv_diff_direction`</span> average individual donor share (<span class="in">`r format_pct100(lgbtq_pct_individual)`</span> vs <span class="in">`r format_pct100(nonlgbtq_pct_individual)`</span>) compared to non-LGBTQ+ candidates.</span>
+<span id="cb19-870"><a href="#cb19-870" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-871"><a href="#cb19-871" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Within-ideology patterns**: Of <span class="in">`r n_ideo_total`</span> ideological blocs examined, <span class="in">`r n_ideo_below1_mean`</span> show a mean revenue ratio below 1 (LGBTQ+ candidates raising less than ideological peers) and <span class="in">`r n_ideo_above1_mean`</span> show a ratio above 1.</span>
+<span id="cb19-872"><a href="#cb19-872" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-873"><a href="#cb19-873" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Identity-specific patterns**: Across <span class="in">`r n_identity_cats`</span> identity categories, <span class="in">`r top_median_cat`</span> candidates have the highest median revenue (<span class="in">`r format_brl(top_median_val)`</span>) and <span class="in">`r bottom_median_cat`</span> candidates the lowest (<span class="in">`r format_brl(bottom_median_val)`</span>). <span class="in">`r top_party_cat`</span> candidates rely most heavily on party funding (<span class="in">`r format_pct100(top_party_val)`</span> of revenue on average).</span>
+<span id="cb19-874"><a href="#cb19-874" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-875"><a href="#cb19-875" aria-hidden="true" tabindex="-1"></a>The next chapters examine intersectional patterns and geographic variation.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
