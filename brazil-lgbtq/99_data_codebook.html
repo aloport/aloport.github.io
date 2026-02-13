@@ -231,7 +231,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#core-candidate-variables" id="toc-core-candidate-variables" class="nav-link" data-scroll-target="#core-candidate-variables"><span class="header-section-number">3.1</span> Core Candidate Variables</a></li>
   <li><a href="#campaign-finance-variables" id="toc-campaign-finance-variables" class="nav-link" data-scroll-target="#campaign-finance-variables"><span class="header-section-number">3.2</span> Campaign Finance Variables</a></li>
-  <li><a href="#transaction-level-finance-variables" id="toc-transaction-level-finance-variables" class="nav-link" data-scroll-target="#transaction-level-finance-variables"><span class="header-section-number">3.3</span> Transaction-Level Finance Variables</a></li>
+  <li><a href="#manifesto-variables" id="toc-manifesto-variables" class="nav-link" data-scroll-target="#manifesto-variables"><span class="header-section-number">3.3</span> Manifesto Variables</a></li>
+  <li><a href="#transaction-level-finance-variables" id="toc-transaction-level-finance-variables" class="nav-link" data-scroll-target="#transaction-level-finance-variables"><span class="header-section-number">3.4</span> Transaction-Level Finance Variables</a></li>
   </ul></li>
   <li><a href="#lgbtq-identification-methodology" id="toc-lgbtq-identification-methodology" class="nav-link" data-scroll-target="#lgbtq-identification-methodology"><span class="header-section-number">4</span> LGBTQ+ Identification Methodology</a>
   <ul class="collapse">
@@ -304,7 +305,7 @@ window.Quarto = {
 </section>
 <section id="source-files" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Source Files</h1>
-<p>The analysis draws on data from three sources: (1) the TSE (<em>Tribunal Superior Eleitoral</em>) official candidate registration files, (2) TSE campaign finance records, and (3) the VOTE LGBT candidate identification project. Geographic boundaries come from the IBGE via the <code>geobr</code> R package.</p>
+<p>The analysis draws on data from four sources: (1) the TSE (<em>Tribunal Superior Eleitoral</em>) official candidate registration files, (2) TSE campaign finance records, (3) TSE candidate manifesto PDFs (<em>propostas de governo</em>), and (4) the VOTE LGBT candidate identification project. Geographic boundaries come from the IBGE via the <code>geobr</code> R package.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -380,6 +381,13 @@ window.Quarto = {
 <td>UTF-8</td>
 <td>Master municipality crosswalk with TSE code, IBGE code, municipality name, state, and population estimates.</td>
 </tr>
+<tr class="even">
+<td>Candidate manifesto ZIPs (27 files)</td>
+<td><code>Data/Brazil/Candidate manifestos/</code> (parent)</td>
+<td>ZIP/PDF</td>
+<td>Latin1</td>
+<td>TSE <em>propostas de governo</em> for mayoral candidates. ~15,800 PDFs across 27 state-level ZIP archives (~11 GB). PDF filenames embed <code>SQ_CANDIDATO</code>.</td>
+</tr>
 </tbody>
 </table>
 <section id="derived-data-files" class="level3" data-number="2.0.1">
@@ -420,18 +428,24 @@ window.Quarto = {
 <td>Transaction-level finance data with classified funding types. Large file (~200MB).</td>
 </tr>
 <tr class="even">
+<td><code>manifestos_text.rds</code></td>
+<td><code>05_process_manifestos.R</code></td>
+<td>RDS</td>
+<td>Extracted manifesto text from ~15,800 mayoral candidate PDFs. Includes text, page/word counts, and extraction success flag.</td>
+</tr>
+<tr class="odd">
 <td><code>analysis_full.rds</code></td>
 <td><code>04_build_analysis_data.R</code></td>
 <td>RDS</td>
-<td>Final merged dataset: candidates + finance + geography. This is the primary analysis file used by all QMD chapters.</td>
+<td>Final merged dataset: candidates + finance + geography + manifestos. This is the primary analysis file used by all QMD chapters.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>municipalities.rds</code></td>
 <td><code>03_prepare_geography.R</code></td>
 <td>RDS</td>
 <td>Cached municipality boundary shapefiles from <code>geobr::read_municipality(year = 2022)</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>states.rds</code></td>
 <td><code>03_prepare_geography.R</code></td>
 <td>RDS</td>
@@ -730,8 +744,54 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
-<section id="transaction-level-finance-variables" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="transaction-level-finance-variables"><span class="header-section-number">3.3</span> Transaction-Level Finance Variables</h2>
+<section id="manifesto-variables" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="manifesto-variables"><span class="header-section-number">3.3</span> Manifesto Variables</h2>
+<p>These variables are merged from <code>manifestos_text.rds</code> onto the candidate dataset. Only mayoral (PREFEITO) candidates have manifestos; all other candidates have <code>has_manifesto = FALSE</code> and <code>NA</code> for text fields.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 35%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Type</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>has_manifesto</code></td>
+<td>logical</td>
+<td>Whether a manifesto PDF was found and text successfully extracted</td>
+<td><code>05_process_manifestos.R</code></td>
+</tr>
+<tr class="even">
+<td><code>manifesto_text</code></td>
+<td>character</td>
+<td>Full extracted text of the candidate’s <em>proposta de governo</em></td>
+<td><code>pdftotext</code> extraction</td>
+</tr>
+<tr class="odd">
+<td><code>manifesto_n_pages</code></td>
+<td>integer</td>
+<td>Page count of the manifesto PDF</td>
+<td><code>pdfinfo</code></td>
+</tr>
+<tr class="even">
+<td><code>manifesto_n_words</code></td>
+<td>integer</td>
+<td>Word count of the extracted manifesto text</td>
+<td>Derived</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="transaction-level-finance-variables" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="transaction-level-finance-variables"><span class="header-section-number">3.4</span> Transaction-Level Finance Variables</h2>
 <p>Available in <code>finance_transactions.rds</code> for detailed analysis.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1092,16 +1152,17 @@ loaded via a namespace (and not attached):
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. code/01_load_candidates.R     -&gt; data/derived/candidates_analysis.rds</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. code/02_load_finance_raw.R    -&gt; data/derived/finance_by_candidate.rds</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     data/derived/finance_transactions.rds</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     output/tables/finance_revenue_source_categories.csv</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. code/03_prepare_geography.R   -&gt; data/geo_cache/municipalities.rds</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     data/geo_cache/states.rds</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. code/04_build_analysis_data.R -&gt; data/derived/analysis_full.rds</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># After all four scripts have run:</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. quarto render docs/           -&gt; docs/_site/ (rendered website)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. code/01_load_candidates.R       -&gt; data/derived/candidates_analysis.rds</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. code/02_load_finance_raw.R      -&gt; data/derived/finance_by_candidate.rds</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                                       data/derived/finance_transactions.rds</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                       output/tables/finance_revenue_source_categories.csv</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. code/03_prepare_geography.R     -&gt; data/geo_cache/municipalities.rds</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                                       data/geo_cache/states.rds</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. code/05_process_manifestos.R    -&gt; data/derived/manifestos_text.rds</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. code/04_build_analysis_data.R   -&gt; data/derived/analysis_full.rds</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># After all five scripts have run:</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. quarto render docs/             -&gt; docs/_site/ (rendered website)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -1113,7 +1174,7 @@ loaded via a namespace (and not attached):
 <li>Download the raw TSE campaign finance files from the same portal</li>
 <li>Contact VOTE LGBT for their candidate identification list</li>
 <li>Run the parent project’s integration scripts to produce the processed files</li>
-<li>Run this project’s data preparation scripts in order</li>
+<li>Run this project’s data preparation scripts in order (01, 02, 03, 05, then 04)</li>
 </ol>
 <p>All code in this project is designed to be portable given the correct <code>paths</code> configuration in <code>code/00_setup.R</code>.</p>
 
@@ -1608,7 +1669,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># Source Files</span></span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>The analysis draws on data from three sources: (1) the TSE (*Tribunal Superior Eleitoral*) official candidate registration files, (2) TSE campaign finance records, and (3) the VOTE LGBT candidate identification project. Geographic boundaries come from the IBGE via the <span class="in">`geobr`</span> R package.</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>The analysis draws on data from four sources: (1) the TSE (*Tribunal Superior Eleitoral*) official candidate registration files, (2) TSE campaign finance records, (3) TSE candidate manifesto PDFs (*propostas de governo*), and (4) the VOTE LGBT candidate identification project. Geographic boundaries come from the IBGE via the <span class="in">`geobr`</span> R package.</span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r source-files}</span></span>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: source-files</span></span>
@@ -1628,327 +1689,340 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>| <span class="in">`campaign_finance_aggregated.csv`</span> | <span class="in">`Data/Processed/intermediate/`</span> (parent) | CSV | UTF-8 | Pre-existing candidate-level finance aggregation from parent project. Used for validation against our independent aggregation. |</span>
 <span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>| <span class="in">`crosswalk_tse_to_geobr.csv`</span> | <span class="in">`Data/Processed/intermediate/`</span> (parent) | CSV | UTF-8 | Crosswalk between TSE municipality codes and IBGE/geobr municipality codes. |</span>
 <span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>| <span class="in">`municipality_crosswalk_master.csv`</span> | <span class="in">`Data/Processed/intermediate/`</span> (parent) | CSV | UTF-8 | Master municipality crosswalk with TSE code, IBGE code, municipality name, state, and population estimates. |</span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Derived Data Files</span></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>These files are created by this project's data preparation scripts and stored in <span class="in">`data/derived/`</span>.</span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>| File | Script | Format | Description |</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>|------|--------|--------|-------------|</span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>| <span class="in">`candidates_analysis.rds`</span> | <span class="in">`01_load_candidates.R`</span> | RDS | Cleaned candidate dataset with recoded variables, LGBTQ+ flags, ideology scores, and simplified demographics. |</span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>| <span class="in">`finance_by_candidate.rds`</span> | <span class="in">`02_load_finance_raw.R`</span> | RDS | Candidate-level campaign finance summary: total revenue, funding source amounts and shares, donor counts. |</span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>| <span class="in">`finance_transactions.rds`</span> | <span class="in">`02_load_finance_raw.R`</span> | RDS | Transaction-level finance data with classified funding types. Large file (~200MB). |</span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>| <span class="in">`analysis_full.rds`</span> | <span class="in">`04_build_analysis_data.R`</span> | RDS | Final merged dataset: candidates + finance + geography. This is the primary analysis file used by all QMD chapters. |</span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>| <span class="in">`municipalities.rds`</span> | <span class="in">`03_prepare_geography.R`</span> | RDS | Cached municipality boundary shapefiles from <span class="in">`geobr::read_municipality(year = 2022)`</span>. |</span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>| <span class="in">`states.rds`</span> | <span class="in">`03_prepare_geography.R`</span> | RDS | Cached state boundary shapefiles from <span class="in">`geobr::read_state(year = 2020)`</span>. |</span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a><span class="fu">### Output Files</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>| Candidate manifesto ZIPs (27 files) | <span class="in">`Data/Brazil/Candidate manifestos/`</span> (parent) | ZIP/PDF | Latin1 | TSE *propostas de governo* for mayoral candidates. ~15,800 PDFs across 27 state-level ZIP archives (~11 GB). PDF filenames embed <span class="in">`SQ_CANDIDATO`</span>. |</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### Derived Data Files</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>These files are created by this project's data preparation scripts and stored in <span class="in">`data/derived/`</span>.</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>| File | Script | Format | Description |</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>|------|--------|--------|-------------|</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>| <span class="in">`candidates_analysis.rds`</span> | <span class="in">`01_load_candidates.R`</span> | RDS | Cleaned candidate dataset with recoded variables, LGBTQ+ flags, ideology scores, and simplified demographics. |</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>| <span class="in">`finance_by_candidate.rds`</span> | <span class="in">`02_load_finance_raw.R`</span> | RDS | Candidate-level campaign finance summary: total revenue, funding source amounts and shares, donor counts. |</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>| <span class="in">`finance_transactions.rds`</span> | <span class="in">`02_load_finance_raw.R`</span> | RDS | Transaction-level finance data with classified funding types. Large file (~200MB). |</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>| <span class="in">`manifestos_text.rds`</span> | <span class="in">`05_process_manifestos.R`</span> | RDS | Extracted manifesto text from ~15,800 mayoral candidate PDFs. Includes text, page/word counts, and extraction success flag. |</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>| <span class="in">`analysis_full.rds`</span> | <span class="in">`04_build_analysis_data.R`</span> | RDS | Final merged dataset: candidates + finance + geography + manifestos. This is the primary analysis file used by all QMD chapters. |</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>| <span class="in">`municipalities.rds`</span> | <span class="in">`03_prepare_geography.R`</span> | RDS | Cached municipality boundary shapefiles from <span class="in">`geobr::read_municipality(year = 2022)`</span>. |</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>| <span class="in">`states.rds`</span> | <span class="in">`03_prepare_geography.R`</span> | RDS | Cached state boundary shapefiles from <span class="in">`geobr::read_state(year = 2020)`</span>. |</span>
 <span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>| Directory | Contents |</span>
-<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>|-----------|----------|</span>
-<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>| <span class="in">`output/tables/`</span> | CSV exports of key summary tables, including <span class="in">`finance_revenue_source_categories.csv`</span>. |</span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>| <span class="in">`output/figures/`</span> | PNG and PDF exports of all figures, generated by <span class="in">`save_figure()`</span>. |</span>
-<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a><span class="fu"># Variable Dictionary</span></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### Output Files</span></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>| Directory | Contents |</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>|-----------|----------|</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>| <span class="in">`output/tables/`</span> | CSV exports of key summary tables, including <span class="in">`finance_revenue_source_categories.csv`</span>. |</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>| <span class="in">`output/figures/`</span> | PNG and PDF exports of all figures, generated by <span class="in">`save_figure()`</span>. |</span>
 <span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core Candidate Variables</span></span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a><span class="fu"># Variable Dictionary</span></span>
 <span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>| Variable | Type | Description | Source | Example Values | Missing |</span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>|----------|------|-------------|--------|----------------|---------|</span>
-<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>| <span class="in">`candidate_id`</span> | character | TSE sequential candidate identifier (<span class="in">`SQ_CANDIDATO`</span>) | TSE registration | <span class="in">`"280000000001"`</span> | 0% |</span>
-<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbtq_candidate`</span> | logical | Whether candidate is identified as LGBTQ+ (TSE self-disclosure OR VOTE LGBT match) | TSE + VOTE LGBT | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | 0% |</span>
-<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>| <span class="in">`trans_candidate`</span> | logical | Whether candidate is identified as transgender (subset of LGBTQ+) | TSE + VOTE LGBT | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | 0% |</span>
-<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbtq_label`</span> | factor | Binary label for plotting | Derived | <span class="in">`"LGBTQ+"`</span>, <span class="in">`"Non-LGBTQ+"`</span> | 0% |</span>
-<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbt_category`</span> | factor | Disaggregated identity category. Trans is prioritized over sexual orientation. | Derived | <span class="in">`"Non-LGBTQ+"`</span>, <span class="in">`"Gay"`</span>, <span class="in">`"Lesbian"`</span>, <span class="in">`"Bisexual+"`</span>, <span class="in">`"Trans"`</span>, <span class="in">`"Asexual"`</span>, <span class="in">`"Other LGBTQ+"`</span> | 0% |</span>
-<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>| <span class="in">`female`</span> | logical | Whether candidate's registered gender is female | TSE | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | &lt;1% |</span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>| <span class="in">`nonwhite`</span> | logical | Whether candidate's race is not "Branca" (White) | TSE | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | ~1% |</span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>| <span class="in">`race_simple`</span> | factor | Simplified race category | Derived from TSE <span class="in">`DS_COR_RACA`</span> | <span class="in">`"White"`</span>, <span class="in">`"Black"`</span>, <span class="in">`"Brown"`</span>, <span class="in">`"Other"`</span> | ~1% |</span>
-<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>| <span class="in">`age`</span> | numeric | Candidate age at election date | TSE | <span class="in">`18`</span> to <span class="in">`100+`</span> | &lt;1% |</span>
-<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>| <span class="in">`age_group`</span> | factor | Binned age categories | Derived | <span class="in">`"18-29"`</span>, <span class="in">`"30-39"`</span>, <span class="in">`"40-49"`</span>, <span class="in">`"50-59"`</span>, <span class="in">`"60+"`</span> | &lt;1% |</span>
-<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>| <span class="in">`education_simple`</span> | factor | Simplified education level (3 categories) | Derived from TSE <span class="in">`DS_GRAU_INSTRUCAO`</span> | <span class="in">`"Less than HS"`</span>, <span class="in">`"High School"`</span>, <span class="in">`"College+"`</span> | &lt;1% |</span>
-<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>| <span class="in">`party_abbrev`</span> | character | Party abbreviation | TSE | <span class="in">`"PT"`</span>, <span class="in">`"PL"`</span>, <span class="in">`"MDB"`</span> | 0% |</span>
-<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>| <span class="in">`ideology_score`</span> | numeric | Party ideology score (0 = far left, 10 = far right) | Bolognesi et al. | <span class="in">`1.5`</span> to <span class="in">`9.2`</span> | ~2% (minor parties) |</span>
-<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>| <span class="in">`ideology_category`</span> | factor | Left/Center/Right classification | Derived from <span class="in">`ideology_score`</span> | <span class="in">`"Left"`</span>, <span class="in">`"Center"`</span>, <span class="in">`"Right"`</span> | ~2% |</span>
-<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a>| <span class="in">`position_simple`</span> | factor | Simplified position type | TSE | <span class="in">`"City Councilor"`</span>, <span class="in">`"Mayor"`</span>, <span class="in">`"Vice Mayor"`</span> | 0% |</span>
-<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>| <span class="in">`elected`</span> | logical | Whether candidate was elected | TSE | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | ~5.4% |</span>
-<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>| <span class="in">`state_abbrev`</span> | character | Two-letter state abbreviation | TSE | <span class="in">`"SP"`</span>, <span class="in">`"RJ"`</span>, <span class="in">`"BA"`</span> | 0% |</span>
-<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>| <span class="in">`region`</span> | factor | Brazilian macro-region | Derived from <span class="in">`state_abbrev`</span> | <span class="in">`"North"`</span>, <span class="in">`"Northeast"`</span>, <span class="in">`"Center-West"`</span>, <span class="in">`"Southeast"`</span>, <span class="in">`"South"`</span> | 0% |</span>
-<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>| <span class="in">`geobr_code`</span> | numeric | IBGE municipality code (7 digits) compatible with <span class="in">`geobr`</span> | Crosswalk | <span class="in">`3550308`</span> (Sao Paulo) | &lt;1% |</span>
-<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Campaign Finance Variables</span></span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core Candidate Variables</span></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>| Variable | Type | Description | Source | Example Values | Missing |</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>|----------|------|-------------|--------|----------------|---------|</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>| <span class="in">`candidate_id`</span> | character | TSE sequential candidate identifier (<span class="in">`SQ_CANDIDATO`</span>) | TSE registration | <span class="in">`"280000000001"`</span> | 0% |</span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbtq_candidate`</span> | logical | Whether candidate is identified as LGBTQ+ (TSE self-disclosure OR VOTE LGBT match) | TSE + VOTE LGBT | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | 0% |</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>| <span class="in">`trans_candidate`</span> | logical | Whether candidate is identified as transgender (subset of LGBTQ+) | TSE + VOTE LGBT | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | 0% |</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbtq_label`</span> | factor | Binary label for plotting | Derived | <span class="in">`"LGBTQ+"`</span>, <span class="in">`"Non-LGBTQ+"`</span> | 0% |</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>| <span class="in">`lgbt_category`</span> | factor | Disaggregated identity category. Trans is prioritized over sexual orientation. | Derived | <span class="in">`"Non-LGBTQ+"`</span>, <span class="in">`"Gay"`</span>, <span class="in">`"Lesbian"`</span>, <span class="in">`"Bisexual+"`</span>, <span class="in">`"Trans"`</span>, <span class="in">`"Asexual"`</span>, <span class="in">`"Other LGBTQ+"`</span> | 0% |</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>| <span class="in">`female`</span> | logical | Whether candidate's registered gender is female | TSE | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | &lt;1% |</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>| <span class="in">`nonwhite`</span> | logical | Whether candidate's race is not "Branca" (White) | TSE | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | ~1% |</span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>| <span class="in">`race_simple`</span> | factor | Simplified race category | Derived from TSE <span class="in">`DS_COR_RACA`</span> | <span class="in">`"White"`</span>, <span class="in">`"Black"`</span>, <span class="in">`"Brown"`</span>, <span class="in">`"Other"`</span> | ~1% |</span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>| <span class="in">`age`</span> | numeric | Candidate age at election date | TSE | <span class="in">`18`</span> to <span class="in">`100+`</span> | &lt;1% |</span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>| <span class="in">`age_group`</span> | factor | Binned age categories | Derived | <span class="in">`"18-29"`</span>, <span class="in">`"30-39"`</span>, <span class="in">`"40-49"`</span>, <span class="in">`"50-59"`</span>, <span class="in">`"60+"`</span> | &lt;1% |</span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>| <span class="in">`education_simple`</span> | factor | Simplified education level (3 categories) | Derived from TSE <span class="in">`DS_GRAU_INSTRUCAO`</span> | <span class="in">`"Less than HS"`</span>, <span class="in">`"High School"`</span>, <span class="in">`"College+"`</span> | &lt;1% |</span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>| <span class="in">`party_abbrev`</span> | character | Party abbreviation | TSE | <span class="in">`"PT"`</span>, <span class="in">`"PL"`</span>, <span class="in">`"MDB"`</span> | 0% |</span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a>| <span class="in">`ideology_score`</span> | numeric | Party ideology score (0 = far left, 10 = far right) | Bolognesi et al. | <span class="in">`1.5`</span> to <span class="in">`9.2`</span> | ~2% (minor parties) |</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>| <span class="in">`ideology_category`</span> | factor | Left/Center/Right classification | Derived from <span class="in">`ideology_score`</span> | <span class="in">`"Left"`</span>, <span class="in">`"Center"`</span>, <span class="in">`"Right"`</span> | ~2% |</span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>| <span class="in">`position_simple`</span> | factor | Simplified position type | TSE | <span class="in">`"City Councilor"`</span>, <span class="in">`"Mayor"`</span>, <span class="in">`"Vice Mayor"`</span> | 0% |</span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>| <span class="in">`elected`</span> | logical | Whether candidate was elected | TSE | <span class="in">`TRUE`</span>, <span class="in">`FALSE`</span> | ~5.4% |</span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>| <span class="in">`state_abbrev`</span> | character | Two-letter state abbreviation | TSE | <span class="in">`"SP"`</span>, <span class="in">`"RJ"`</span>, <span class="in">`"BA"`</span> | 0% |</span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>| <span class="in">`region`</span> | factor | Brazilian macro-region | Derived from <span class="in">`state_abbrev`</span> | <span class="in">`"North"`</span>, <span class="in">`"Northeast"`</span>, <span class="in">`"Center-West"`</span>, <span class="in">`"Southeast"`</span>, <span class="in">`"South"`</span> | 0% |</span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a>| <span class="in">`geobr_code`</span> | numeric | IBGE municipality code (7 digits) compatible with <span class="in">`geobr`</span> | Crosswalk | <span class="in">`3550308`</span> (Sao Paulo) | &lt;1% |</span>
 <span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>These variables are merged from <span class="in">`finance_by_candidate.rds`</span> onto the candidate dataset. Candidates with no finance records have all finance variables set to 0.</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Campaign Finance Variables</span></span>
 <span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>| Variable | Type | Description | Source |</span>
-<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>|----------|------|-------------|--------|</span>
-<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>| <span class="in">`total_revenue`</span> | numeric | Total campaign revenue in R$ | TSE receitas |</span>
-<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>| <span class="in">`n_transactions`</span> | integer | Number of revenue transactions | TSE receitas |</span>
-<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>| <span class="in">`n_unique_donors`</span> | integer | Number of distinct donor IDs | TSE receitas |</span>
-<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>| <span class="in">`self_funding_amt`</span> | numeric | Revenue from candidate's own resources (R$) | Classified from <span class="in">`DS_ORIGEM_RECEITA`</span> |</span>
-<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>| <span class="in">`party_funding_amt`</span> | numeric | Revenue from party transfers (R$) | Classified |</span>
-<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>| <span class="in">`individual_funding_amt`</span> | numeric | Revenue from individual donors (R$) | Classified |</span>
-<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>| <span class="in">`crowdfunding_amt`</span> | numeric | Revenue from crowdfunding platforms (R$) | Classified |</span>
-<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_self`</span> | numeric | Self-funding as % of total revenue (0-100 scale) | Derived |</span>
-<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_party`</span> | numeric | Party funding as % of total (0-100) | Derived |</span>
-<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_individual`</span> | numeric | Individual funding as % of total (0-100) | Derived |</span>
-<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_crowdfunding`</span> | numeric | Crowdfunding as % of total (0-100) | Derived |</span>
-<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>| <span class="in">`financial_amt`</span> | numeric | Total financial (cash) contributions (R$) | From <span class="in">`DS_NATUREZA_RECEITA == "FINANCEIRO"`</span> |</span>
-<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>| <span class="in">`inkind_amt`</span> | numeric | Total in-kind/estimated contributions (R$) | From <span class="in">`DS_NATUREZA_RECEITA != "FINANCEIRO"`</span> |</span>
-<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## Transaction-Level Finance Variables</span></span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>These variables are merged from <span class="in">`finance_by_candidate.rds`</span> onto the candidate dataset. Candidates with no finance records have all finance variables set to 0.</span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>| Variable | Type | Description | Source |</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>|----------|------|-------------|--------|</span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>| <span class="in">`total_revenue`</span> | numeric | Total campaign revenue in R$ | TSE receitas |</span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>| <span class="in">`n_transactions`</span> | integer | Number of revenue transactions | TSE receitas |</span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>| <span class="in">`n_unique_donors`</span> | integer | Number of distinct donor IDs | TSE receitas |</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>| <span class="in">`self_funding_amt`</span> | numeric | Revenue from candidate's own resources (R$) | Classified from <span class="in">`DS_ORIGEM_RECEITA`</span> |</span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>| <span class="in">`party_funding_amt`</span> | numeric | Revenue from party transfers (R$) | Classified |</span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>| <span class="in">`individual_funding_amt`</span> | numeric | Revenue from individual donors (R$) | Classified |</span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>| <span class="in">`crowdfunding_amt`</span> | numeric | Revenue from crowdfunding platforms (R$) | Classified |</span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_self`</span> | numeric | Self-funding as % of total revenue (0-100 scale) | Derived |</span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_party`</span> | numeric | Party funding as % of total (0-100) | Derived |</span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_individual`</span> | numeric | Individual funding as % of total (0-100) | Derived |</span>
+<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>| <span class="in">`pct_crowdfunding`</span> | numeric | Crowdfunding as % of total (0-100) | Derived |</span>
+<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a>| <span class="in">`financial_amt`</span> | numeric | Total financial (cash) contributions (R$) | From <span class="in">`DS_NATUREZA_RECEITA == "FINANCEIRO"`</span> |</span>
+<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a>| <span class="in">`inkind_amt`</span> | numeric | Total in-kind/estimated contributions (R$) | From <span class="in">`DS_NATUREZA_RECEITA != "FINANCEIRO"`</span> |</span>
 <span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a>Available in <span class="in">`finance_transactions.rds`</span> for detailed analysis.</span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Manifesto Variables</span></span>
 <span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a>| Variable | Type | Description |</span>
-<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a>|----------|------|-------------|</span>
-<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>| <span class="in">`SQ_CANDIDATO`</span> | character | Candidate sequential ID (join key) |</span>
-<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_ORIGEM_RECEITA`</span> | character | TSE revenue source category (Portuguese) |</span>
-<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_NATUREZA_RECEITA`</span> | character | Financial vs in-kind classification |</span>
-<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_ESPECIE_RECEITA`</span> | character | Payment method (PIX, bank transfer, check, etc.) |</span>
-<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_NATUREZA_RECURSO_ESTIMAVEL`</span> | character | Type of in-kind contribution (when applicable) |</span>
-<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a>| <span class="in">`VR_RECEITA`</span> | numeric | Transaction amount in R$ |</span>
-<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>| <span class="in">`funding_type`</span> | character | Our classified funding type: <span class="in">`self_funding`</span>, <span class="in">`party_funding`</span>, <span class="in">`individual_funding`</span>, <span class="in">`crowdfunding`</span>, <span class="in">`other_candidates`</span>, <span class="in">`other`</span> |</span>
-<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>| <span class="in">`NR_CPF_CNPJ_DOADOR`</span> | character | Donor CPF (individual) or CNPJ (entity) |</span>
-<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>| <span class="in">`NM_DOADOR`</span> | character | Donor name |</span>
-<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_GENERO`</span> | character | Donor gender (TSE categories) |</span>
-<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_COR_RACA`</span> | character | Donor race/color (TSE categories) |</span>
-<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DT_RECEITA`</span> | character | Transaction date |</span>
-<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a><span class="fu"># LGBTQ+ Identification Methodology</span></span>
-<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two Sources of Identification</span></span>
-<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>LGBTQ+ candidates are identified through two complementary mechanisms:</span>
-<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. TSE Self-Disclosure (New in 2024)</span></span>
-<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>For the first time, the TSE's 2024 candidate registration form included optional fields for:</span>
-<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sexual orientation**: Heterossexual, Gay, Lesbica, Bissexual, Pansexual, Assexual, or open text</span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Gender identity**: Cisgenero, Transgenero/Travesti, Nao-binario, or open text</span>
+<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a>These variables are merged from <span class="in">`manifestos_text.rds`</span> onto the candidate dataset. Only mayoral (PREFEITO) candidates have manifestos; all other candidates have <span class="in">`has_manifesto = FALSE`</span> and <span class="in">`NA`</span> for text fields.</span>
+<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>| Variable | Type | Description | Source |</span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>|----------|------|-------------|--------|</span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a>| <span class="in">`has_manifesto`</span> | logical | Whether a manifesto PDF was found and text successfully extracted | <span class="in">`05_process_manifestos.R`</span> |</span>
+<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a>| <span class="in">`manifesto_text`</span> | character | Full extracted text of the candidate's *proposta de governo* | <span class="in">`pdftotext`</span> extraction |</span>
+<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a>| <span class="in">`manifesto_n_pages`</span> | integer | Page count of the manifesto PDF | <span class="in">`pdfinfo`</span> |</span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a>| <span class="in">`manifesto_n_words`</span> | integer | Word count of the extracted manifesto text | Derived |</span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Transaction-Level Finance Variables</span></span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>Available in <span class="in">`finance_transactions.rds`</span> for detailed analysis.</span>
+<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a>| Variable | Type | Description |</span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>|----------|------|-------------|</span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a>| <span class="in">`SQ_CANDIDATO`</span> | character | Candidate sequential ID (join key) |</span>
+<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_ORIGEM_RECEITA`</span> | character | TSE revenue source category (Portuguese) |</span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_NATUREZA_RECEITA`</span> | character | Financial vs in-kind classification |</span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_ESPECIE_RECEITA`</span> | character | Payment method (PIX, bank transfer, check, etc.) |</span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_NATUREZA_RECURSO_ESTIMAVEL`</span> | character | Type of in-kind contribution (when applicable) |</span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>| <span class="in">`VR_RECEITA`</span> | numeric | Transaction amount in R$ |</span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>| <span class="in">`funding_type`</span> | character | Our classified funding type: <span class="in">`self_funding`</span>, <span class="in">`party_funding`</span>, <span class="in">`individual_funding`</span>, <span class="in">`crowdfunding`</span>, <span class="in">`other_candidates`</span>, <span class="in">`other`</span> |</span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>| <span class="in">`NR_CPF_CNPJ_DOADOR`</span> | character | Donor CPF (individual) or CNPJ (entity) |</span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>| <span class="in">`NM_DOADOR`</span> | character | Donor name |</span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_GENERO`</span> | character | Donor gender (TSE categories) |</span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DS_COR_RACA`</span> | character | Donor race/color (TSE categories) |</span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>| <span class="in">`DT_RECEITA`</span> | character | Transaction date |</span>
 <span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a>Candidates who reported any non-heterosexual orientation or non-cisgender identity are flagged as LGBTQ+. This is the primary identification source and captures the majority of identified LGBTQ+ candidates.</span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="fu"># LGBTQ+ Identification Methodology</span></span>
 <span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tse-disclosure}</span></span>
-<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tse-disclosure</span></span>
-<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two Sources of Identification</span></span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a>LGBTQ+ candidates are identified through two complementary mechanisms:</span>
 <span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a><span class="in"># TSE self-disclosure logic (simplified)</span></span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a><span class="in">tse_lgbtq &lt;- sexual_orientation != "Heterossexual" |</span></span>
-<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a><span class="in">             gender_identity != "Cisgenero"</span></span>
-<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. VOTE LGBT Candidate List</span></span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. TSE Self-Disclosure (New in 2024)</span></span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>For the first time, the TSE's 2024 candidate registration form included optional fields for:</span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sexual orientation**: Heterossexual, Gay, Lesbica, Bissexual, Pansexual, Assexual, or open text</span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Gender identity**: Cisgenero, Transgenero/Travesti, Nao-binario, or open text</span>
 <span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a>VOTE LGBT (*Voto com Orgulho*) is a civil society organization that identifies and supports LGBTQ+ candidates in Brazilian elections. Their list includes candidates who:</span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a>Candidates who reported any non-heterosexual orientation or non-cisgender identity are flagged as LGBTQ+. This is the primary identification source and captures the majority of identified LGBTQ+ candidates.</span>
 <span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Self-identify to the organization as LGBTQ+</span>
-<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Are publicly known LGBTQ+ community members</span>
-<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Are nominated by LGBTQ+ organizations</span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tse-disclosure}</span></span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tse-disclosure</span></span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
 <span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a>The matching between VOTE LGBT names and TSE candidate records uses a two-step process:</span>
-<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{r matching-logic}</span></span>
-<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: matching-logic</span></span>
-<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 1: Exact match on candidate name (after normalization)</span></span>
-<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="in"># - Remove accents, standardize spacing, uppercase</span></span>
-<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a><span class="in"># - Match on full name, with state as secondary filter</span></span>
-<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 2: Fuzzy match for remaining unmatched</span></span>
-<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a><span class="in"># - String distance (Jaro-Winkler) with threshold</span></span>
-<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a><span class="in"># - Manual review of ambiguous matches</span></span>
-<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a><span class="in"># - State + party used as disambiguation</span></span>
-<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Priority Rules for Identity Categories</span></span>
-<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a>When a candidate is identified through both sources, or when multiple identity labels apply, the following priority rules determine the <span class="in">`lgbt_category`</span> assignment:</span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r priority-rules}</span></span>
-<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: priority-rules</span></span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a><span class="in"># Priority rules (implemented in make_lgbt_category()):</span></span>
-<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Non-LGBTQ+ candidates: lgbtq_candidate == FALSE -&gt; "Non-LGBTQ+"</span></span>
-<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Trans identity is prioritized: trans_candidate == TRUE -&gt; "Trans"</span></span>
-<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="in">#    (regardless of sexual orientation, since trans is a gender identity</span></span>
-<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a><span class="in">#     that cross-cuts sexual orientation)</span></span>
-<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. Sexual orientation categories in order:</span></span>
-<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Gay" (male homosexual)</span></span>
-<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Lesbian" (female homosexual, "Lesbica" in Portuguese)</span></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Bisexual+" (bisexual or pansexual, collapsed)</span></span>
-<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Asexual"</span></span>
-<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Other LGBTQ+" (any remaining identified candidate)</span></span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a><span class="in"># TSE self-disclosure logic (simplified)</span></span>
+<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a><span class="in">tse_lgbtq &lt;- sexual_orientation != "Heterossexual" |</span></span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="in">             gender_identity != "Cisgenero"</span></span>
+<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. VOTE LGBT Candidate List</span></span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a>VOTE LGBT (*Voto com Orgulho*) is a civil society organization that identifies and supports LGBTQ+ candidates in Brazilian elections. Their list includes candidates who:</span>
+<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Self-identify to the organization as LGBTQ+</span>
+<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Are publicly known LGBTQ+ community members</span>
+<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Are nominated by LGBTQ+ organizations</span>
+<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>The matching between VOTE LGBT names and TSE candidate records uses a two-step process:</span>
+<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r matching-logic}</span></span>
+<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: matching-logic</span></span>
+<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 1: Exact match on candidate name (after normalization)</span></span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a><span class="in"># - Remove accents, standardize spacing, uppercase</span></span>
+<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a><span class="in"># - Match on full name, with state as secondary filter</span></span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a><span class="in"># Step 2: Fuzzy match for remaining unmatched</span></span>
+<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a><span class="in"># - String distance (Jaro-Winkler) with threshold</span></span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a><span class="in"># - Manual review of ambiguous matches</span></span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a><span class="in"># - State + party used as disambiguation</span></span>
+<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="fu">### Priority Rules for Identity Categories</span></span>
+<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a>When a candidate is identified through both sources, or when multiple identity labels apply, the following priority rules determine the <span class="in">`lgbt_category`</span> assignment:</span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r priority-rules}</span></span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: priority-rules</span></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
 <span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Prioritize Trans?</span></span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a>Transgender identity is a gender identity, not a sexual orientation. A trans candidate may also be gay, lesbian, or bisexual, but for the purpose of this analysis, their gender identity takes precedence in the primary categorization. This follows conventions in both the LGBTQ+ studies literature and in Brazilian activist nomenclature. The "Bisexual+" category collapses bisexual and pansexual identities, which share the key feature of attraction to more than one gender.</span>
-<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a><span class="fu"># Party Ideology Scores</span></span>
-<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a><span class="fu">## Source</span></span>
-<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>Party ideology scores come from:</span>
-<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Bolognesi, B., Ribeiro, E., &amp; Codato, A. (2023). "Ideologia dos partidos politicos brasileiros." *Expert survey of Brazilian party ideology.*</span></span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="in"># Priority rules (implemented in make_lgbt_category()):</span></span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Non-LGBTQ+ candidates: lgbtq_candidate == FALSE -&gt; "Non-LGBTQ+"</span></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Trans identity is prioritized: trans_candidate == TRUE -&gt; "Trans"</span></span>
+<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a><span class="in">#    (regardless of sexual orientation, since trans is a gender identity</span></span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a><span class="in">#     that cross-cuts sexual orientation)</span></span>
+<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. Sexual orientation categories in order:</span></span>
+<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Gay" (male homosexual)</span></span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Lesbian" (female homosexual, "Lesbica" in Portuguese)</span></span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Bisexual+" (bisexual or pansexual, collapsed)</span></span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Asexual"</span></span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a><span class="in">#    - "Other LGBTQ+" (any remaining identified candidate)</span></span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scale</span></span>
-<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Range**: 0 (far left) to 10 (far right)</span>
-<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Method**: Expert survey with multiple respondents per party</span>
-<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coverage**: All major and most minor parties in the Brazilian system</span>
-<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classification Thresholds</span></span>
-<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ideology-thresholds}</span></span>
-<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: ideology-thresholds</span></span>
-<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a><span class="in"># Thresholds used in this analysis:</span></span>
-<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a><span class="in"># Left:   ideology_score &lt; 4.0</span></span>
-<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a><span class="in"># Center: ideology_score &gt;= 4.0 and &lt; 7.1</span></span>
-<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a><span class="in"># Right:  ideology_score &gt;= 7.1</span></span>
-<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a><span class="in"># These thresholds are based on:</span></span>
-<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Natural breaks in the expert survey distribution</span></span>
-<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Conventional placement of anchor parties:</span></span>
-<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a><span class="in">#    - PT (Workers' Party) ~ 2.0 (clearly Left)</span></span>
-<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a><span class="in">#    - MDB (centrist catch-all) ~ 5.5 (Center)</span></span>
-<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a><span class="in">#    - PL (Bolsonaro's party) ~ 8.5 (clearly Right)</span></span>
-<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Prioritize Trans?</span></span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a>Transgender identity is a gender identity, not a sexual orientation. A trans candidate may also be gay, lesbian, or bisexual, but for the purpose of this analysis, their gender identity takes precedence in the primary categorization. This follows conventions in both the LGBTQ+ studies literature and in Brazilian activist nomenclature. The "Bisexual+" category collapses bisexual and pansexual identities, which share the key feature of attraction to more than one gender.</span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a><span class="fu"># Party Ideology Scores</span></span>
+<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## Source</span></span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a>Party ideology scores come from:</span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Bolognesi, B., Ribeiro, E., &amp; Codato, A. (2023). "Ideologia dos partidos politicos brasileiros." *Expert survey of Brazilian party ideology.*</span></span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scale</span></span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Range**: 0 (far left) to 10 (far right)</span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Method**: Expert survey with multiple respondents per party</span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Coverage**: All major and most minor parties in the Brazilian system</span>
+<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Classification Thresholds</span></span>
+<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ideology-thresholds}</span></span>
+<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: ideology-thresholds</span></span>
+<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
 <span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unscored Parties</span></span>
-<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>Approximately 2% of candidates belong to minor parties not covered by the expert survey. These candidates have <span class="in">`ideology_score = NA`</span> and <span class="in">`ideology_category = NA`</span>. They are excluded from ideology-stratified analyses but included in all other analyses.</span>
-<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a><span class="fu"># Municipality Crosswalk</span></span>
-<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a><span class="fu">## The TSE-IBGE Code Problem</span></span>
-<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>The TSE uses its own municipality coding system, which differs from the IBGE's official 7-digit municipality codes used by statistical agencies and the <span class="in">`geobr`</span> package. The crosswalk resolves this mismatch.</span>
-<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crosswalk-logic}</span></span>
-<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: crosswalk-logic</span></span>
-<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a><span class="in"># Crosswalk construction:</span></span>
-<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Start with TSE municipality code + name + state</span></span>
-<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Match to IBGE municipality code via:</span></span>
-<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a><span class="in">#    a. Exact name match within state (handles ~95% of cases)</span></span>
-<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a><span class="in">#    b. Fuzzy name match for municipalities with accent/spelling differences</span></span>
-<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a><span class="in">#    c. Manual resolution for remaining cases (mergers, name changes)</span></span>
-<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. IBGE 7-digit code (geobr_code) enables spatial joins with geobr shapefiles</span></span>
-<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a><span class="in"># The geobr package uses code_muni, which is the IBGE 7-digit code.</span></span>
-<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a><span class="in"># Join: candidates$geobr_code == muni_sf$code_muni</span></span>
-<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a><span class="fu">## Coverage</span></span>
-<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a>The crosswalk covers all 5,570 Brazilian municipalities as of 2022. A small number of candidates (&lt;1%) have missing <span class="in">`geobr_code`</span> due to:</span>
-<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>TSE municipality codes for overseas voting sections (not mappable to domestic municipalities)</span>
-<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Rare municipality code changes between TSE and IBGE systems</span>
-<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Quality Notes</span></span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="in"># Thresholds used in this analysis:</span></span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="in"># Left:   ideology_score &lt; 4.0</span></span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a><span class="in"># Center: ideology_score &gt;= 4.0 and &lt; 7.1</span></span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a><span class="in"># Right:  ideology_score &gt;= 7.1</span></span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a><span class="in"># These thresholds are based on:</span></span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Natural breaks in the expert survey distribution</span></span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Conventional placement of anchor parties:</span></span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a><span class="in">#    - PT (Workers' Party) ~ 2.0 (clearly Left)</span></span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a><span class="in">#    - MDB (centrist catch-all) ~ 5.5 (Center)</span></span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a><span class="in">#    - PL (Bolsonaro's party) ~ 8.5 (clearly Right)</span></span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unscored Parties</span></span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>Approximately 2% of candidates belong to minor parties not covered by the expert survey. These candidates have <span class="in">`ideology_score = NA`</span> and <span class="in">`ideology_category = NA`</span>. They are excluded from ideology-stratified analyses but included in all other analyses.</span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a><span class="fu"># Municipality Crosswalk</span></span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a><span class="fu">## The TSE-IBGE Code Problem</span></span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>The TSE uses its own municipality coding system, which differs from the IBGE's official 7-digit municipality codes used by statistical agencies and the <span class="in">`geobr`</span> package. The crosswalk resolves this mismatch.</span>
+<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crosswalk-logic}</span></span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: crosswalk-logic</span></span>
+<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a><span class="in"># Crosswalk construction:</span></span>
+<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Start with TSE municipality code + name + state</span></span>
+<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Match to IBGE municipality code via:</span></span>
+<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a><span class="in">#    a. Exact name match within state (handles ~95% of cases)</span></span>
+<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a><span class="in">#    b. Fuzzy name match for municipalities with accent/spelling differences</span></span>
+<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a><span class="in">#    c. Manual resolution for remaining cases (mergers, name changes)</span></span>
+<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. IBGE 7-digit code (geobr_code) enables spatial joins with geobr shapefiles</span></span>
 <span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Known Issues</span></span>
-<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Missing Election Outcomes (~5.4%)</span></span>
+<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a><span class="in"># The geobr package uses code_muni, which is the IBGE 7-digit code.</span></span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a><span class="in"># Join: candidates$geobr_code == muni_sf$code_muni</span></span>
+<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a>Approximately 5.4% of candidates have <span class="in">`elected = NA`</span>. This occurs because:</span>
+<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Coverage</span></span>
 <span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some candidacies were annulled or withdrawn after registration but before results were finalized</span>
-<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A small number of substitute candidates (*suplentes*) have ambiguous outcome status</span>
-<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The <span class="in">`DS_SIT_TOT_TURNO`</span> field in the TSE data has values that do not map cleanly to elected/not-elected</span>
-<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a>**Handling**: These candidates are excluded from election rate calculations but included in all other analyses (demographics, finance, geography).</span>
-<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Finance File Parsing</span></span>
-<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a>The raw TSE finance file (<span class="in">`receitas_candidatos_2024_BRASIL.csv`</span>) is 1.3 GB with semicolon delimiters and Latin1 encoding. Known issues:</span>
-<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Decimal separator**: Commas are used as decimal separators (Brazilian convention). We specify <span class="in">`locale(decimal_mark = ",")`</span> in <span class="in">`read_delim()`</span>.</span>
-<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Parsing warnings**: A small number of rows (~0.01%) produce parsing warnings due to malformed fields. These are dropped silently.</span>
-<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Duplicate transactions**: We do not de-duplicate transactions, as the TSE may legitimately record corrections and adjustments as separate entries.</span>
-<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. LGBTQ+ Identification Coverage</span></span>
-<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>The LGBTQ+ identification methodology has two important limitations:</span>
-<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**False negatives**: Candidates who are LGBTQ+ but did not disclose to the TSE and were not identified by VOTE LGBT are classified as Non-LGBTQ+. The true LGBTQ+ count is almost certainly higher than our identified count.</span>
-<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**False positives**: Very rare, but possible through fuzzy name matching. All fuzzy matches were manually reviewed.</span>
-<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Regional variation in disclosure**: Self-disclosure rates likely vary by region, urbanization, and local political culture. The Southeast and South may have higher disclosure rates than the North and Northeast. This means geographic comparisons of LGBTQ+ candidate *rates* confound true prevalence with disclosure propensity.</span>
-<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. Race and Gender Categories</span></span>
-<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>TSE race categories use the Brazilian census classification: Branca (White), Preta (Black), Parda (Brown), Amarela (Asian), and Indigena (Indigenous). We simplify to:</span>
-<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**White**: Branca</span>
-<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Nonwhite**: All other categories (for binary analyses)</span>
-<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Detailed**: White, Black, Brown, Other (collapsing Amarela, Indigena, and missing)</span>
-<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>The <span class="in">`female`</span> variable is based on the TSE's <span class="in">`DS_GENERO`</span> field. For trans candidates, this may reflect their legal gender rather than their gender assigned at birth. We use the TSE-recorded gender throughout, which aligns with Brazilian legal identity norms post-2018 (when the *Supremo Tribunal Federal* allowed name/gender changes without surgery).</span>
-<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5. Candidate vs Person</span></span>
-<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>The unit of analysis is the **candidacy**, not the individual person. In rare cases, the same person may appear as a candidate in more than one municipality (e.g., if they withdrew and re-registered). We do not de-duplicate at the person level, as the candidacy is the relevant unit for campaign finance and electoral outcome analysis.</span>
-<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reproducibility</span></span>
-<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Software Environment</span></span>
-<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
-<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: session-info</span></span>
-<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
-<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: true</span></span>
+<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a>The crosswalk covers all 5,570 Brazilian municipalities as of 2022. A small number of candidates (&lt;1%) have missing <span class="in">`geobr_code`</span> due to:</span>
+<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>TSE municipality codes for overseas voting sections (not mappable to domestic municipalities)</span>
+<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Rare municipality code changes between TSE and IBGE systems</span>
+<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Quality Notes</span></span>
+<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a><span class="fu">## Known Issues</span></span>
+<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. Missing Election Outcomes (~5.4%)</span></span>
+<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>Approximately 5.4% of candidates have <span class="in">`elected = NA`</span>. This occurs because:</span>
+<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some candidacies were annulled or withdrawn after registration but before results were finalized</span>
+<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A small number of substitute candidates (*suplentes*) have ambiguous outcome status</span>
+<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The <span class="in">`DS_SIT_TOT_TURNO`</span> field in the TSE data has values that do not map cleanly to elected/not-elected</span>
+<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>**Handling**: These candidates are excluded from election rate calculations but included in all other analyses (demographics, finance, geography).</span>
+<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Finance File Parsing</span></span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a>The raw TSE finance file (<span class="in">`receitas_candidatos_2024_BRASIL.csv`</span>) is 1.3 GB with semicolon delimiters and Latin1 encoding. Known issues:</span>
+<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Decimal separator**: Commas are used as decimal separators (Brazilian convention). We specify <span class="in">`locale(decimal_mark = ",")`</span> in <span class="in">`read_delim()`</span>.</span>
+<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Parsing warnings**: A small number of rows (~0.01%) produce parsing warnings due to malformed fields. These are dropped silently.</span>
+<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Duplicate transactions**: We do not de-duplicate transactions, as the TSE may legitimately record corrections and adjustments as separate entries.</span>
+<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. LGBTQ+ Identification Coverage</span></span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>The LGBTQ+ identification methodology has two important limitations:</span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**False negatives**: Candidates who are LGBTQ+ but did not disclose to the TSE and were not identified by VOTE LGBT are classified as Non-LGBTQ+. The true LGBTQ+ count is almost certainly higher than our identified count.</span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**False positives**: Very rare, but possible through fuzzy name matching. All fuzzy matches were manually reviewed.</span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Regional variation in disclosure**: Self-disclosure rates likely vary by region, urbanization, and local political culture. The Southeast and South may have higher disclosure rates than the North and Northeast. This means geographic comparisons of LGBTQ+ candidate *rates* confound true prevalence with disclosure propensity.</span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4. Race and Gender Categories</span></span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>TSE race categories use the Brazilian census classification: Branca (White), Preta (Black), Parda (Brown), Amarela (Asian), and Indigena (Indigenous). We simplify to:</span>
+<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**White**: Branca</span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Nonwhite**: All other categories (for binary analyses)</span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Detailed**: White, Black, Brown, Other (collapsing Amarela, Indigena, and missing)</span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>The <span class="in">`female`</span> variable is based on the TSE's <span class="in">`DS_GENERO`</span> field. For trans candidates, this may reflect their legal gender rather than their gender assigned at birth. We use the TSE-recorded gender throughout, which aligns with Brazilian legal identity norms post-2018 (when the *Supremo Tribunal Federal* allowed name/gender changes without surgery).</span>
 <span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("code", "00_setup.R"))</span></span>
-<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a><span class="in">library(sf)</span></span>
-<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a><span class="in">library(geobr)</span></span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5. Candidate vs Person</span></span>
+<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>The unit of analysis is the **candidacy**, not the individual person. In rare cases, the same person may appear as a candidate in more than one municipality (e.g., if they withdrew and re-registered). We do not de-duplicate at the person level, as the candidacy is the relevant unit for campaign finance and electoral outcome analysis.</span>
 <span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a><span class="in">cat("Analysis data path:\n")</span></span>
-<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a><span class="in">cat("  ", paths$analysis_full_rds, "\n")</span></span>
-<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a><span class="in">cat("  Exists:", file.exists(paths$analysis_full_rds), "\n\n")</span></span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reproducibility</span></span>
+<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a><span class="fu">## Software Environment</span></span>
 <span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
-<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a><span class="fu">## Execution Order</span></span>
-<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a>The data preparation scripts must be run in order before rendering the QMD chapters:</span>
-<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r execution-order}</span></span>
-<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: execution-order</span></span>
-<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
-<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. code/01_load_candidates.R     -&gt; data/derived/candidates_analysis.rds</span></span>
-<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. code/02_load_finance_raw.R    -&gt; data/derived/finance_by_candidate.rds</span></span>
-<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a><span class="in">#                                     data/derived/finance_transactions.rds</span></span>
-<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a><span class="in">#                                     output/tables/finance_revenue_source_categories.csv</span></span>
-<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. code/03_prepare_geography.R   -&gt; data/geo_cache/municipalities.rds</span></span>
-<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a><span class="in">#                                     data/geo_cache/states.rds</span></span>
-<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a><span class="in"># 4. code/04_build_analysis_data.R -&gt; data/derived/analysis_full.rds</span></span>
-<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
-<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a><span class="in"># After all four scripts have run:</span></span>
-<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a><span class="in"># 5. quarto render docs/           -&gt; docs/_site/ (rendered website)</span></span>
-<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: session-info</span></span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: true</span></span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("code", "00_setup.R"))</span></span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a><span class="in">library(sf)</span></span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a><span class="in">library(geobr)</span></span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a><span class="in">cat("Analysis data path:\n")</span></span>
+<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a><span class="in">cat("  ", paths$analysis_full_rds, "\n")</span></span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a><span class="in">cat("  Exists:", file.exists(paths$analysis_full_rds), "\n\n")</span></span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
+<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Execution Order</span></span>
+<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a>The data preparation scripts must be run in order before rendering the QMD chapters:</span>
+<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a><span class="in">```{r execution-order}</span></span>
+<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: execution-order</span></span>
+<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
 <span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Access</span></span>
-<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>The parent project data is stored on Dropbox and is not publicly available. Researchers wishing to replicate this analysis should:</span>
-<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Download the raw TSE candidate registration files from <span class="co">[</span><span class="ot">https://dadosabertos.tse.jus.br/</span><span class="co">](https://dadosabertos.tse.jus.br/)</span></span>
-<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Download the raw TSE campaign finance files from the same portal</span>
-<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Contact VOTE LGBT for their candidate identification list</span>
-<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Run the parent project's integration scripts to produce the processed files</span>
-<span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Run this project's data preparation scripts in order</span>
-<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a>All code in this project is designed to be portable given the correct <span class="in">`paths`</span> configuration in <span class="in">`code/00_setup.R`</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. code/01_load_candidates.R       -&gt; data/derived/candidates_analysis.rds</span></span>
+<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. code/02_load_finance_raw.R      -&gt; data/derived/finance_by_candidate.rds</span></span>
+<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a><span class="in">#                                       data/derived/finance_transactions.rds</span></span>
+<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a><span class="in">#                                       output/tables/finance_revenue_source_categories.csv</span></span>
+<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. code/03_prepare_geography.R     -&gt; data/geo_cache/municipalities.rds</span></span>
+<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a><span class="in">#                                       data/geo_cache/states.rds</span></span>
+<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a><span class="in"># 4. code/05_process_manifestos.R    -&gt; data/derived/manifestos_text.rds</span></span>
+<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="in"># 5. code/04_build_analysis_data.R   -&gt; data/derived/analysis_full.rds</span></span>
+<span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
+<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a><span class="in"># After all five scripts have run:</span></span>
+<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a><span class="in"># 6. quarto render docs/             -&gt; docs/_site/ (rendered website)</span></span>
+<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Access</span></span>
+<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>The parent project data is stored on Dropbox and is not publicly available. Researchers wishing to replicate this analysis should:</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Download the raw TSE candidate registration files from <span class="co">[</span><span class="ot">https://dadosabertos.tse.jus.br/</span><span class="co">](https://dadosabertos.tse.jus.br/)</span></span>
+<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Download the raw TSE campaign finance files from the same portal</span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Contact VOTE LGBT for their candidate identification list</span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Run the parent project's integration scripts to produce the processed files</span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Run this project's data preparation scripts in order (01, 02, 03, 05, then 04)</span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>All code in this project is designed to be portable given the correct <span class="in">`paths`</span> configuration in <span class="in">`code/00_setup.R`</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
