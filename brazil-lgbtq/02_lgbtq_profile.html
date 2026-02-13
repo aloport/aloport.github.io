@@ -693,7 +693,7 @@ Figure&nbsp;3: Age Distribution: LGBTQ+ vs Non-LGBTQ+ Candidates
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t_age <span class="ot">&lt;-</span> <span class="fu">t.test</span>(age <span class="sc">~</span> lgbtq_label, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The mean age of LGBTQ+ candidates is 47.3 years vs.&nbsp;38.5 for non-LGBTQ+ candidates (difference: -8.8 years, <em>p</em> &lt; 0.001).</p>
+<p>The mean age of LGBTQ+ candidates is 38.5 years vs.&nbsp;47.3 for non-LGBTQ+ candidates (difference: 8.8 years, <em>p</em> &lt; 0.001).</p>
 </section>
 <section id="raceethnicity" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="raceethnicity"><span class="header-section-number">3.3</span> Race/Ethnicity</h2>
@@ -2293,7 +2293,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb21-211"><a href="#cb21-211" aria-hidden="true" tabindex="-1"></a><span class="in">t_age &lt;- t.test(age ~ lgbtq_label, data = df)</span></span>
 <span id="cb21-212"><a href="#cb21-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-213"><a href="#cb21-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-214"><a href="#cb21-214" aria-hidden="true" tabindex="-1"></a>The mean age of LGBTQ+ candidates is <span class="in">`r round(t_age$estimate[1], 1)`</span> years vs. <span class="in">`r round(t_age$estimate[2], 1)`</span> for non-LGBTQ+ candidates (difference: <span class="in">`r round(diff(t_age$estimate), 1)`</span> years, *p* <span class="in">`r ifelse(t_age$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(t_age$p.value, 3)))`</span>).</span>
+<span id="cb21-214"><a href="#cb21-214" aria-hidden="true" tabindex="-1"></a>The mean age of LGBTQ+ candidates is <span class="in">`r round(t_age$estimate[2], 1)`</span> years vs. <span class="in">`r round(t_age$estimate[1], 1)`</span> for non-LGBTQ+ candidates (difference: <span class="in">`r round(abs(diff(t_age$estimate)), 1)`</span> years, *p* <span class="in">`r ifelse(t_age$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(t_age$p.value, 3)))`</span>).</span>
 <span id="cb21-215"><a href="#cb21-215" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-216"><a href="#cb21-216" aria-hidden="true" tabindex="-1"></a><span class="fu">## Race/Ethnicity</span></span>
 <span id="cb21-217"><a href="#cb21-217" aria-hidden="true" tabindex="-1"></a></span>

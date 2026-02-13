@@ -255,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>Brazil’s 2024 municipal elections were a watershed moment for LGBTQ+ political representation. For the first time, the <em>Tribunal Superior Eleitoral</em> (TSE) allowed candidates to voluntarily declare their sexual orientation and gender identity on official registration forms, creating an unprecedented population-level dataset.</p>
-<p>This site documents a <strong>descriptive analysis</strong> of LGBTQ+ political candidates across approximately 933,000 candidacies. Before any regression models or causal claims, we ask: <em>Who are these candidates? How do they differ from the general candidate population? And how do they differ from each other?</em></p>
+<p>This site documents a <strong>descriptive analysis</strong> of LGBTQ+ political candidates across approximately 464,000 candidacies. Before any regression models or causal claims, we ask: <em>Who are these candidates? How do they differ from the general candidate population? And how do they differ from each other?</em></p>
 </section>
 <section id="chapters" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="chapters"><span class="header-section-number">2</span> Chapters</h2>
@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><a href="./01_candidate_universe.html">1. Candidate Universe</a></td>
 <td>The Baseline</td>
-<td>Who runs for municipal office in Brazil in 2024? Demographics, parties, ideology, geography, and outcomes for all ~933K candidates</td>
+<td>Who runs for municipal office in Brazil in 2024? Demographics, parties, ideology, geography, and outcomes for all ~464K candidates</td>
 </tr>
 <tr class="even">
 <td><a href="./02_lgbtq_profile.html">2. LGBTQ+ Profile</a></td>
@@ -306,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td><a href="./08_candidate_explorer.html">8. Candidate Explorer</a></td>
 <td>Individual Lookup</td>
-<td>Searchable table of all ~12K identified LGBTQ+ candidates with demographics and outcomes</td>
+<td>Searchable table of all ~3,100 identified LGBTQ+ candidates with demographics and outcomes</td>
 </tr>
 <tr class="odd">
 <td><a href="./99_data_codebook.html">Codebook</a></td>
@@ -816,20 +816,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Brazil's 2024 municipal elections were a watershed moment for LGBTQ+ political representation. For the first time, the *Tribunal Superior Eleitoral* (TSE) allowed candidates to voluntarily declare their sexual orientation and gender identity on official registration forms, creating an unprecedented population-level dataset.</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>This site documents a **descriptive analysis** of LGBTQ+ political candidates across approximately 933,000 candidacies. Before any regression models or causal claims, we ask: *Who are these candidates? How do they differ from the general candidate population? And how do they differ from each other?*</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>This site documents a **descriptive analysis** of LGBTQ+ political candidates across approximately 464,000 candidacies. Before any regression models or causal claims, we ask: *Who are these candidates? How do they differ from the general candidate population? And how do they differ from each other?*</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chapters</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>| Chapter | Title | Focus |</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>|---------|-------|-------|</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">1. Candidate Universe</span><span class="co">](01_candidate_universe.qmd)</span> | The Baseline | Who runs for municipal office in Brazil in 2024? Demographics, parties, ideology, geography, and outcomes for all ~933K candidates |</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">1. Candidate Universe</span><span class="co">](01_candidate_universe.qmd)</span> | The Baseline | Who runs for municipal office in Brazil in 2024? Demographics, parties, ideology, geography, and outcomes for all ~464K candidates |</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">2. LGBTQ+ Profile</span><span class="co">](02_lgbtq_profile.qmd)</span> | How They Differ | Systematic comparison of LGBTQ+ vs non-LGBTQ+ candidates across every dimension |</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">3. L-G-B-T Disaggregation</span><span class="co">](03_identity_disaggregation.qmd)</span> | Within-Group Heterogeneity | Breaking the monolith: Lesbian vs Gay vs Bisexual vs Trans along ideology, age, race, party |</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">4. Geography</span><span class="co">](04_geography.qmd)</span> | Where They Run | Choropleth maps, geographic concentration, urban/rural, and regional patterns |</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">5. Campaign Finance</span><span class="co">](05_campaign_finance.qmd)</span> | Follow the Money | Transparent processing of raw TSE revenue data, funding sources, LGBTQ+ financing gaps |</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">6. Intersections</span><span class="co">](06_intersections.qmd)</span> | Compounding Disadvantage | LGBTQ+ x gender, race, ideology, and triple intersections |</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">7. Methodology</span><span class="co">](07_methodology.qmd)</span> | Data Pipeline | Data flow, LGBTQ+ matching algorithm, finance classification, municipality crosswalk |</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">8. Candidate Explorer</span><span class="co">](08_candidate_explorer.qmd)</span> | Individual Lookup | Searchable table of all ~12K identified LGBTQ+ candidates with demographics and outcomes |</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">8. Candidate Explorer</span><span class="co">](08_candidate_explorer.qmd)</span> | Individual Lookup | Searchable table of all ~3,100 identified LGBTQ+ candidates with demographics and outcomes |</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">Codebook</span><span class="co">](99_data_codebook.qmd)</span> | Data Documentation | Source files, variable dictionary, identification methodology |</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Sources</span></span>
