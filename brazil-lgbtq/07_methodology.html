@@ -293,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    A["TSE Candidate Registration\n~933K rows, 61 cols"] --&gt; B["01_load_candidates.R"]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    A["TSE Candidate Registration\n~464K rows, 59 cols"] --&gt; B["01_load_candidates.R"]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    C["VOTE LGBT List\n~1,300 candidates"] --&gt; D["07_merge_lgbtq_list.R\n(Parent Project)"]</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    D --&gt; A</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    E["TSE Finance Raw\n~5.5M transactions, 1.3GB"] --&gt; F["02_load_finance_raw.R"]</span>
@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    F --&gt; I</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    H --&gt; I</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    P --&gt; I</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    I --&gt; J["analysis_full.rds\n~933K rows, 114 cols"]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    I --&gt; J["analysis_full.rds\n~464K rows, 112 cols"]</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    J --&gt; K["Quarto Website\nChapters 1-8"]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TD
-    A["TSE Candidate Registration\n~933K rows, 61 cols"] --&gt; B["01_load_candidates.R"]
+    A["TSE Candidate Registration\n~464K rows, 59 cols"] --&gt; B["01_load_candidates.R"]
     C["VOTE LGBT List\n~1,300 candidates"] --&gt; D["07_merge_lgbtq_list.R\n(Parent Project)"]
     D --&gt; A
     E["TSE Finance Raw\n~5.5M transactions, 1.3GB"] --&gt; F["02_load_finance_raw.R"]
@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     F --&gt; I
     H --&gt; I
     P --&gt; I
-    I --&gt; J["analysis_full.rds\n~933K rows, 114 cols"]
+    I --&gt; J["analysis_full.rds\n~464K rows, 112 cols"]
     J --&gt; K["Quarto Website\nChapters 1-8"]
 </pre>
 </div>
@@ -336,11 +336,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="script-descriptions" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="script-descriptions"><span class="header-section-number">1.2</span> Script Descriptions</h2>
-<p><strong><code>01_load_candidates.R</code></strong> reads the integrated candidate CSV from the parent project (~416 MB, ~933K rows x 61 columns). It creates derived variables—simplified demographics, age groups, regional assignments, ideology categories, and the disaggregated LGBTQ+ identity classification—and saves the result as <code>candidates_analysis.rds</code>.</p>
+<p><strong><code>01_load_candidates.R</code></strong> reads the integrated candidate CSV from the parent project (~210 MB, ~464K rows x 59 columns). It creates derived variables—simplified demographics, age groups, regional assignments, ideology categories, and the disaggregated LGBTQ+ identity classification—and saves the result as <code>candidates_analysis.rds</code>.</p>
 <p><strong><code>02_load_finance_raw.R</code></strong> reads the raw TSE campaign finance file (<code>receitas_candidatos_2024_BRASIL.csv</code>, ~1.3 GB, semicolon-delimited, Latin1 encoding). It documents every revenue source category in the raw data, classifies each transaction into funding types (self, party, individual, crowdfunding, other candidates, other), aggregates to the candidate level, validates the aggregation against a pre-existing aggregated file, and saves both candidate-level summaries (<code>finance_by_candidate.rds</code>) and the full transaction-level data (<code>finance_transactions.rds</code>).</p>
 <p><strong><code>03_prepare_geography.R</code></strong> downloads and caches municipality and state boundary shapefiles from the IBGE via the <code>geobr</code> R package. These are stored locally in <code>data/geo_cache/</code> so that subsequent renders do not re-download. It also reads the municipality crosswalk that bridges TSE and IBGE coding systems.</p>
 <p><strong><code>05_process_manifestos.R</code></strong> extracts text from candidate manifesto PDFs (<em>propostas de governo</em>), which are mandatory filings for mayoral candidates. The TSE distributes these as 27 state-level ZIP archives (~11 GB total, ~15,800 PDFs). The script processes each state sequentially: unzipping to a temporary directory, parsing the <code>SQ_CANDIDATO</code> (candidate ID) from each filename, extracting text with <code>pdftotext</code> and page counts with <code>pdfinfo</code> (poppler), and cleaning up. Corrupt or image-only PDFs (~3.5%) are flagged as <code>extraction_ok = FALSE</code> with <code>NA</code> text. The output is <code>manifestos_text.rds</code>.</p>
-<p><strong><code>04_build_analysis_data.R</code></strong> merges the four preceding outputs—candidates, finance, geography, and manifestos—into a single analysis-ready file (<code>analysis_full.rds</code>, ~933K rows, 114 columns). In addition to filling financial variables with zeros for unmatched candidates, this script:</p>
+<p><strong><code>04_build_analysis_data.R</code></strong> merges the four preceding outputs—candidates, finance, geography, and manifestos—into a single analysis-ready file (<code>analysis_full.rds</code>, ~464K rows, 112 columns). In addition to filling financial variables with zeros for unmatched candidates, this script:</p>
 <ul>
 <li>Reads <strong>municipality characteristics</strong> from the IBGE Census (population, GDP per capita, racial composition, poverty indicators, state capital status) via the parent project’s intermediate file</li>
 <li>Computes <strong>n_parties</strong> (number of distinct parties) and <strong>n_seats</strong> (city council seats) per municipality from the candidate data</li>
@@ -352,7 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="lgbtq-identification-methodology" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> LGBTQ+ Identification Methodology</h1>
-<p>Identifying LGBTQ+ candidates in a population of nearly one million candidacies is the central methodological challenge of this project. We draw on two complementary sources, then apply a three-stage matching algorithm to link the external VOTE LGBT list to official TSE records.</p>
+<p>Identifying LGBTQ+ candidates in a population of nearly half a million candidacies is the central methodological challenge of this project. We draw on two complementary sources, then apply a three-stage matching algorithm to link the external VOTE LGBT list to official TSE records.</p>
 <section id="two-sources-of-identification" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="two-sources-of-identification"><span class="header-section-number">2.1</span> Two Sources of Identification</h2>
 <section id="tse-self-disclosure-new-in-2024" class="level3" data-number="2.1.1">
@@ -613,13 +613,13 @@ Table&nbsp;1: LGBTQ+ Candidates by Match Type
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">exact_full</td>
-<td style="text-align: right;">12528</td>
-<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">3132</td>
+<td style="text-align: right;">99.9%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">fuzzy</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0.0%</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.1%</td>
 </tr>
 </tbody>
 </table>
@@ -660,17 +660,17 @@ Table&nbsp;2: LGBTQ+ Candidates by Disclosure Source
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">TSE</td>
-<td style="text-align: right;">8860</td>
+<td style="text-align: right;">2215</td>
 <td style="text-align: right;">70.7%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">VOTE + TSE</td>
-<td style="text-align: right;">2512</td>
+<td style="text-align: right;">628</td>
 <td style="text-align: right;">20.0%</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">VOTE</td>
-<td style="text-align: right;">1160</td>
+<td style="text-align: right;">291</td>
 <td style="text-align: right;">9.3%</td>
 </tr>
 </tbody>
@@ -713,14 +713,14 @@ Table&nbsp;3: Match Type by Disclosure Source
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">exact_full</td>
-<td style="text-align: right;">8860</td>
-<td style="text-align: right;">1156</td>
-<td style="text-align: right;">2512</td>
+<td style="text-align: right;">2215</td>
+<td style="text-align: right;">289</td>
+<td style="text-align: right;">628</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">fuzzy</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -768,7 +768,7 @@ Table&nbsp;4: Match Quality Score Summary (for Matched Candidates)
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">12,532</td>
+<td style="text-align: right;">3,134</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">1.000</td>
 <td style="text-align: right;">0.974</td>
@@ -922,7 +922,7 @@ Order Matters in <code>case_when()</code>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">format_n</span>(<span class="fu">nrow</span>(df)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Candidates with geobr_code: 932,932 of 933,466 </code></pre>
+<pre><code>Candidates with geobr_code: 463,338 of 463,601 </code></pre>
 </div>
 </div>
 <p>The small number of unmatched candidates (&lt;1%) are primarily from overseas voting sections or reflect rare discrepancies between TSE and IBGE municipality code systems.</p>
@@ -1665,7 +1665,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
 <span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="in">flowchart TD</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="in">    A["TSE Candidate Registration\n~933K rows, 61 cols"] --&gt; B["01_load_candidates.R"]</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="in">    A["TSE Candidate Registration\n~464K rows, 59 cols"] --&gt; B["01_load_candidates.R"]</span></span>
 <span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="in">    C["VOTE LGBT List\n~1,300 candidates"] --&gt; D["07_merge_lgbtq_list.R\n(Parent Project)"]</span></span>
 <span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="in">    D --&gt; A</span></span>
 <span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="in">    E["TSE Finance Raw\n~5.5M transactions, 1.3GB"] --&gt; F["02_load_finance_raw.R"]</span></span>
@@ -1677,13 +1677,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="in">    F --&gt; I</span></span>
 <span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="in">    H --&gt; I</span></span>
 <span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="in">    P --&gt; I</span></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="in">    I --&gt; J["analysis_full.rds\n~933K rows, 114 cols"]</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="in">    I --&gt; J["analysis_full.rds\n~464K rows, 112 cols"]</span></span>
 <span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="in">    J --&gt; K["Quarto Website\nChapters 1-8"]</span></span>
 <span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Script Descriptions</span></span>
 <span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>**`01_load_candidates.R`** reads the integrated candidate CSV from the parent project (~416 MB, ~933K rows x 61 columns). It creates derived variables---simplified demographics, age groups, regional assignments, ideology categories, and the disaggregated LGBTQ+ identity classification---and saves the result as <span class="in">`candidates_analysis.rds`</span>.</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>**`01_load_candidates.R`** reads the integrated candidate CSV from the parent project (~210 MB, ~464K rows x 59 columns). It creates derived variables---simplified demographics, age groups, regional assignments, ideology categories, and the disaggregated LGBTQ+ identity classification---and saves the result as <span class="in">`candidates_analysis.rds`</span>.</span>
 <span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>**`02_load_finance_raw.R`** reads the raw TSE campaign finance file (<span class="in">`receitas_candidatos_2024_BRASIL.csv`</span>, ~1.3 GB, semicolon-delimited, Latin1 encoding). It documents every revenue source category in the raw data, classifies each transaction into funding types (self, party, individual, crowdfunding, other candidates, other), aggregates to the candidate level, validates the aggregation against a pre-existing aggregated file, and saves both candidate-level summaries (<span class="in">`finance_by_candidate.rds`</span>) and the full transaction-level data (<span class="in">`finance_transactions.rds`</span>).</span>
 <span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
@@ -1691,7 +1691,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>**`05_process_manifestos.R`** extracts text from candidate manifesto PDFs (*propostas de governo*), which are mandatory filings for mayoral candidates. The TSE distributes these as 27 state-level ZIP archives (~11 GB total, ~15,800 PDFs). The script processes each state sequentially: unzipping to a temporary directory, parsing the <span class="in">`SQ_CANDIDATO`</span> (candidate ID) from each filename, extracting text with <span class="in">`pdftotext`</span> and page counts with <span class="in">`pdfinfo`</span> (poppler), and cleaning up. Corrupt or image-only PDFs (~3.5%) are flagged as <span class="in">`extraction_ok = FALSE`</span> with <span class="in">`NA`</span> text. The output is <span class="in">`manifestos_text.rds`</span>.</span>
 <span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>**`04_build_analysis_data.R`** merges the four preceding outputs---candidates, finance, geography, and manifestos---into a single analysis-ready file (<span class="in">`analysis_full.rds`</span>, ~933K rows, 114 columns). In addition to filling financial variables with zeros for unmatched candidates, this script:</span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>**`04_build_analysis_data.R`** merges the four preceding outputs---candidates, finance, geography, and manifestos---into a single analysis-ready file (<span class="in">`analysis_full.rds`</span>, ~464K rows, 112 columns). In addition to filling financial variables with zeros for unmatched candidates, this script:</span>
 <span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reads **municipality characteristics** from the IBGE Census (population, GDP per capita, racial composition, poverty indicators, state capital status) via the parent project's intermediate file</span>
 <span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Computes **n_parties** (number of distinct parties) and **n_seats** (city council seats) per municipality from the candidate data</span>
@@ -1702,7 +1702,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a><span class="fu"># LGBTQ+ Identification Methodology</span></span>
 <span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>Identifying LGBTQ+ candidates in a population of nearly one million candidacies is the central methodological challenge of this project. We draw on two complementary sources, then apply a three-stage matching algorithm to link the external VOTE LGBT list to official TSE records.</span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>Identifying LGBTQ+ candidates in a population of nearly half a million candidacies is the central methodological challenge of this project. We draw on two complementary sources, then apply a three-stage matching algorithm to link the external VOTE LGBT list to official TSE records.</span>
 <span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two Sources of Identification</span></span>
 <span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a></span>
