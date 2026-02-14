@@ -155,6 +155,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./06_intersections.html">
  <span class="dropdown-text">6. Intersections</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./09_manifestos.html">
+ <span class="dropdown-text">9. Manifestos</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -606,7 +610,7 @@ Table&nbsp;4: Demographic Comparison: LGBTQ+ vs Non-LGBTQ+ Candidates
 </tr>
 <tr class="odd">
 <td style="text-align: left;">SD Age</td>
-<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">11.5</td>
 <td style="text-align: right;">10.6</td>
 </tr>
 <tr class="even">
@@ -891,19 +895,21 @@ Figure&nbsp;5: Ideology Score Distribution: LGBTQ+ vs Non-LGBTQ+
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"gray70"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span></span>
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> n_total), <span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> overall_pct, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray40"</span>) <span class="sc">+</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> overall_pct, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Overall: "</span>, <span class="fu">format_pct</span>(overall_pct)),</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">color =</span> <span class="st">"gray40"</span>) <span class="sc">+</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> percent, <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) <span class="sc">+</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Total Candidates"</span>, <span class="at">labels =</span> comma, <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>)) <span class="sc">+</span></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"LGBTQ+ Share of Party's Candidates"</span>, <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LGBTQ+ Candidate Share by Party"</span>,</span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Cleveland dot plot for the 20 largest parties. Dashed line = overall average."</span>,</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Point size proportional to total number of candidates in party."</span></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="fu">save_figure</span>(<span class="fu">last_plot</span>(), <span class="st">"02_party_lgbtq_share"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"n="</span>, n_lgbtq)),</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> overall_pct, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray40"</span>) <span class="sc">+</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> overall_pct, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Overall: "</span>, <span class="fu">format_pct</span>(overall_pct)),</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">color =</span> <span class="st">"gray40"</span>) <span class="sc">+</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> percent, <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Total Candidates</span><span class="sc">\n</span><span class="st">in Party"</span>, <span class="at">labels =</span> comma, <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>)) <span class="sc">+</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"LGBTQ+ Share of Party's Candidates"</span>, <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"LGBTQ+ Candidate Share by Party"</span>,</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Top 20 parties by size. Labels show LGBTQ+ candidate count; dot size = total party size."</span>,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Dashed line = overall LGBTQ+ share across all candidates."</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="fu">save_figure</span>(<span class="fu">last_plot</span>(), <span class="st">"02_party_lgbtq_share"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-party-lgbtq-share" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1457,9 +1463,9 @@ Table&nbsp;9: Table 1: Summary Statistics by LGBTQ+ Status
 </tr>
 <tr class="even">
 <td style="text-align: left;">Age, mean (SD)</td>
-<td style="text-align: right;">47.3 (11.8)</td>
+<td style="text-align: right;">47.3 (11.5)</td>
 <td style="text-align: right;">38.5 (10.6)</td>
-<td style="text-align: left;">t = 46.08, p &lt; 0.001</td>
+<td style="text-align: left;">t = 46.06, p &lt; 0.001</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Female, %</td>
@@ -2417,368 +2423,370 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb21-335"><a href="#cb21-335" aria-hidden="true" tabindex="-1"></a><span class="in">    color = "gray70", linewidth = 0.5</span></span>
 <span id="cb21-336"><a href="#cb21-336" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
 <span id="cb21-337"><a href="#cb21-337" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(aes(size = n_total), color = "#E74C3C", alpha = 0.8) +</span></span>
-<span id="cb21-338"><a href="#cb21-338" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_vline(xintercept = overall_pct, linetype = "dashed", color = "gray40") +</span></span>
-<span id="cb21-339"><a href="#cb21-339" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = overall_pct, y = 1, label = paste0("Overall: ", format_pct(overall_pct)),</span></span>
-<span id="cb21-340"><a href="#cb21-340" aria-hidden="true" tabindex="-1"></a><span class="in">           hjust = -0.1, vjust = -0.5, size = 3.5, color = "gray40") +</span></span>
-<span id="cb21-341"><a href="#cb21-341" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = percent, expand = expansion(mult = c(0, 0.1))) +</span></span>
-<span id="cb21-342"><a href="#cb21-342" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_size_continuous(name = "Total Candidates", labels = comma, range = c(2, 8)) +</span></span>
-<span id="cb21-343"><a href="#cb21-343" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb21-344"><a href="#cb21-344" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "LGBTQ+ Share of Party's Candidates", y = NULL,</span></span>
-<span id="cb21-345"><a href="#cb21-345" aria-hidden="true" tabindex="-1"></a><span class="in">    title = "LGBTQ+ Candidate Share by Party",</span></span>
-<span id="cb21-346"><a href="#cb21-346" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Cleveland dot plot for the 20 largest parties. Dashed line = overall average.",</span></span>
-<span id="cb21-347"><a href="#cb21-347" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Point size proportional to total number of candidates in party."</span></span>
-<span id="cb21-348"><a href="#cb21-348" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb21-349"><a href="#cb21-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-350"><a href="#cb21-350" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "02_party_lgbtq_share")</span></span>
-<span id="cb21-351"><a href="#cb21-351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-352"><a href="#cb21-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-353"><a href="#cb21-353" aria-hidden="true" tabindex="-1"></a><span class="fu">## Position Distribution</span></span>
+<span id="cb21-338"><a href="#cb21-338" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(aes(label = paste0("n=", n_lgbtq)),</span></span>
+<span id="cb21-339"><a href="#cb21-339" aria-hidden="true" tabindex="-1"></a><span class="in">            hjust = -0.3, size = 3, color = "gray30") +</span></span>
+<span id="cb21-340"><a href="#cb21-340" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_vline(xintercept = overall_pct, linetype = "dashed", color = "gray40") +</span></span>
+<span id="cb21-341"><a href="#cb21-341" aria-hidden="true" tabindex="-1"></a><span class="in">  annotate("text", x = overall_pct, y = 1, label = paste0("Overall: ", format_pct(overall_pct)),</span></span>
+<span id="cb21-342"><a href="#cb21-342" aria-hidden="true" tabindex="-1"></a><span class="in">           hjust = -0.1, vjust = -0.5, size = 3.5, color = "gray40") +</span></span>
+<span id="cb21-343"><a href="#cb21-343" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = percent, expand = expansion(mult = c(0, 0.15))) +</span></span>
+<span id="cb21-344"><a href="#cb21-344" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_size_continuous(name = "Total Candidates\nin Party", labels = comma, range = c(2, 8)) +</span></span>
+<span id="cb21-345"><a href="#cb21-345" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb21-346"><a href="#cb21-346" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "LGBTQ+ Share of Party's Candidates", y = NULL,</span></span>
+<span id="cb21-347"><a href="#cb21-347" aria-hidden="true" tabindex="-1"></a><span class="in">    title = "LGBTQ+ Candidate Share by Party",</span></span>
+<span id="cb21-348"><a href="#cb21-348" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Top 20 parties by size. Labels show LGBTQ+ candidate count; dot size = total party size.",</span></span>
+<span id="cb21-349"><a href="#cb21-349" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Dashed line = overall LGBTQ+ share across all candidates."</span></span>
+<span id="cb21-350"><a href="#cb21-350" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb21-351"><a href="#cb21-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-352"><a href="#cb21-352" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "02_party_lgbtq_share")</span></span>
+<span id="cb21-353"><a href="#cb21-353" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-354"><a href="#cb21-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-355"><a href="#cb21-355" aria-hidden="true" tabindex="-1"></a>The table below compares how LGBTQ+ and non-LGBTQ+ candidates are distributed across position types (city councilor vs. mayor). Differences may reflect strategic entry decisions shaped by the electoral system.</span>
+<span id="cb21-355"><a href="#cb21-355" aria-hidden="true" tabindex="-1"></a><span class="fu">## Position Distribution</span></span>
 <span id="cb21-356"><a href="#cb21-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-357"><a href="#cb21-357" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-position-comparison}</span></span>
-<span id="cb21-358"><a href="#cb21-358" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-position-comparison</span></span>
-<span id="cb21-359"><a href="#cb21-359" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Position Distribution: LGBTQ+ vs Non-LGBTQ+"</span></span>
-<span id="cb21-360"><a href="#cb21-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-361"><a href="#cb21-361" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
-<span id="cb21-362"><a href="#cb21-362" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(lgbtq_label)) %&gt;%</span></span>
-<span id="cb21-363"><a href="#cb21-363" aria-hidden="true" tabindex="-1"></a><span class="in">  count(lgbtq_label, position_simple) %&gt;%</span></span>
-<span id="cb21-364"><a href="#cb21-364" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(lgbtq_label) %&gt;%</span></span>
-<span id="cb21-365"><a href="#cb21-365" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = format_pct(n / sum(n))) %&gt;%</span></span>
-<span id="cb21-366"><a href="#cb21-366" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
-<span id="cb21-367"><a href="#cb21-367" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(</span></span>
-<span id="cb21-368"><a href="#cb21-368" aria-hidden="true" tabindex="-1"></a><span class="in">    names_from = lgbtq_label,</span></span>
-<span id="cb21-369"><a href="#cb21-369" aria-hidden="true" tabindex="-1"></a><span class="in">    values_from = c(n, pct),</span></span>
-<span id="cb21-370"><a href="#cb21-370" aria-hidden="true" tabindex="-1"></a><span class="in">    names_glue = "{lgbtq_label}_{.value}"</span></span>
-<span id="cb21-371"><a href="#cb21-371" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb21-372"><a href="#cb21-372" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(Position = position_simple) %&gt;%</span></span>
-<span id="cb21-373"><a href="#cb21-373" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Position,</span></span>
-<span id="cb21-374"><a href="#cb21-374" aria-hidden="true" tabindex="-1"></a><span class="in">         `Non-LGBTQ+ N` = `Non-LGBTQ+_n`, `Non-LGBTQ+ %` = `Non-LGBTQ+_pct`,</span></span>
-<span id="cb21-375"><a href="#cb21-375" aria-hidden="true" tabindex="-1"></a><span class="in">         `LGBTQ+ N` = `LGBTQ+_n`, `LGBTQ+ %` = `LGBTQ+_pct`) %&gt;%</span></span>
-<span id="cb21-376"><a href="#cb21-376" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r"))</span></span>
-<span id="cb21-377"><a href="#cb21-377" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-378"><a href="#cb21-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-379"><a href="#cb21-379" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb21-380"><a href="#cb21-380" aria-hidden="true" tabindex="-1"></a><span class="fu">## Executive vs. Legislative Positions</span></span>
-<span id="cb21-381"><a href="#cb21-381" aria-hidden="true" tabindex="-1"></a>The distribution of LGBTQ+ candidates across position types is informative: proportional systems (city council races) may offer lower barriers to entry for underrepresented groups, since candidates need only clear a party threshold rather than win a plurality. The data above reveal whether LGBTQ+ candidates are differentially concentrated in one position type.</span>
-<span id="cb21-382"><a href="#cb21-382" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb21-383"><a href="#cb21-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-384"><a href="#cb21-384" aria-hidden="true" tabindex="-1"></a><span class="fu"># Electoral Outcomes {#sec-outcomes}</span></span>
+<span id="cb21-357"><a href="#cb21-357" aria-hidden="true" tabindex="-1"></a>The table below compares how LGBTQ+ and non-LGBTQ+ candidates are distributed across position types (city councilor vs. mayor). Differences may reflect strategic entry decisions shaped by the electoral system.</span>
+<span id="cb21-358"><a href="#cb21-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-359"><a href="#cb21-359" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-position-comparison}</span></span>
+<span id="cb21-360"><a href="#cb21-360" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-position-comparison</span></span>
+<span id="cb21-361"><a href="#cb21-361" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Position Distribution: LGBTQ+ vs Non-LGBTQ+"</span></span>
+<span id="cb21-362"><a href="#cb21-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-363"><a href="#cb21-363" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
+<span id="cb21-364"><a href="#cb21-364" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(lgbtq_label)) %&gt;%</span></span>
+<span id="cb21-365"><a href="#cb21-365" aria-hidden="true" tabindex="-1"></a><span class="in">  count(lgbtq_label, position_simple) %&gt;%</span></span>
+<span id="cb21-366"><a href="#cb21-366" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(lgbtq_label) %&gt;%</span></span>
+<span id="cb21-367"><a href="#cb21-367" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pct = format_pct(n / sum(n))) %&gt;%</span></span>
+<span id="cb21-368"><a href="#cb21-368" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb21-369"><a href="#cb21-369" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(</span></span>
+<span id="cb21-370"><a href="#cb21-370" aria-hidden="true" tabindex="-1"></a><span class="in">    names_from = lgbtq_label,</span></span>
+<span id="cb21-371"><a href="#cb21-371" aria-hidden="true" tabindex="-1"></a><span class="in">    values_from = c(n, pct),</span></span>
+<span id="cb21-372"><a href="#cb21-372" aria-hidden="true" tabindex="-1"></a><span class="in">    names_glue = "{lgbtq_label}_{.value}"</span></span>
+<span id="cb21-373"><a href="#cb21-373" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb21-374"><a href="#cb21-374" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(Position = position_simple) %&gt;%</span></span>
+<span id="cb21-375"><a href="#cb21-375" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Position,</span></span>
+<span id="cb21-376"><a href="#cb21-376" aria-hidden="true" tabindex="-1"></a><span class="in">         `Non-LGBTQ+ N` = `Non-LGBTQ+_n`, `Non-LGBTQ+ %` = `Non-LGBTQ+_pct`,</span></span>
+<span id="cb21-377"><a href="#cb21-377" aria-hidden="true" tabindex="-1"></a><span class="in">         `LGBTQ+ N` = `LGBTQ+_n`, `LGBTQ+ %` = `LGBTQ+_pct`) %&gt;%</span></span>
+<span id="cb21-378"><a href="#cb21-378" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r"))</span></span>
+<span id="cb21-379"><a href="#cb21-379" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-380"><a href="#cb21-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-381"><a href="#cb21-381" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb21-382"><a href="#cb21-382" aria-hidden="true" tabindex="-1"></a><span class="fu">## Executive vs. Legislative Positions</span></span>
+<span id="cb21-383"><a href="#cb21-383" aria-hidden="true" tabindex="-1"></a>The distribution of LGBTQ+ candidates across position types is informative: proportional systems (city council races) may offer lower barriers to entry for underrepresented groups, since candidates need only clear a party threshold rather than win a plurality. The data above reveal whether LGBTQ+ candidates are differentially concentrated in one position type.</span>
+<span id="cb21-384"><a href="#cb21-384" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb21-385"><a href="#cb21-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-386"><a href="#cb21-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## Election Rate Comparison</span></span>
+<span id="cb21-386"><a href="#cb21-386" aria-hidden="true" tabindex="-1"></a><span class="fu"># Electoral Outcomes {#sec-outcomes}</span></span>
 <span id="cb21-387"><a href="#cb21-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-388"><a href="#cb21-388" aria-hidden="true" tabindex="-1"></a>**Election rate** is the proportion of candidates who won their race (elected = 1), including candidates elected outright and those elected by average in the proportional system. The table below reports election rates for LGBTQ+ and non-LGBTQ+ candidates, along with exact binomial 95% confidence intervals.</span>
+<span id="cb21-388"><a href="#cb21-388" aria-hidden="true" tabindex="-1"></a><span class="fu">## Election Rate Comparison</span></span>
 <span id="cb21-389"><a href="#cb21-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-390"><a href="#cb21-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-election-comparison}</span></span>
-<span id="cb21-391"><a href="#cb21-391" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-election-comparison</span></span>
-<span id="cb21-392"><a href="#cb21-392" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Election Rates with 95% Confidence Intervals"</span></span>
-<span id="cb21-393"><a href="#cb21-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-394"><a href="#cb21-394" aria-hidden="true" tabindex="-1"></a><span class="in">election_comparison &lt;- df %&gt;%</span></span>
-<span id="cb21-395"><a href="#cb21-395" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected), !is.na(lgbtq_label)) %&gt;%</span></span>
-<span id="cb21-396"><a href="#cb21-396" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(lgbtq_label) %&gt;%</span></span>
-<span id="cb21-397"><a href="#cb21-397" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
-<span id="cb21-398"><a href="#cb21-398" aria-hidden="true" tabindex="-1"></a><span class="in">    N = n(),</span></span>
-<span id="cb21-399"><a href="#cb21-399" aria-hidden="true" tabindex="-1"></a><span class="in">    Elected = sum(elected),</span></span>
-<span id="cb21-400"><a href="#cb21-400" aria-hidden="true" tabindex="-1"></a><span class="in">    Rate = mean(elected),</span></span>
-<span id="cb21-401"><a href="#cb21-401" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
-<span id="cb21-402"><a href="#cb21-402" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb21-403"><a href="#cb21-403" aria-hidden="true" tabindex="-1"></a><span class="in">  rowwise() %&gt;%</span></span>
-<span id="cb21-404"><a href="#cb21-404" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb21-405"><a href="#cb21-405" aria-hidden="true" tabindex="-1"></a><span class="in">    ci = list(binom.test(Elected, N)$conf.int),</span></span>
-<span id="cb21-406"><a href="#cb21-406" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_low = ci[1],</span></span>
-<span id="cb21-407"><a href="#cb21-407" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_high = ci[2]</span></span>
-<span id="cb21-408"><a href="#cb21-408" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb21-409"><a href="#cb21-409" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
-<span id="cb21-410"><a href="#cb21-410" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-ci) %&gt;%</span></span>
-<span id="cb21-411"><a href="#cb21-411" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb21-412"><a href="#cb21-412" aria-hidden="true" tabindex="-1"></a><span class="in">    `Election Rate` = format_pct(Rate),</span></span>
-<span id="cb21-413"><a href="#cb21-413" aria-hidden="true" tabindex="-1"></a><span class="in">    `95% CI` = paste0("[", format_pct(CI_low), ", ", format_pct(CI_high), "]")</span></span>
-<span id="cb21-414"><a href="#cb21-414" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb21-415"><a href="#cb21-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-416"><a href="#cb21-416" aria-hidden="true" tabindex="-1"></a><span class="in">election_comparison %&gt;%</span></span>
-<span id="cb21-417"><a href="#cb21-417" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Group = lgbtq_label, N = N, Elected, `Election Rate`, `95% CI`) %&gt;%</span></span>
-<span id="cb21-418"><a href="#cb21-418" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(N = format_n(N), Elected = format_n(Elected)) %&gt;%</span></span>
-<span id="cb21-419"><a href="#cb21-419" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r"))</span></span>
-<span id="cb21-420"><a href="#cb21-420" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-421"><a href="#cb21-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-422"><a href="#cb21-422" aria-hidden="true" tabindex="-1"></a><span class="in">```{r election-test}</span></span>
+<span id="cb21-390"><a href="#cb21-390" aria-hidden="true" tabindex="-1"></a>**Election rate** is the proportion of candidates who won their race (elected = 1), including candidates elected outright and those elected by average in the proportional system. The table below reports election rates for LGBTQ+ and non-LGBTQ+ candidates, along with exact binomial 95% confidence intervals.</span>
+<span id="cb21-391"><a href="#cb21-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-392"><a href="#cb21-392" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-election-comparison}</span></span>
+<span id="cb21-393"><a href="#cb21-393" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-election-comparison</span></span>
+<span id="cb21-394"><a href="#cb21-394" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Election Rates with 95% Confidence Intervals"</span></span>
+<span id="cb21-395"><a href="#cb21-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-396"><a href="#cb21-396" aria-hidden="true" tabindex="-1"></a><span class="in">election_comparison &lt;- df %&gt;%</span></span>
+<span id="cb21-397"><a href="#cb21-397" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected), !is.na(lgbtq_label)) %&gt;%</span></span>
+<span id="cb21-398"><a href="#cb21-398" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(lgbtq_label) %&gt;%</span></span>
+<span id="cb21-399"><a href="#cb21-399" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
+<span id="cb21-400"><a href="#cb21-400" aria-hidden="true" tabindex="-1"></a><span class="in">    N = n(),</span></span>
+<span id="cb21-401"><a href="#cb21-401" aria-hidden="true" tabindex="-1"></a><span class="in">    Elected = sum(elected),</span></span>
+<span id="cb21-402"><a href="#cb21-402" aria-hidden="true" tabindex="-1"></a><span class="in">    Rate = mean(elected),</span></span>
+<span id="cb21-403"><a href="#cb21-403" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
+<span id="cb21-404"><a href="#cb21-404" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb21-405"><a href="#cb21-405" aria-hidden="true" tabindex="-1"></a><span class="in">  rowwise() %&gt;%</span></span>
+<span id="cb21-406"><a href="#cb21-406" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb21-407"><a href="#cb21-407" aria-hidden="true" tabindex="-1"></a><span class="in">    ci = list(binom.test(Elected, N)$conf.int),</span></span>
+<span id="cb21-408"><a href="#cb21-408" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_low = ci[1],</span></span>
+<span id="cb21-409"><a href="#cb21-409" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_high = ci[2]</span></span>
+<span id="cb21-410"><a href="#cb21-410" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb21-411"><a href="#cb21-411" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb21-412"><a href="#cb21-412" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-ci) %&gt;%</span></span>
+<span id="cb21-413"><a href="#cb21-413" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb21-414"><a href="#cb21-414" aria-hidden="true" tabindex="-1"></a><span class="in">    `Election Rate` = format_pct(Rate),</span></span>
+<span id="cb21-415"><a href="#cb21-415" aria-hidden="true" tabindex="-1"></a><span class="in">    `95% CI` = paste0("[", format_pct(CI_low), ", ", format_pct(CI_high), "]")</span></span>
+<span id="cb21-416"><a href="#cb21-416" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb21-417"><a href="#cb21-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-418"><a href="#cb21-418" aria-hidden="true" tabindex="-1"></a><span class="in">election_comparison %&gt;%</span></span>
+<span id="cb21-419"><a href="#cb21-419" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Group = lgbtq_label, N = N, Elected, `Election Rate`, `95% CI`) %&gt;%</span></span>
+<span id="cb21-420"><a href="#cb21-420" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(N = format_n(N), Elected = format_n(Elected)) %&gt;%</span></span>
+<span id="cb21-421"><a href="#cb21-421" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "r", "r"))</span></span>
+<span id="cb21-422"><a href="#cb21-422" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-423"><a href="#cb21-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-424"><a href="#cb21-424" aria-hidden="true" tabindex="-1"></a><span class="in"># Formal test of difference in election rates</span></span>
-<span id="cb21-425"><a href="#cb21-425" aria-hidden="true" tabindex="-1"></a><span class="in">ct &lt;- df %&gt;%</span></span>
-<span id="cb21-426"><a href="#cb21-426" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected), !is.na(lgbtq_label)) %&gt;%</span></span>
-<span id="cb21-427"><a href="#cb21-427" aria-hidden="true" tabindex="-1"></a><span class="in">  with(table(lgbtq_label, elected))</span></span>
-<span id="cb21-428"><a href="#cb21-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-429"><a href="#cb21-429" aria-hidden="true" tabindex="-1"></a><span class="in">prop_test &lt;- prop.test(ct)</span></span>
-<span id="cb21-430"><a href="#cb21-430" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-431"><a href="#cb21-431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-432"><a href="#cb21-432" aria-hidden="true" tabindex="-1"></a>The difference in election rates is <span class="in">`r ifelse(prop_test$p.value &lt; 0.001, "statistically significant (*p* &lt; 0.001)", paste0("not statistically significant (*p* = ", round(prop_test$p.value, 3), ")"))`</span>.</span>
+<span id="cb21-424"><a href="#cb21-424" aria-hidden="true" tabindex="-1"></a><span class="in">```{r election-test}</span></span>
+<span id="cb21-425"><a href="#cb21-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-426"><a href="#cb21-426" aria-hidden="true" tabindex="-1"></a><span class="in"># Formal test of difference in election rates</span></span>
+<span id="cb21-427"><a href="#cb21-427" aria-hidden="true" tabindex="-1"></a><span class="in">ct &lt;- df %&gt;%</span></span>
+<span id="cb21-428"><a href="#cb21-428" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected), !is.na(lgbtq_label)) %&gt;%</span></span>
+<span id="cb21-429"><a href="#cb21-429" aria-hidden="true" tabindex="-1"></a><span class="in">  with(table(lgbtq_label, elected))</span></span>
+<span id="cb21-430"><a href="#cb21-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-431"><a href="#cb21-431" aria-hidden="true" tabindex="-1"></a><span class="in">prop_test &lt;- prop.test(ct)</span></span>
+<span id="cb21-432"><a href="#cb21-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-433"><a href="#cb21-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-434"><a href="#cb21-434" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-election-rate}</span></span>
-<span id="cb21-435"><a href="#cb21-435" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-election-rate</span></span>
-<span id="cb21-436"><a href="#cb21-436" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Election Rates with 95% Confidence Intervals"</span></span>
-<span id="cb21-437"><a href="#cb21-437" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 5</span></span>
-<span id="cb21-438"><a href="#cb21-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-439"><a href="#cb21-439" aria-hidden="true" tabindex="-1"></a><span class="in">election_comparison %&gt;%</span></span>
-<span id="cb21-440"><a href="#cb21-440" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = lgbtq_label, y = Rate, fill = lgbtq_label)) +</span></span>
-<span id="cb21-441"><a href="#cb21-441" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col(alpha = 0.9, width = 0.5) +</span></span>
-<span id="cb21-442"><a href="#cb21-442" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_errorbar(</span></span>
-<span id="cb21-443"><a href="#cb21-443" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(ymin = CI_low, ymax = CI_high),</span></span>
-<span id="cb21-444"><a href="#cb21-444" aria-hidden="true" tabindex="-1"></a><span class="in">    width = 0.15, linewidth = 0.7</span></span>
-<span id="cb21-445"><a href="#cb21-445" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb21-446"><a href="#cb21-446" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(</span></span>
-<span id="cb21-447"><a href="#cb21-447" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(label = format_pct(Rate)),</span></span>
-<span id="cb21-448"><a href="#cb21-448" aria-hidden="true" tabindex="-1"></a><span class="in">    vjust = -1.5, size = 5, fontface = "bold"</span></span>
-<span id="cb21-449"><a href="#cb21-449" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb21-450"><a href="#cb21-450" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(</span></span>
-<span id="cb21-451"><a href="#cb21-451" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = percent,</span></span>
-<span id="cb21-452"><a href="#cb21-452" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = expansion(mult = c(0, 0.2))</span></span>
-<span id="cb21-453"><a href="#cb21-453" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb21-454"><a href="#cb21-454" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = pal_lgbtq, guide = "none") +</span></span>
-<span id="cb21-455"><a href="#cb21-455" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb21-456"><a href="#cb21-456" aria-hidden="true" tabindex="-1"></a><span class="in">    x = NULL, y = "Election Rate",</span></span>
-<span id="cb21-457"><a href="#cb21-457" aria-hidden="true" tabindex="-1"></a><span class="in">    title = "Election Rate: LGBTQ+ vs Non-LGBTQ+ Candidates",</span></span>
-<span id="cb21-458"><a href="#cb21-458" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Error bars represent 95% confidence intervals (exact binomial)",</span></span>
-<span id="cb21-459"><a href="#cb21-459" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Based on all candidates with known election outcomes."</span></span>
-<span id="cb21-460"><a href="#cb21-460" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb21-461"><a href="#cb21-461" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-462"><a href="#cb21-462" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "02_election_rate")</span></span>
-<span id="cb21-463"><a href="#cb21-463" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-464"><a href="#cb21-464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-465"><a href="#cb21-465" aria-hidden="true" tabindex="-1"></a><span class="fu">## Election Rate by Position</span></span>
+<span id="cb21-434"><a href="#cb21-434" aria-hidden="true" tabindex="-1"></a>The difference in election rates is <span class="in">`r ifelse(prop_test$p.value &lt; 0.001, "statistically significant (*p* &lt; 0.001)", paste0("not statistically significant (*p* = ", round(prop_test$p.value, 3), ")"))`</span>.</span>
+<span id="cb21-435"><a href="#cb21-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-436"><a href="#cb21-436" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-election-rate}</span></span>
+<span id="cb21-437"><a href="#cb21-437" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-election-rate</span></span>
+<span id="cb21-438"><a href="#cb21-438" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Election Rates with 95% Confidence Intervals"</span></span>
+<span id="cb21-439"><a href="#cb21-439" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 5</span></span>
+<span id="cb21-440"><a href="#cb21-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-441"><a href="#cb21-441" aria-hidden="true" tabindex="-1"></a><span class="in">election_comparison %&gt;%</span></span>
+<span id="cb21-442"><a href="#cb21-442" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = lgbtq_label, y = Rate, fill = lgbtq_label)) +</span></span>
+<span id="cb21-443"><a href="#cb21-443" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col(alpha = 0.9, width = 0.5) +</span></span>
+<span id="cb21-444"><a href="#cb21-444" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_errorbar(</span></span>
+<span id="cb21-445"><a href="#cb21-445" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(ymin = CI_low, ymax = CI_high),</span></span>
+<span id="cb21-446"><a href="#cb21-446" aria-hidden="true" tabindex="-1"></a><span class="in">    width = 0.15, linewidth = 0.7</span></span>
+<span id="cb21-447"><a href="#cb21-447" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb21-448"><a href="#cb21-448" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_text(</span></span>
+<span id="cb21-449"><a href="#cb21-449" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(label = format_pct(Rate)),</span></span>
+<span id="cb21-450"><a href="#cb21-450" aria-hidden="true" tabindex="-1"></a><span class="in">    vjust = -1.5, size = 5, fontface = "bold"</span></span>
+<span id="cb21-451"><a href="#cb21-451" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb21-452"><a href="#cb21-452" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_y_continuous(</span></span>
+<span id="cb21-453"><a href="#cb21-453" aria-hidden="true" tabindex="-1"></a><span class="in">    labels = percent,</span></span>
+<span id="cb21-454"><a href="#cb21-454" aria-hidden="true" tabindex="-1"></a><span class="in">    expand = expansion(mult = c(0, 0.2))</span></span>
+<span id="cb21-455"><a href="#cb21-455" aria-hidden="true" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb21-456"><a href="#cb21-456" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = pal_lgbtq, guide = "none") +</span></span>
+<span id="cb21-457"><a href="#cb21-457" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb21-458"><a href="#cb21-458" aria-hidden="true" tabindex="-1"></a><span class="in">    x = NULL, y = "Election Rate",</span></span>
+<span id="cb21-459"><a href="#cb21-459" aria-hidden="true" tabindex="-1"></a><span class="in">    title = "Election Rate: LGBTQ+ vs Non-LGBTQ+ Candidates",</span></span>
+<span id="cb21-460"><a href="#cb21-460" aria-hidden="true" tabindex="-1"></a><span class="in">    subtitle = "Error bars represent 95% confidence intervals (exact binomial)",</span></span>
+<span id="cb21-461"><a href="#cb21-461" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Based on all candidates with known election outcomes."</span></span>
+<span id="cb21-462"><a href="#cb21-462" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb21-463"><a href="#cb21-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-464"><a href="#cb21-464" aria-hidden="true" tabindex="-1"></a><span class="in">save_figure(last_plot(), "02_election_rate")</span></span>
+<span id="cb21-465"><a href="#cb21-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-466"><a href="#cb21-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-467"><a href="#cb21-467" aria-hidden="true" tabindex="-1"></a>The aggregate comparison may mask important differences across position types. Below we disaggregate by city councilor and mayor races.</span>
+<span id="cb21-467"><a href="#cb21-467" aria-hidden="true" tabindex="-1"></a><span class="fu">## Election Rate by Position</span></span>
 <span id="cb21-468"><a href="#cb21-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-469"><a href="#cb21-469" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-election-by-position}</span></span>
-<span id="cb21-470"><a href="#cb21-470" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-election-by-position</span></span>
-<span id="cb21-471"><a href="#cb21-471" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Election Rates by Position and LGBTQ+ Status"</span></span>
-<span id="cb21-472"><a href="#cb21-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-473"><a href="#cb21-473" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
-<span id="cb21-474"><a href="#cb21-474" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected), !is.na(lgbtq_label)) %&gt;%</span></span>
-<span id="cb21-475"><a href="#cb21-475" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(position_simple, lgbtq_label) %&gt;%</span></span>
-<span id="cb21-476"><a href="#cb21-476" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
-<span id="cb21-477"><a href="#cb21-477" aria-hidden="true" tabindex="-1"></a><span class="in">    N = n(),</span></span>
-<span id="cb21-478"><a href="#cb21-478" aria-hidden="true" tabindex="-1"></a><span class="in">    Elected = sum(elected),</span></span>
-<span id="cb21-479"><a href="#cb21-479" aria-hidden="true" tabindex="-1"></a><span class="in">    Rate = mean(elected),</span></span>
-<span id="cb21-480"><a href="#cb21-480" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
-<span id="cb21-481"><a href="#cb21-481" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb21-482"><a href="#cb21-482" aria-hidden="true" tabindex="-1"></a><span class="in">  rowwise() %&gt;%</span></span>
-<span id="cb21-483"><a href="#cb21-483" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb21-484"><a href="#cb21-484" aria-hidden="true" tabindex="-1"></a><span class="in">    ci = list(binom.test(Elected, N)$conf.int),</span></span>
-<span id="cb21-485"><a href="#cb21-485" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_low = ci[1],</span></span>
-<span id="cb21-486"><a href="#cb21-486" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_high = ci[2]</span></span>
-<span id="cb21-487"><a href="#cb21-487" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb21-488"><a href="#cb21-488" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
-<span id="cb21-489"><a href="#cb21-489" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-ci) %&gt;%</span></span>
-<span id="cb21-490"><a href="#cb21-490" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
-<span id="cb21-491"><a href="#cb21-491" aria-hidden="true" tabindex="-1"></a><span class="in">    `Election Rate` = format_pct(Rate),</span></span>
-<span id="cb21-492"><a href="#cb21-492" aria-hidden="true" tabindex="-1"></a><span class="in">    `95% CI` = paste0("[", format_pct(CI_low), ", ", format_pct(CI_high), "]"),</span></span>
-<span id="cb21-493"><a href="#cb21-493" aria-hidden="true" tabindex="-1"></a><span class="in">    N = format_n(N),</span></span>
-<span id="cb21-494"><a href="#cb21-494" aria-hidden="true" tabindex="-1"></a><span class="in">    Elected = format_n(Elected)</span></span>
-<span id="cb21-495"><a href="#cb21-495" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb21-496"><a href="#cb21-496" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Position = position_simple, Group = lgbtq_label, N, Elected, `Election Rate`, `95% CI`) %&gt;%</span></span>
-<span id="cb21-497"><a href="#cb21-497" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "l", "r", "r", "r", "r"))</span></span>
-<span id="cb21-498"><a href="#cb21-498" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-499"><a href="#cb21-499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-500"><a href="#cb21-500" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb21-501"><a href="#cb21-501" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Confidence Intervals Matter</span></span>
-<span id="cb21-502"><a href="#cb21-502" aria-hidden="true" tabindex="-1"></a>With a much smaller LGBTQ+ sample, confidence intervals are substantially wider. A point estimate that looks different may not be statistically distinguishable from the non-LGBTQ+ rate once uncertainty is accounted for. Always read the CIs alongside the point estimates.</span>
-<span id="cb21-503"><a href="#cb21-503" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb21-504"><a href="#cb21-504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-505"><a href="#cb21-505" aria-hidden="true" tabindex="-1"></a><span class="fu"># Publication-Ready Table 1 {#sec-table1}</span></span>
+<span id="cb21-469"><a href="#cb21-469" aria-hidden="true" tabindex="-1"></a>The aggregate comparison may mask important differences across position types. Below we disaggregate by city councilor and mayor races.</span>
+<span id="cb21-470"><a href="#cb21-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-471"><a href="#cb21-471" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-election-by-position}</span></span>
+<span id="cb21-472"><a href="#cb21-472" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-election-by-position</span></span>
+<span id="cb21-473"><a href="#cb21-473" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Election Rates by Position and LGBTQ+ Status"</span></span>
+<span id="cb21-474"><a href="#cb21-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-475"><a href="#cb21-475" aria-hidden="true" tabindex="-1"></a><span class="in">df %&gt;%</span></span>
+<span id="cb21-476"><a href="#cb21-476" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected), !is.na(lgbtq_label)) %&gt;%</span></span>
+<span id="cb21-477"><a href="#cb21-477" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(position_simple, lgbtq_label) %&gt;%</span></span>
+<span id="cb21-478"><a href="#cb21-478" aria-hidden="true" tabindex="-1"></a><span class="in">  summarise(</span></span>
+<span id="cb21-479"><a href="#cb21-479" aria-hidden="true" tabindex="-1"></a><span class="in">    N = n(),</span></span>
+<span id="cb21-480"><a href="#cb21-480" aria-hidden="true" tabindex="-1"></a><span class="in">    Elected = sum(elected),</span></span>
+<span id="cb21-481"><a href="#cb21-481" aria-hidden="true" tabindex="-1"></a><span class="in">    Rate = mean(elected),</span></span>
+<span id="cb21-482"><a href="#cb21-482" aria-hidden="true" tabindex="-1"></a><span class="in">    .groups = "drop"</span></span>
+<span id="cb21-483"><a href="#cb21-483" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb21-484"><a href="#cb21-484" aria-hidden="true" tabindex="-1"></a><span class="in">  rowwise() %&gt;%</span></span>
+<span id="cb21-485"><a href="#cb21-485" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb21-486"><a href="#cb21-486" aria-hidden="true" tabindex="-1"></a><span class="in">    ci = list(binom.test(Elected, N)$conf.int),</span></span>
+<span id="cb21-487"><a href="#cb21-487" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_low = ci[1],</span></span>
+<span id="cb21-488"><a href="#cb21-488" aria-hidden="true" tabindex="-1"></a><span class="in">    CI_high = ci[2]</span></span>
+<span id="cb21-489"><a href="#cb21-489" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb21-490"><a href="#cb21-490" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb21-491"><a href="#cb21-491" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-ci) %&gt;%</span></span>
+<span id="cb21-492"><a href="#cb21-492" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(</span></span>
+<span id="cb21-493"><a href="#cb21-493" aria-hidden="true" tabindex="-1"></a><span class="in">    `Election Rate` = format_pct(Rate),</span></span>
+<span id="cb21-494"><a href="#cb21-494" aria-hidden="true" tabindex="-1"></a><span class="in">    `95% CI` = paste0("[", format_pct(CI_low), ", ", format_pct(CI_high), "]"),</span></span>
+<span id="cb21-495"><a href="#cb21-495" aria-hidden="true" tabindex="-1"></a><span class="in">    N = format_n(N),</span></span>
+<span id="cb21-496"><a href="#cb21-496" aria-hidden="true" tabindex="-1"></a><span class="in">    Elected = format_n(Elected)</span></span>
+<span id="cb21-497"><a href="#cb21-497" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb21-498"><a href="#cb21-498" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Position = position_simple, Group = lgbtq_label, N, Elected, `Election Rate`, `95% CI`) %&gt;%</span></span>
+<span id="cb21-499"><a href="#cb21-499" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "l", "r", "r", "r", "r"))</span></span>
+<span id="cb21-500"><a href="#cb21-500" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-501"><a href="#cb21-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-502"><a href="#cb21-502" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb21-503"><a href="#cb21-503" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Confidence Intervals Matter</span></span>
+<span id="cb21-504"><a href="#cb21-504" aria-hidden="true" tabindex="-1"></a>With a much smaller LGBTQ+ sample, confidence intervals are substantially wider. A point estimate that looks different may not be statistically distinguishable from the non-LGBTQ+ rate once uncertainty is accounted for. Always read the CIs alongside the point estimates.</span>
+<span id="cb21-505"><a href="#cb21-505" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb21-506"><a href="#cb21-506" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-507"><a href="#cb21-507" aria-hidden="true" tabindex="-1"></a>The table below consolidates all major comparisons into a single summary statistics table suitable for inclusion in a research paper. For each variable, we report the statistic for non-LGBTQ+ and LGBTQ+ candidates, along with a formal test of difference. All variable definitions follow Chapter 1.</span>
+<span id="cb21-507"><a href="#cb21-507" aria-hidden="true" tabindex="-1"></a><span class="fu"># Publication-Ready Table 1 {#sec-table1}</span></span>
 <span id="cb21-508"><a href="#cb21-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-509"><a href="#cb21-509" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Continuous variables** (age, ideology score): Welch's *t*-test</span>
-<span id="cb21-510"><a href="#cb21-510" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Categorical variables** (gender, race, education, ideology category, position): Pearson's chi-squared test</span>
-<span id="cb21-511"><a href="#cb21-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-512"><a href="#cb21-512" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-table1}</span></span>
-<span id="cb21-513"><a href="#cb21-513" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-table1</span></span>
-<span id="cb21-514"><a href="#cb21-514" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Table 1: Summary Statistics by LGBTQ+ Status"</span></span>
-<span id="cb21-515"><a href="#cb21-515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-516"><a href="#cb21-516" aria-hidden="true" tabindex="-1"></a><span class="in"># Prepare subsets</span></span>
-<span id="cb21-517"><a href="#cb21-517" aria-hidden="true" tabindex="-1"></a><span class="in">df_compare &lt;- df %&gt;% filter(!is.na(lgbtq_label))</span></span>
-<span id="cb21-518"><a href="#cb21-518" aria-hidden="true" tabindex="-1"></a><span class="in">df_lgbtq &lt;- df_compare %&gt;% filter(lgbtq_label == "LGBTQ+")</span></span>
-<span id="cb21-519"><a href="#cb21-519" aria-hidden="true" tabindex="-1"></a><span class="in">df_non   &lt;- df_compare %&gt;% filter(lgbtq_label == "Non-LGBTQ+")</span></span>
-<span id="cb21-520"><a href="#cb21-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-521"><a href="#cb21-521" aria-hidden="true" tabindex="-1"></a><span class="in"># Helper: format mean(sd)</span></span>
-<span id="cb21-522"><a href="#cb21-522" aria-hidden="true" tabindex="-1"></a><span class="in">fmt_mean_sd &lt;- function(x) {</span></span>
-<span id="cb21-523"><a href="#cb21-523" aria-hidden="true" tabindex="-1"></a><span class="in">  paste0(round(mean(x, na.rm = TRUE), 1), " (", round(sd(x, na.rm = TRUE), 1), ")")</span></span>
-<span id="cb21-524"><a href="#cb21-524" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb21-525"><a href="#cb21-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-526"><a href="#cb21-526" aria-hidden="true" tabindex="-1"></a><span class="in"># Helper: format proportion</span></span>
-<span id="cb21-527"><a href="#cb21-527" aria-hidden="true" tabindex="-1"></a><span class="in">fmt_prop &lt;- function(x, val) {</span></span>
-<span id="cb21-528"><a href="#cb21-528" aria-hidden="true" tabindex="-1"></a><span class="in">  format_pct(mean(x == val, na.rm = TRUE))</span></span>
-<span id="cb21-529"><a href="#cb21-529" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb21-530"><a href="#cb21-530" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-531"><a href="#cb21-531" aria-hidden="true" tabindex="-1"></a><span class="in"># --- Continuous variables ---</span></span>
-<span id="cb21-532"><a href="#cb21-532" aria-hidden="true" tabindex="-1"></a><span class="in"># Age</span></span>
-<span id="cb21-533"><a href="#cb21-533" aria-hidden="true" tabindex="-1"></a><span class="in">t_age &lt;- t.test(age ~ lgbtq_label, data = df_compare)</span></span>
-<span id="cb21-534"><a href="#cb21-534" aria-hidden="true" tabindex="-1"></a><span class="in">age_row &lt;- tibble(</span></span>
-<span id="cb21-535"><a href="#cb21-535" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Age, mean (SD)",</span></span>
-<span id="cb21-536"><a href="#cb21-536" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = fmt_mean_sd(df_non$age),</span></span>
-<span id="cb21-537"><a href="#cb21-537" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = fmt_mean_sd(df_lgbtq$age),</span></span>
-<span id="cb21-538"><a href="#cb21-538" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("t = ", round(t_age$statistic, 2),</span></span>
-<span id="cb21-539"><a href="#cb21-539" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(t_age$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(t_age$p.value, 3))))</span></span>
-<span id="cb21-540"><a href="#cb21-540" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-541"><a href="#cb21-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-542"><a href="#cb21-542" aria-hidden="true" tabindex="-1"></a><span class="in"># Ideology score</span></span>
-<span id="cb21-543"><a href="#cb21-543" aria-hidden="true" tabindex="-1"></a><span class="in">t_ideo &lt;- t.test(ideology_score ~ lgbtq_label, data = df_compare)</span></span>
-<span id="cb21-544"><a href="#cb21-544" aria-hidden="true" tabindex="-1"></a><span class="in">ideo_row &lt;- tibble(</span></span>
-<span id="cb21-545"><a href="#cb21-545" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Ideology score, mean (SD)",</span></span>
-<span id="cb21-546"><a href="#cb21-546" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = fmt_mean_sd(df_non$ideology_score),</span></span>
-<span id="cb21-547"><a href="#cb21-547" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = fmt_mean_sd(df_lgbtq$ideology_score),</span></span>
-<span id="cb21-548"><a href="#cb21-548" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("t = ", round(t_ideo$statistic, 2),</span></span>
-<span id="cb21-549"><a href="#cb21-549" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(t_ideo$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(t_ideo$p.value, 3))))</span></span>
-<span id="cb21-550"><a href="#cb21-550" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-551"><a href="#cb21-551" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-552"><a href="#cb21-552" aria-hidden="true" tabindex="-1"></a><span class="in"># --- Categorical variables ---</span></span>
-<span id="cb21-553"><a href="#cb21-553" aria-hidden="true" tabindex="-1"></a><span class="in"># Gender: % Female</span></span>
-<span id="cb21-554"><a href="#cb21-554" aria-hidden="true" tabindex="-1"></a><span class="in">chi_gender &lt;- df_compare %&gt;%</span></span>
-<span id="cb21-555"><a href="#cb21-555" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(female)) %&gt;%</span></span>
-<span id="cb21-556"><a href="#cb21-556" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, female)))</span></span>
-<span id="cb21-557"><a href="#cb21-557" aria-hidden="true" tabindex="-1"></a><span class="in">gender_row &lt;- tibble(</span></span>
-<span id="cb21-558"><a href="#cb21-558" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Female, %",</span></span>
-<span id="cb21-559"><a href="#cb21-559" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_pct(mean(df_non$female, na.rm = TRUE)),</span></span>
-<span id="cb21-560"><a href="#cb21-560" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_pct(mean(df_lgbtq$female, na.rm = TRUE)),</span></span>
-<span id="cb21-561"><a href="#cb21-561" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("\u03C7\u00B2 = ", round(chi_gender$statistic, 1),</span></span>
-<span id="cb21-562"><a href="#cb21-562" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(chi_gender$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_gender$p.value, 3))))</span></span>
-<span id="cb21-563"><a href="#cb21-563" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-564"><a href="#cb21-564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-565"><a href="#cb21-565" aria-hidden="true" tabindex="-1"></a><span class="in"># Nonwhite</span></span>
-<span id="cb21-566"><a href="#cb21-566" aria-hidden="true" tabindex="-1"></a><span class="in">chi_nonwhite &lt;- df_compare %&gt;%</span></span>
-<span id="cb21-567"><a href="#cb21-567" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(nonwhite)) %&gt;%</span></span>
-<span id="cb21-568"><a href="#cb21-568" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, nonwhite)))</span></span>
-<span id="cb21-569"><a href="#cb21-569" aria-hidden="true" tabindex="-1"></a><span class="in">nonwhite_row &lt;- tibble(</span></span>
-<span id="cb21-570"><a href="#cb21-570" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Nonwhite, %",</span></span>
-<span id="cb21-571"><a href="#cb21-571" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_pct(mean(df_non$nonwhite, na.rm = TRUE)),</span></span>
-<span id="cb21-572"><a href="#cb21-572" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_pct(mean(df_lgbtq$nonwhite, na.rm = TRUE)),</span></span>
-<span id="cb21-573"><a href="#cb21-573" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("\u03C7\u00B2 = ", round(chi_nonwhite$statistic, 1),</span></span>
-<span id="cb21-574"><a href="#cb21-574" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(chi_nonwhite$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_nonwhite$p.value, 3))))</span></span>
-<span id="cb21-575"><a href="#cb21-575" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-576"><a href="#cb21-576" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-577"><a href="#cb21-577" aria-hidden="true" tabindex="-1"></a><span class="in"># Race (full breakdown)</span></span>
-<span id="cb21-578"><a href="#cb21-578" aria-hidden="true" tabindex="-1"></a><span class="in">chi_race &lt;- df_compare %&gt;%</span></span>
-<span id="cb21-579"><a href="#cb21-579" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(race_simple)) %&gt;%</span></span>
-<span id="cb21-580"><a href="#cb21-580" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, race_simple)))</span></span>
-<span id="cb21-581"><a href="#cb21-581" aria-hidden="true" tabindex="-1"></a><span class="in">race_rows &lt;- tibble(</span></span>
-<span id="cb21-582"><a href="#cb21-582" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = c("Race", "  White, %", "  Black, %", "  Brown, %", "  Other, %"),</span></span>
-<span id="cb21-583"><a href="#cb21-583" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = c(</span></span>
-<span id="cb21-584"><a href="#cb21-584" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
-<span id="cb21-585"><a href="#cb21-585" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "White"),</span></span>
-<span id="cb21-586"><a href="#cb21-586" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "Black"),</span></span>
-<span id="cb21-587"><a href="#cb21-587" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "Brown"),</span></span>
-<span id="cb21-588"><a href="#cb21-588" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "Other")</span></span>
-<span id="cb21-589"><a href="#cb21-589" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb21-590"><a href="#cb21-590" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = c(</span></span>
-<span id="cb21-591"><a href="#cb21-591" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
-<span id="cb21-592"><a href="#cb21-592" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "White"),</span></span>
-<span id="cb21-593"><a href="#cb21-593" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "Black"),</span></span>
-<span id="cb21-594"><a href="#cb21-594" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "Brown"),</span></span>
-<span id="cb21-595"><a href="#cb21-595" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "Other")</span></span>
-<span id="cb21-596"><a href="#cb21-596" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb21-597"><a href="#cb21-597" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = c(</span></span>
-<span id="cb21-598"><a href="#cb21-598" aria-hidden="true" tabindex="-1"></a><span class="in">    paste0("\u03C7\u00B2 = ", round(chi_race$statistic, 1),</span></span>
-<span id="cb21-599"><a href="#cb21-599" aria-hidden="true" tabindex="-1"></a><span class="in">           ", p ", ifelse(chi_race$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_race$p.value, 3)))),</span></span>
-<span id="cb21-600"><a href="#cb21-600" aria-hidden="true" tabindex="-1"></a><span class="in">    "", "", "", ""</span></span>
-<span id="cb21-601"><a href="#cb21-601" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb21-602"><a href="#cb21-602" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-603"><a href="#cb21-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-604"><a href="#cb21-604" aria-hidden="true" tabindex="-1"></a><span class="in"># Education</span></span>
-<span id="cb21-605"><a href="#cb21-605" aria-hidden="true" tabindex="-1"></a><span class="in">chi_edu &lt;- df_compare %&gt;%</span></span>
-<span id="cb21-606"><a href="#cb21-606" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(education_simple)) %&gt;%</span></span>
-<span id="cb21-607"><a href="#cb21-607" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, education_simple)))</span></span>
-<span id="cb21-608"><a href="#cb21-608" aria-hidden="true" tabindex="-1"></a><span class="in">edu_rows &lt;- tibble(</span></span>
-<span id="cb21-609"><a href="#cb21-609" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = c("Education", "  Less than HS, %", "  High School, %", "  College+, %"),</span></span>
-<span id="cb21-610"><a href="#cb21-610" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = c(</span></span>
-<span id="cb21-611"><a href="#cb21-611" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
-<span id="cb21-612"><a href="#cb21-612" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$education_simple, "Less than HS"),</span></span>
-<span id="cb21-613"><a href="#cb21-613" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$education_simple, "High School"),</span></span>
-<span id="cb21-614"><a href="#cb21-614" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$education_simple, "College+")</span></span>
-<span id="cb21-615"><a href="#cb21-615" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb21-616"><a href="#cb21-616" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = c(</span></span>
-<span id="cb21-617"><a href="#cb21-617" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
-<span id="cb21-618"><a href="#cb21-618" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$education_simple, "Less than HS"),</span></span>
-<span id="cb21-619"><a href="#cb21-619" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$education_simple, "High School"),</span></span>
-<span id="cb21-620"><a href="#cb21-620" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$education_simple, "College+")</span></span>
-<span id="cb21-621"><a href="#cb21-621" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb21-622"><a href="#cb21-622" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = c(</span></span>
-<span id="cb21-623"><a href="#cb21-623" aria-hidden="true" tabindex="-1"></a><span class="in">    paste0("\u03C7\u00B2 = ", round(chi_edu$statistic, 1),</span></span>
-<span id="cb21-624"><a href="#cb21-624" aria-hidden="true" tabindex="-1"></a><span class="in">           ", p ", ifelse(chi_edu$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_edu$p.value, 3)))),</span></span>
-<span id="cb21-625"><a href="#cb21-625" aria-hidden="true" tabindex="-1"></a><span class="in">    "", "", ""</span></span>
-<span id="cb21-626"><a href="#cb21-626" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb21-627"><a href="#cb21-627" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-628"><a href="#cb21-628" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-629"><a href="#cb21-629" aria-hidden="true" tabindex="-1"></a><span class="in"># Ideology category</span></span>
-<span id="cb21-630"><a href="#cb21-630" aria-hidden="true" tabindex="-1"></a><span class="in">chi_ideol &lt;- df_compare %&gt;%</span></span>
-<span id="cb21-631"><a href="#cb21-631" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(ideology_category)) %&gt;%</span></span>
-<span id="cb21-632"><a href="#cb21-632" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, ideology_category)))</span></span>
-<span id="cb21-633"><a href="#cb21-633" aria-hidden="true" tabindex="-1"></a><span class="in">ideol_rows &lt;- tibble(</span></span>
-<span id="cb21-634"><a href="#cb21-634" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = c("Ideology category", "  Left, %", "  Center, %", "  Right, %"),</span></span>
-<span id="cb21-635"><a href="#cb21-635" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = c(</span></span>
-<span id="cb21-636"><a href="#cb21-636" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
-<span id="cb21-637"><a href="#cb21-637" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$ideology_category, "Left"),</span></span>
-<span id="cb21-638"><a href="#cb21-638" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$ideology_category, "Center"),</span></span>
-<span id="cb21-639"><a href="#cb21-639" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$ideology_category, "Right")</span></span>
-<span id="cb21-640"><a href="#cb21-640" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb21-641"><a href="#cb21-641" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = c(</span></span>
-<span id="cb21-642"><a href="#cb21-642" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
-<span id="cb21-643"><a href="#cb21-643" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$ideology_category, "Left"),</span></span>
-<span id="cb21-644"><a href="#cb21-644" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$ideology_category, "Center"),</span></span>
-<span id="cb21-645"><a href="#cb21-645" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$ideology_category, "Right")</span></span>
-<span id="cb21-646"><a href="#cb21-646" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb21-647"><a href="#cb21-647" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = c(</span></span>
-<span id="cb21-648"><a href="#cb21-648" aria-hidden="true" tabindex="-1"></a><span class="in">    paste0("\u03C7\u00B2 = ", round(chi_ideol$statistic, 1),</span></span>
-<span id="cb21-649"><a href="#cb21-649" aria-hidden="true" tabindex="-1"></a><span class="in">           ", p ", ifelse(chi_ideol$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_ideol$p.value, 3)))),</span></span>
-<span id="cb21-650"><a href="#cb21-650" aria-hidden="true" tabindex="-1"></a><span class="in">    "", "", ""</span></span>
-<span id="cb21-651"><a href="#cb21-651" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb21-652"><a href="#cb21-652" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-653"><a href="#cb21-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-654"><a href="#cb21-654" aria-hidden="true" tabindex="-1"></a><span class="in"># Elected</span></span>
-<span id="cb21-655"><a href="#cb21-655" aria-hidden="true" tabindex="-1"></a><span class="in">chi_elected &lt;- df_compare %&gt;%</span></span>
-<span id="cb21-656"><a href="#cb21-656" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected)) %&gt;%</span></span>
-<span id="cb21-657"><a href="#cb21-657" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, elected)))</span></span>
-<span id="cb21-658"><a href="#cb21-658" aria-hidden="true" tabindex="-1"></a><span class="in">elected_row &lt;- tibble(</span></span>
-<span id="cb21-659"><a href="#cb21-659" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Elected, %",</span></span>
-<span id="cb21-660"><a href="#cb21-660" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_pct(mean(df_non$elected, na.rm = TRUE)),</span></span>
-<span id="cb21-661"><a href="#cb21-661" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_pct(mean(df_lgbtq$elected, na.rm = TRUE)),</span></span>
-<span id="cb21-662"><a href="#cb21-662" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("\u03C7\u00B2 = ", round(chi_elected$statistic, 1),</span></span>
-<span id="cb21-663"><a href="#cb21-663" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(chi_elected$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_elected$p.value, 3))))</span></span>
-<span id="cb21-664"><a href="#cb21-664" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-665"><a href="#cb21-665" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-666"><a href="#cb21-666" aria-hidden="true" tabindex="-1"></a><span class="in"># N row</span></span>
-<span id="cb21-667"><a href="#cb21-667" aria-hidden="true" tabindex="-1"></a><span class="in">n_row &lt;- tibble(</span></span>
-<span id="cb21-668"><a href="#cb21-668" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "N",</span></span>
-<span id="cb21-669"><a href="#cb21-669" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_n(nrow(df_non)),</span></span>
-<span id="cb21-670"><a href="#cb21-670" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_n(nrow(df_lgbtq)),</span></span>
-<span id="cb21-671"><a href="#cb21-671" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = ""</span></span>
-<span id="cb21-672"><a href="#cb21-672" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb21-673"><a href="#cb21-673" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-674"><a href="#cb21-674" aria-hidden="true" tabindex="-1"></a><span class="in"># Bind all rows</span></span>
-<span id="cb21-675"><a href="#cb21-675" aria-hidden="true" tabindex="-1"></a><span class="in">table1 &lt;- bind_rows(n_row, age_row, gender_row, nonwhite_row, race_rows, edu_rows, ideo_row, ideol_rows, elected_row)</span></span>
-<span id="cb21-676"><a href="#cb21-676" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-677"><a href="#cb21-677" aria-hidden="true" tabindex="-1"></a><span class="in">table1 %&gt;%</span></span>
-<span id="cb21-678"><a href="#cb21-678" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "l"))</span></span>
-<span id="cb21-679"><a href="#cb21-679" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-680"><a href="#cb21-680" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-681"><a href="#cb21-681" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save-table1}</span></span>
-<span id="cb21-682"><a href="#cb21-682" aria-hidden="true" tabindex="-1"></a><span class="in">save_table(table1, "table1_lgbtq_comparison.csv")</span></span>
-<span id="cb21-683"><a href="#cb21-683" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-684"><a href="#cb21-684" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-685"><a href="#cb21-685" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb21-686"><a href="#cb21-686" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting Table 1</span></span>
-<span id="cb21-687"><a href="#cb21-687" aria-hidden="true" tabindex="-1"></a>With sample sizes in the hundreds of thousands (non-LGBTQ+) and thousands (LGBTQ+), virtually all comparisons will be statistically significant. The more informative question is one of **substantive magnitude**: how *large* are the differences? Pay particular attention to the ideology and education comparisons, where differences may be most consequential for understanding political representation.</span>
-<span id="cb21-688"><a href="#cb21-688" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb21-689"><a href="#cb21-689" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-690"><a href="#cb21-690" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary</span></span>
+<span id="cb21-509"><a href="#cb21-509" aria-hidden="true" tabindex="-1"></a>The table below consolidates all major comparisons into a single summary statistics table suitable for inclusion in a research paper. For each variable, we report the statistic for non-LGBTQ+ and LGBTQ+ candidates, along with a formal test of difference. All variable definitions follow Chapter 1.</span>
+<span id="cb21-510"><a href="#cb21-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-511"><a href="#cb21-511" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Continuous variables** (age, ideology score): Welch's *t*-test</span>
+<span id="cb21-512"><a href="#cb21-512" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Categorical variables** (gender, race, education, ideology category, position): Pearson's chi-squared test</span>
+<span id="cb21-513"><a href="#cb21-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-514"><a href="#cb21-514" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-table1}</span></span>
+<span id="cb21-515"><a href="#cb21-515" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-table1</span></span>
+<span id="cb21-516"><a href="#cb21-516" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: "Table 1: Summary Statistics by LGBTQ+ Status"</span></span>
+<span id="cb21-517"><a href="#cb21-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-518"><a href="#cb21-518" aria-hidden="true" tabindex="-1"></a><span class="in"># Prepare subsets</span></span>
+<span id="cb21-519"><a href="#cb21-519" aria-hidden="true" tabindex="-1"></a><span class="in">df_compare &lt;- df %&gt;% filter(!is.na(lgbtq_label))</span></span>
+<span id="cb21-520"><a href="#cb21-520" aria-hidden="true" tabindex="-1"></a><span class="in">df_lgbtq &lt;- df_compare %&gt;% filter(lgbtq_label == "LGBTQ+")</span></span>
+<span id="cb21-521"><a href="#cb21-521" aria-hidden="true" tabindex="-1"></a><span class="in">df_non   &lt;- df_compare %&gt;% filter(lgbtq_label == "Non-LGBTQ+")</span></span>
+<span id="cb21-522"><a href="#cb21-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-523"><a href="#cb21-523" aria-hidden="true" tabindex="-1"></a><span class="in"># Helper: format mean(sd)</span></span>
+<span id="cb21-524"><a href="#cb21-524" aria-hidden="true" tabindex="-1"></a><span class="in">fmt_mean_sd &lt;- function(x) {</span></span>
+<span id="cb21-525"><a href="#cb21-525" aria-hidden="true" tabindex="-1"></a><span class="in">  paste0(round(mean(x, na.rm = TRUE), 1), " (", round(sd(x, na.rm = TRUE), 1), ")")</span></span>
+<span id="cb21-526"><a href="#cb21-526" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb21-527"><a href="#cb21-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-528"><a href="#cb21-528" aria-hidden="true" tabindex="-1"></a><span class="in"># Helper: format proportion</span></span>
+<span id="cb21-529"><a href="#cb21-529" aria-hidden="true" tabindex="-1"></a><span class="in">fmt_prop &lt;- function(x, val) {</span></span>
+<span id="cb21-530"><a href="#cb21-530" aria-hidden="true" tabindex="-1"></a><span class="in">  format_pct(mean(x == val, na.rm = TRUE))</span></span>
+<span id="cb21-531"><a href="#cb21-531" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb21-532"><a href="#cb21-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-533"><a href="#cb21-533" aria-hidden="true" tabindex="-1"></a><span class="in"># --- Continuous variables ---</span></span>
+<span id="cb21-534"><a href="#cb21-534" aria-hidden="true" tabindex="-1"></a><span class="in"># Age</span></span>
+<span id="cb21-535"><a href="#cb21-535" aria-hidden="true" tabindex="-1"></a><span class="in">t_age &lt;- t.test(age ~ lgbtq_label, data = df_compare)</span></span>
+<span id="cb21-536"><a href="#cb21-536" aria-hidden="true" tabindex="-1"></a><span class="in">age_row &lt;- tibble(</span></span>
+<span id="cb21-537"><a href="#cb21-537" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Age, mean (SD)",</span></span>
+<span id="cb21-538"><a href="#cb21-538" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = fmt_mean_sd(df_non$age),</span></span>
+<span id="cb21-539"><a href="#cb21-539" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = fmt_mean_sd(df_lgbtq$age),</span></span>
+<span id="cb21-540"><a href="#cb21-540" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("t = ", round(t_age$statistic, 2),</span></span>
+<span id="cb21-541"><a href="#cb21-541" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(t_age$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(t_age$p.value, 3))))</span></span>
+<span id="cb21-542"><a href="#cb21-542" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-543"><a href="#cb21-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-544"><a href="#cb21-544" aria-hidden="true" tabindex="-1"></a><span class="in"># Ideology score</span></span>
+<span id="cb21-545"><a href="#cb21-545" aria-hidden="true" tabindex="-1"></a><span class="in">t_ideo &lt;- t.test(ideology_score ~ lgbtq_label, data = df_compare)</span></span>
+<span id="cb21-546"><a href="#cb21-546" aria-hidden="true" tabindex="-1"></a><span class="in">ideo_row &lt;- tibble(</span></span>
+<span id="cb21-547"><a href="#cb21-547" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Ideology score, mean (SD)",</span></span>
+<span id="cb21-548"><a href="#cb21-548" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = fmt_mean_sd(df_non$ideology_score),</span></span>
+<span id="cb21-549"><a href="#cb21-549" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = fmt_mean_sd(df_lgbtq$ideology_score),</span></span>
+<span id="cb21-550"><a href="#cb21-550" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("t = ", round(t_ideo$statistic, 2),</span></span>
+<span id="cb21-551"><a href="#cb21-551" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(t_ideo$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(t_ideo$p.value, 3))))</span></span>
+<span id="cb21-552"><a href="#cb21-552" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-553"><a href="#cb21-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-554"><a href="#cb21-554" aria-hidden="true" tabindex="-1"></a><span class="in"># --- Categorical variables ---</span></span>
+<span id="cb21-555"><a href="#cb21-555" aria-hidden="true" tabindex="-1"></a><span class="in"># Gender: % Female</span></span>
+<span id="cb21-556"><a href="#cb21-556" aria-hidden="true" tabindex="-1"></a><span class="in">chi_gender &lt;- df_compare %&gt;%</span></span>
+<span id="cb21-557"><a href="#cb21-557" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(female)) %&gt;%</span></span>
+<span id="cb21-558"><a href="#cb21-558" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, female)))</span></span>
+<span id="cb21-559"><a href="#cb21-559" aria-hidden="true" tabindex="-1"></a><span class="in">gender_row &lt;- tibble(</span></span>
+<span id="cb21-560"><a href="#cb21-560" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Female, %",</span></span>
+<span id="cb21-561"><a href="#cb21-561" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_pct(mean(df_non$female, na.rm = TRUE)),</span></span>
+<span id="cb21-562"><a href="#cb21-562" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_pct(mean(df_lgbtq$female, na.rm = TRUE)),</span></span>
+<span id="cb21-563"><a href="#cb21-563" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("\u03C7\u00B2 = ", round(chi_gender$statistic, 1),</span></span>
+<span id="cb21-564"><a href="#cb21-564" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(chi_gender$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_gender$p.value, 3))))</span></span>
+<span id="cb21-565"><a href="#cb21-565" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-566"><a href="#cb21-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-567"><a href="#cb21-567" aria-hidden="true" tabindex="-1"></a><span class="in"># Nonwhite</span></span>
+<span id="cb21-568"><a href="#cb21-568" aria-hidden="true" tabindex="-1"></a><span class="in">chi_nonwhite &lt;- df_compare %&gt;%</span></span>
+<span id="cb21-569"><a href="#cb21-569" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(nonwhite)) %&gt;%</span></span>
+<span id="cb21-570"><a href="#cb21-570" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, nonwhite)))</span></span>
+<span id="cb21-571"><a href="#cb21-571" aria-hidden="true" tabindex="-1"></a><span class="in">nonwhite_row &lt;- tibble(</span></span>
+<span id="cb21-572"><a href="#cb21-572" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Nonwhite, %",</span></span>
+<span id="cb21-573"><a href="#cb21-573" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_pct(mean(df_non$nonwhite, na.rm = TRUE)),</span></span>
+<span id="cb21-574"><a href="#cb21-574" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_pct(mean(df_lgbtq$nonwhite, na.rm = TRUE)),</span></span>
+<span id="cb21-575"><a href="#cb21-575" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("\u03C7\u00B2 = ", round(chi_nonwhite$statistic, 1),</span></span>
+<span id="cb21-576"><a href="#cb21-576" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(chi_nonwhite$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_nonwhite$p.value, 3))))</span></span>
+<span id="cb21-577"><a href="#cb21-577" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-578"><a href="#cb21-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-579"><a href="#cb21-579" aria-hidden="true" tabindex="-1"></a><span class="in"># Race (full breakdown)</span></span>
+<span id="cb21-580"><a href="#cb21-580" aria-hidden="true" tabindex="-1"></a><span class="in">chi_race &lt;- df_compare %&gt;%</span></span>
+<span id="cb21-581"><a href="#cb21-581" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(race_simple)) %&gt;%</span></span>
+<span id="cb21-582"><a href="#cb21-582" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, race_simple)))</span></span>
+<span id="cb21-583"><a href="#cb21-583" aria-hidden="true" tabindex="-1"></a><span class="in">race_rows &lt;- tibble(</span></span>
+<span id="cb21-584"><a href="#cb21-584" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = c("Race", "  White, %", "  Black, %", "  Brown, %", "  Other, %"),</span></span>
+<span id="cb21-585"><a href="#cb21-585" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = c(</span></span>
+<span id="cb21-586"><a href="#cb21-586" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
+<span id="cb21-587"><a href="#cb21-587" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "White"),</span></span>
+<span id="cb21-588"><a href="#cb21-588" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "Black"),</span></span>
+<span id="cb21-589"><a href="#cb21-589" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "Brown"),</span></span>
+<span id="cb21-590"><a href="#cb21-590" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$race_simple, "Other")</span></span>
+<span id="cb21-591"><a href="#cb21-591" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb21-592"><a href="#cb21-592" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = c(</span></span>
+<span id="cb21-593"><a href="#cb21-593" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
+<span id="cb21-594"><a href="#cb21-594" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "White"),</span></span>
+<span id="cb21-595"><a href="#cb21-595" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "Black"),</span></span>
+<span id="cb21-596"><a href="#cb21-596" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "Brown"),</span></span>
+<span id="cb21-597"><a href="#cb21-597" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$race_simple, "Other")</span></span>
+<span id="cb21-598"><a href="#cb21-598" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb21-599"><a href="#cb21-599" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = c(</span></span>
+<span id="cb21-600"><a href="#cb21-600" aria-hidden="true" tabindex="-1"></a><span class="in">    paste0("\u03C7\u00B2 = ", round(chi_race$statistic, 1),</span></span>
+<span id="cb21-601"><a href="#cb21-601" aria-hidden="true" tabindex="-1"></a><span class="in">           ", p ", ifelse(chi_race$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_race$p.value, 3)))),</span></span>
+<span id="cb21-602"><a href="#cb21-602" aria-hidden="true" tabindex="-1"></a><span class="in">    "", "", "", ""</span></span>
+<span id="cb21-603"><a href="#cb21-603" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb21-604"><a href="#cb21-604" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-605"><a href="#cb21-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-606"><a href="#cb21-606" aria-hidden="true" tabindex="-1"></a><span class="in"># Education</span></span>
+<span id="cb21-607"><a href="#cb21-607" aria-hidden="true" tabindex="-1"></a><span class="in">chi_edu &lt;- df_compare %&gt;%</span></span>
+<span id="cb21-608"><a href="#cb21-608" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(education_simple)) %&gt;%</span></span>
+<span id="cb21-609"><a href="#cb21-609" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, education_simple)))</span></span>
+<span id="cb21-610"><a href="#cb21-610" aria-hidden="true" tabindex="-1"></a><span class="in">edu_rows &lt;- tibble(</span></span>
+<span id="cb21-611"><a href="#cb21-611" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = c("Education", "  Less than HS, %", "  High School, %", "  College+, %"),</span></span>
+<span id="cb21-612"><a href="#cb21-612" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = c(</span></span>
+<span id="cb21-613"><a href="#cb21-613" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
+<span id="cb21-614"><a href="#cb21-614" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$education_simple, "Less than HS"),</span></span>
+<span id="cb21-615"><a href="#cb21-615" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$education_simple, "High School"),</span></span>
+<span id="cb21-616"><a href="#cb21-616" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$education_simple, "College+")</span></span>
+<span id="cb21-617"><a href="#cb21-617" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb21-618"><a href="#cb21-618" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = c(</span></span>
+<span id="cb21-619"><a href="#cb21-619" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
+<span id="cb21-620"><a href="#cb21-620" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$education_simple, "Less than HS"),</span></span>
+<span id="cb21-621"><a href="#cb21-621" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$education_simple, "High School"),</span></span>
+<span id="cb21-622"><a href="#cb21-622" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$education_simple, "College+")</span></span>
+<span id="cb21-623"><a href="#cb21-623" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb21-624"><a href="#cb21-624" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = c(</span></span>
+<span id="cb21-625"><a href="#cb21-625" aria-hidden="true" tabindex="-1"></a><span class="in">    paste0("\u03C7\u00B2 = ", round(chi_edu$statistic, 1),</span></span>
+<span id="cb21-626"><a href="#cb21-626" aria-hidden="true" tabindex="-1"></a><span class="in">           ", p ", ifelse(chi_edu$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_edu$p.value, 3)))),</span></span>
+<span id="cb21-627"><a href="#cb21-627" aria-hidden="true" tabindex="-1"></a><span class="in">    "", "", ""</span></span>
+<span id="cb21-628"><a href="#cb21-628" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb21-629"><a href="#cb21-629" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-630"><a href="#cb21-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-631"><a href="#cb21-631" aria-hidden="true" tabindex="-1"></a><span class="in"># Ideology category</span></span>
+<span id="cb21-632"><a href="#cb21-632" aria-hidden="true" tabindex="-1"></a><span class="in">chi_ideol &lt;- df_compare %&gt;%</span></span>
+<span id="cb21-633"><a href="#cb21-633" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(ideology_category)) %&gt;%</span></span>
+<span id="cb21-634"><a href="#cb21-634" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, ideology_category)))</span></span>
+<span id="cb21-635"><a href="#cb21-635" aria-hidden="true" tabindex="-1"></a><span class="in">ideol_rows &lt;- tibble(</span></span>
+<span id="cb21-636"><a href="#cb21-636" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = c("Ideology category", "  Left, %", "  Center, %", "  Right, %"),</span></span>
+<span id="cb21-637"><a href="#cb21-637" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = c(</span></span>
+<span id="cb21-638"><a href="#cb21-638" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
+<span id="cb21-639"><a href="#cb21-639" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$ideology_category, "Left"),</span></span>
+<span id="cb21-640"><a href="#cb21-640" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$ideology_category, "Center"),</span></span>
+<span id="cb21-641"><a href="#cb21-641" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_non$ideology_category, "Right")</span></span>
+<span id="cb21-642"><a href="#cb21-642" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb21-643"><a href="#cb21-643" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = c(</span></span>
+<span id="cb21-644"><a href="#cb21-644" aria-hidden="true" tabindex="-1"></a><span class="in">    "",</span></span>
+<span id="cb21-645"><a href="#cb21-645" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$ideology_category, "Left"),</span></span>
+<span id="cb21-646"><a href="#cb21-646" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$ideology_category, "Center"),</span></span>
+<span id="cb21-647"><a href="#cb21-647" aria-hidden="true" tabindex="-1"></a><span class="in">    fmt_prop(df_lgbtq$ideology_category, "Right")</span></span>
+<span id="cb21-648"><a href="#cb21-648" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb21-649"><a href="#cb21-649" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = c(</span></span>
+<span id="cb21-650"><a href="#cb21-650" aria-hidden="true" tabindex="-1"></a><span class="in">    paste0("\u03C7\u00B2 = ", round(chi_ideol$statistic, 1),</span></span>
+<span id="cb21-651"><a href="#cb21-651" aria-hidden="true" tabindex="-1"></a><span class="in">           ", p ", ifelse(chi_ideol$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_ideol$p.value, 3)))),</span></span>
+<span id="cb21-652"><a href="#cb21-652" aria-hidden="true" tabindex="-1"></a><span class="in">    "", "", ""</span></span>
+<span id="cb21-653"><a href="#cb21-653" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb21-654"><a href="#cb21-654" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-655"><a href="#cb21-655" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-656"><a href="#cb21-656" aria-hidden="true" tabindex="-1"></a><span class="in"># Elected</span></span>
+<span id="cb21-657"><a href="#cb21-657" aria-hidden="true" tabindex="-1"></a><span class="in">chi_elected &lt;- df_compare %&gt;%</span></span>
+<span id="cb21-658"><a href="#cb21-658" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(elected)) %&gt;%</span></span>
+<span id="cb21-659"><a href="#cb21-659" aria-hidden="true" tabindex="-1"></a><span class="in">  with(chisq.test(table(lgbtq_label, elected)))</span></span>
+<span id="cb21-660"><a href="#cb21-660" aria-hidden="true" tabindex="-1"></a><span class="in">elected_row &lt;- tibble(</span></span>
+<span id="cb21-661"><a href="#cb21-661" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "Elected, %",</span></span>
+<span id="cb21-662"><a href="#cb21-662" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_pct(mean(df_non$elected, na.rm = TRUE)),</span></span>
+<span id="cb21-663"><a href="#cb21-663" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_pct(mean(df_lgbtq$elected, na.rm = TRUE)),</span></span>
+<span id="cb21-664"><a href="#cb21-664" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = paste0("\u03C7\u00B2 = ", round(chi_elected$statistic, 1),</span></span>
+<span id="cb21-665"><a href="#cb21-665" aria-hidden="true" tabindex="-1"></a><span class="in">                ", p ", ifelse(chi_elected$p.value &lt; 0.001, "&lt; 0.001", paste0("= ", round(chi_elected$p.value, 3))))</span></span>
+<span id="cb21-666"><a href="#cb21-666" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-667"><a href="#cb21-667" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-668"><a href="#cb21-668" aria-hidden="true" tabindex="-1"></a><span class="in"># N row</span></span>
+<span id="cb21-669"><a href="#cb21-669" aria-hidden="true" tabindex="-1"></a><span class="in">n_row &lt;- tibble(</span></span>
+<span id="cb21-670"><a href="#cb21-670" aria-hidden="true" tabindex="-1"></a><span class="in">  Variable = "N",</span></span>
+<span id="cb21-671"><a href="#cb21-671" aria-hidden="true" tabindex="-1"></a><span class="in">  `Non-LGBTQ+` = format_n(nrow(df_non)),</span></span>
+<span id="cb21-672"><a href="#cb21-672" aria-hidden="true" tabindex="-1"></a><span class="in">  `LGBTQ+` = format_n(nrow(df_lgbtq)),</span></span>
+<span id="cb21-673"><a href="#cb21-673" aria-hidden="true" tabindex="-1"></a><span class="in">  Test = ""</span></span>
+<span id="cb21-674"><a href="#cb21-674" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb21-675"><a href="#cb21-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-676"><a href="#cb21-676" aria-hidden="true" tabindex="-1"></a><span class="in"># Bind all rows</span></span>
+<span id="cb21-677"><a href="#cb21-677" aria-hidden="true" tabindex="-1"></a><span class="in">table1 &lt;- bind_rows(n_row, age_row, gender_row, nonwhite_row, race_rows, edu_rows, ideo_row, ideol_rows, elected_row)</span></span>
+<span id="cb21-678"><a href="#cb21-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-679"><a href="#cb21-679" aria-hidden="true" tabindex="-1"></a><span class="in">table1 %&gt;%</span></span>
+<span id="cb21-680"><a href="#cb21-680" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = c("l", "r", "r", "l"))</span></span>
+<span id="cb21-681"><a href="#cb21-681" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-682"><a href="#cb21-682" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-683"><a href="#cb21-683" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save-table1}</span></span>
+<span id="cb21-684"><a href="#cb21-684" aria-hidden="true" tabindex="-1"></a><span class="in">save_table(table1, "table1_lgbtq_comparison.csv")</span></span>
+<span id="cb21-685"><a href="#cb21-685" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-686"><a href="#cb21-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-687"><a href="#cb21-687" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb21-688"><a href="#cb21-688" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting Table 1</span></span>
+<span id="cb21-689"><a href="#cb21-689" aria-hidden="true" tabindex="-1"></a>With sample sizes in the hundreds of thousands (non-LGBTQ+) and thousands (LGBTQ+), virtually all comparisons will be statistically significant. The more informative question is one of **substantive magnitude**: how *large* are the differences? Pay particular attention to the ideology and education comparisons, where differences may be most consequential for understanding political representation.</span>
+<span id="cb21-690"><a href="#cb21-690" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb21-691"><a href="#cb21-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-692"><a href="#cb21-692" aria-hidden="true" tabindex="-1"></a>This chapter documents how LGBTQ+ candidates compare with the general candidate pool across several dimensions:</span>
+<span id="cb21-692"><a href="#cb21-692" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary</span></span>
 <span id="cb21-693"><a href="#cb21-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-694"><a href="#cb21-694" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Demographics**: The data reveal the extent to which LGBTQ+ candidates differ from non-LGBTQ+ counterparts in age, racial composition, and educational attainment --- with implications for understanding who gains access to candidacy.</span>
-<span id="cb21-695"><a href="#cb21-695" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Ideology**: The ideological distribution of LGBTQ+ candidates is compared to the non-LGBTQ+ baseline, showing the degree to which LGBTQ+ candidates concentrate in particular parts of the left-right spectrum.</span>
-<span id="cb21-696"><a href="#cb21-696" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Party concentration**: LGBTQ+ candidates are not uniformly distributed across parties. Some parties serve as key vehicles for LGBTQ+ candidacies while others have virtually none.</span>
-<span id="cb21-697"><a href="#cb21-697" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Electoral outcomes**: The comparison of election rates between LGBTQ+ and non-LGBTQ+ candidates provides a critical descriptive finding that sets the stage for understanding representation gaps.</span>
-<span id="cb21-698"><a href="#cb21-698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-699"><a href="#cb21-699" aria-hidden="true" tabindex="-1"></a>However, treating "LGBTQ+" as a monolithic category obscures crucial within-group variation. The next chapter disaggregates this umbrella into its constituent identities --- Gay, Lesbian, Bisexual+, and Trans --- to reveal the heterogeneity that the binary comparison conceals.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb21-694"><a href="#cb21-694" aria-hidden="true" tabindex="-1"></a>This chapter documents how LGBTQ+ candidates compare with the general candidate pool across several dimensions:</span>
+<span id="cb21-695"><a href="#cb21-695" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-696"><a href="#cb21-696" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Demographics**: The data reveal the extent to which LGBTQ+ candidates differ from non-LGBTQ+ counterparts in age, racial composition, and educational attainment --- with implications for understanding who gains access to candidacy.</span>
+<span id="cb21-697"><a href="#cb21-697" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Ideology**: The ideological distribution of LGBTQ+ candidates is compared to the non-LGBTQ+ baseline, showing the degree to which LGBTQ+ candidates concentrate in particular parts of the left-right spectrum.</span>
+<span id="cb21-698"><a href="#cb21-698" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Party concentration**: LGBTQ+ candidates are not uniformly distributed across parties. Some parties serve as key vehicles for LGBTQ+ candidacies while others have virtually none.</span>
+<span id="cb21-699"><a href="#cb21-699" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Electoral outcomes**: The comparison of election rates between LGBTQ+ and non-LGBTQ+ candidates provides a critical descriptive finding that sets the stage for understanding representation gaps.</span>
+<span id="cb21-700"><a href="#cb21-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-701"><a href="#cb21-701" aria-hidden="true" tabindex="-1"></a>However, treating "LGBTQ+" as a monolithic category obscures crucial within-group variation. The next chapter disaggregates this umbrella into its constituent identities --- Gay, Lesbian, Bisexual+, and Trans --- to reveal the heterogeneity that the binary comparison conceals.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
