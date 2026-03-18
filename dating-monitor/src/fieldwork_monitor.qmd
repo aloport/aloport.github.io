@@ -572,7 +572,8 @@ process_country <- function(cfg, country_key) {
 
   # Factor conversions
   conjoint <- conjoint |> mutate(
-    PARTY = factor(PARTY, levels = names(cfg$party_detect)),
+    PARTY = factor(PARTY, levels = c(cfg$center_right,
+                                     setdiff(names(cfg$party_detect), cfg$center_right))),
     FLAG = factor(FLAG, levels = c("No flag", "National flag", "National + EU flag", "EU flag")),
     SOLIDARITY = factor(SOLIDARITY, levels = c("None", "Anti-Trump", "Pro-Trump", "Pro-Putin", "Pro-Ukraine")),
     REJECTION = factor(REJECTION),
