@@ -2,8 +2,8 @@ name: Update Dating Monitor
 
 on:
   schedule:
-    # Every 15 minutes
-    - cron: "*/15 * * * *"
+    # Every 30 minutes (auto-expires after 2026-03-22)
+    - cron: "*/30 * * * *"
   workflow_dispatch: # Manual trigger
 
 permissions:
@@ -16,6 +16,15 @@ jobs:
       QUALTRICS_API_TOKEN: ${{ secrets.QUALTRICS_API_TOKEN }}
 
     steps:
+      - name: Check expiry date
+        if: github.event_name == 'schedule'
+        run: |
+          # Stop scheduled runs after Sunday March 22, 2026
+          if [ "$(date -u +%Y%m%d)" -gt "20260322" ]; then
+            echo "Schedule expired (past 2026-03-22). Skipping."
+            exit 1
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
 
