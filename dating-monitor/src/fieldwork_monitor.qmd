@@ -68,6 +68,8 @@ countries <- list(
       "High" = c("Fachhochschulreife", "Abitur / Allgemeine Hochschulreife",
                   "Hochschulabschluss (FH / Universität)")
     ),
+    left_parties = c("SPD", "Grune", "Die Linke"),
+    right_nofr_parties = c("CDU/CSU", "FDP"),
     age_qid = "qid501",
     sex_id_qid = "qid398"
   ),
@@ -98,6 +100,8 @@ countries <- list(
       "High" = c("AHS / BHS mit Matura (HTL, HAK, HBLA)",
                   "Hochschulabschluss (FH / Universität)")
     ),
+    left_parties = c("SPO", "Grune", "KPO"),
+    right_nofr_parties = c("OVP", "NEOS"),
     age_qid = "qid499",
     sex_id_qid = "qid396"
   )
@@ -495,7 +499,12 @@ process_country <- function(cfg, country_key) {
       sex_id %in% c("1", "Heterosexuell") ~ "Heterosexual",
       sex_id %in% c("Unsicher", "Keine Angabe") ~ NA_character_,
       TRUE ~ "LGBTQ+"
-    ), levels = c("Heterosexual", "LGBTQ+"))
+    ), levels = c("Heterosexual", "LGBTQ+")),
+    party_bloc = factor(case_when(
+      party_id %in% cfg$left_parties ~ "Left-party voters",
+      party_id %in% cfg$right_nofr_parties ~ "Right-party voters (non-FR)",
+      TRUE ~ NA_character_
+    ), levels = c("Left-party voters", "Right-party voters (non-FR)"))
   )
 
   # Recode education for quota check
@@ -1340,16 +1349,16 @@ build_pap_table <- function(d) {
       p = 2 * pnorm(-abs(z)))
   }, error = function(e) NULL)
 
-  # H3: mm_diff by ideology for far-right
+  # H3: mm_diff by party bloc for far-right
   tryCatch({
-    sub <- conjoint |> filter(!is.na(derecha))
-    if (n_distinct(sub$derecha) >= 2) {
-      diff_ideo <- mm_diffs(sub, selected ~ PARTY, id = ~response_id, by = ~derecha)
-      fr_diff <- diff_ideo |> filter(level == cfg$far_right)
+    sub <- conjoint |> filter(!is.na(party_bloc))
+    if (n_distinct(sub$party_bloc) >= 2) {
+      diff_bloc <- mm_diffs(sub, selected ~ PARTY, id = ~response_id, by = ~party_bloc)
+      fr_diff <- diff_bloc |> filter(level == cfg$far_right)
       if (nrow(fr_diff) > 0) {
         z <- fr_diff$estimate[1] / fr_diff$std.error[1]
         rows$h3 <- tibble(
-          Hypothesis = "H3", Contrast = paste0("mm_diff(", cfg$far_right, "): Left vs Right"),
+          Hypothesis = "H3", Contrast = paste0("mm_diff(", cfg$far_right, "): Left vs Right (non-FR) voters"),
           Estimate = fr_diff$estimate[1], SE = fr_diff$std.error[1],
           CI_lower = fr_diff$lower[1], CI_upper = fr_diff$upper[1],
           p = 2 * pnorm(-abs(z)))
@@ -1407,16 +1416,16 @@ build_pap_table <- function(d) {
     }
   }, error = function(e) NULL)
 
-  # H5c: mm_diff rejection by ideology
+  # H5c: mm_diff rejection by party bloc
   tryCatch({
-    sub <- conjoint_nofr |> filter(!is.na(derecha))
-    if (n_distinct(sub$derecha) >= 2) {
-      diff_rej_ideo <- mm_diffs(sub, selected ~ REJECTION_CLEAN, id = ~response_id, by = ~derecha)
-      sig_row <- diff_rej_ideo |> filter(level == "With rejection signal")
+    sub <- conjoint_nofr |> filter(!is.na(party_bloc))
+    if (n_distinct(sub$party_bloc) >= 2) {
+      diff_rej_bloc <- mm_diffs(sub, selected ~ REJECTION_CLEAN, id = ~response_id, by = ~party_bloc)
+      sig_row <- diff_rej_bloc |> filter(level == "With rejection signal")
       if (nrow(sig_row) > 0) {
         z <- sig_row$estimate[1] / sig_row$std.error[1]
         rows$h5c <- tibble(
-          Hypothesis = "H5c", Contrast = "mm_diff(rejection signal): Left vs Right",
+          Hypothesis = "H5c", Contrast = "mm_diff(rejection): Left vs Right (non-FR) voters",
           Estimate = sig_row$estimate[1], SE = sig_row$std.error[1],
           CI_lower = sig_row$lower[1], CI_upper = sig_row$upper[1],
           p = 2 * pnorm(-abs(z)))
@@ -1529,8 +1538,8 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 ```{r subgroup-germany, eval=show_results, fig.height=7, fig.width=14}
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
   d <- data[["germany"]]
-  tryCatch(print(plot_subgroup_party(d, derecha, "Ideology",
-    c("#E74C3C", "#3498DB"), "H3: Right-wing evaluate far-right more positively")),
+  tryCatch(print(plot_subgroup_party(d, party_bloc, "Party Bloc",
+    c("#E74C3C", "#3498DB"), "H3: Left vs Right (non-FR) party voters")),
     error = function(e) cat(paste0("H3 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1558,8 +1567,8 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 ```{r subgroup-austria, eval=show_results, fig.height=7, fig.width=14}
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
   d <- data[["austria"]]
-  tryCatch(print(plot_subgroup_party(d, derecha, "Ideology",
-    c("#E74C3C", "#3498DB"), "H3: Right-wing evaluate far-right more positively")),
+  tryCatch(print(plot_subgroup_party(d, party_bloc, "Party Bloc",
+    c("#E74C3C", "#3498DB"), "H3: Left vs Right (non-FR) party voters")),
     error = function(e) cat(paste0("H3 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1599,8 +1608,8 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 
 ```{r rejection-h5c-germany, eval=show_results, fig.height=6, fig.width=12}
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
-  tryCatch(print(plot_rejection_subgroup(data[["germany"]], derecha, "Ideology",
-    c("#E74C3C", "#3498DB"), "H5c: Rejection signal premium larger among left-leaning")),
+  tryCatch(print(plot_rejection_subgroup(data[["germany"]], party_bloc, "Party Bloc",
+    c("#E74C3C", "#3498DB"), "H5c: Rejection signal by left vs right (non-FR) voters")),
     error = function(e) cat(paste0("H5c Error: ", e$message, "\n\n")))
 }
 ```
@@ -1624,8 +1633,8 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 
 ```{r rejection-h5c-austria, eval=show_results, fig.height=6, fig.width=12}
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
-  tryCatch(print(plot_rejection_subgroup(data[["austria"]], derecha, "Ideology",
-    c("#E74C3C", "#3498DB"), "H5c: Rejection signal premium larger among left-leaning")),
+  tryCatch(print(plot_rejection_subgroup(data[["austria"]], party_bloc, "Party Bloc",
+    c("#E74C3C", "#3498DB"), "H5c: Rejection signal by left vs right (non-FR) voters")),
     error = function(e) cat(paste0("H5c Error: ", e$message, "\n\n")))
 }
 ```
