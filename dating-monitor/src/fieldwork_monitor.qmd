@@ -23,6 +23,10 @@ execute:
   message: false
 ---
 
+::: {.callout-note appearance="minimal"}
+**Last updated:** `r format(Sys.time(), "%A %B %d, %Y at %H:%M %Z")` | **Next auto-update:** every 30 minutes via GitHub Actions (until March 22, 2026)
+:::
+
 # 0. Setup
 
 ```{r setup}
@@ -37,7 +41,43 @@ library(lubridate)
 library(scales)
 
 set.seed(12345)
-theme_set(theme_ggdist())
+
+# --- Color palette ---
+pal <- list(
+  primary = "#2563EB",     # blue - single-group CIs
+  accent = "#DC2626",      # red - far-right / highlights
+  muted = "#6B7280",       # grey - reference lines, secondary
+  left = "#3B82F6",        # blue - left party bloc
+  right = "#EF4444",       # red - right party bloc
+  germany = "#1D4ED8",     # dark blue
+  austria = "#DC2626",     # red
+  pass = "#10B981",        # green
+  fail = "#EF4444",        # red
+  female = "#8B5CF6",      # purple
+  male = "#F59E0B",        # amber
+  hetero = "#10B981",      # green
+  lgbtq = "#8B5CF6"        # purple
+)
+
+# --- Global theme ---
+theme_monitor <- function() {
+  theme_minimal(base_size = 13, base_family = "sans") +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, margin = margin(b = 6)),
+    plot.subtitle = element_text(color = "grey40", size = 11, margin = margin(b = 10)),
+    plot.caption = element_text(color = "grey50", size = 9, hjust = 0),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "grey90", linewidth = 0.3),
+    strip.text = element_text(face = "bold", size = 10, hjust = 0),
+    strip.background = element_rect(fill = "grey97", color = NA),
+    axis.text = element_text(size = 10),
+    legend.position = "bottom",
+    legend.title = element_text(size = 10),
+    plot.margin = margin(12, 12, 12, 12)
+  )
+}
+theme_set(theme_monitor())
 
 # Country configurations
 countries <- list(
@@ -109,12 +149,12 @@ countries <- list(
 
 # Ethnicity map (same for both countries - based on face IDs)
 ethnicity_map <- c(
-  "W1" = "German", "W2" = "German", "W3" = "German", "W4" = "German",
-  "W5" = "Other", "W6" = "German", "W7" = "Turkish",
-  "W8" = "Other", "W9" = "German", "W10" = "Eastern European",
-  "M1" = "German", "M2" = "Other", "M3" = "Turkish",
-  "M4" = "Other", "M5" = "Other", "M6" = "German",
-  "M7" = "German", "M8" = "German", "M9" = "German", "M10" = "Eastern European"
+  "W1" = "Local", "W2" = "Local", "W3" = "Local", "W4" = "Local",
+  "W5" = "Other", "W6" = "Local", "W7" = "Turkish",
+  "W8" = "Other", "W9" = "Local", "W10" = "Eastern European",
+  "M1" = "Local", "M2" = "Other", "M3" = "Turkish",
+  "M4" = "Other", "M5" = "Other", "M6" = "Local",
+  "M7" = "Local", "M8" = "Local", "M9" = "Local", "M10" = "Eastern European"
 )
 
 # Progressive cultural identity statements
@@ -391,7 +431,7 @@ process_country <- function(cfg, country_key) {
     ), levels = c("<1km", "1-5km", "5-10km", ">10km")),
     ETHNICITY = factor(
       ifelse(!is.na(ethnicity) & ethnicity != "", ethnicity, ethnicity_map[base_person]),
-      levels = c("German", "Turkish", "Eastern European", "Other")
+      levels = c("Local", "Turkish", "Eastern European", "Other")
     ),
     SOLIDARITY = case_when(
       international_solidarity == "" | is.na(international_solidarity) ~ "None",
@@ -483,17 +523,26 @@ process_country <- function(cfg, country_key) {
       resp_age_raw == "5" ~ "60-74",
       TRUE ~ NA_character_
     ), levels = c("18-29", "30-39", "40-49", "50-59", "60-74")),
-    ideology_numeric = as.numeric(str_extract(as.character(ideology_lr), "^\\d+")),
-    derecha = factor(case_when(
-      ideology_numeric > 5 ~ "Right-wing",
-      ideology_numeric < 5 ~ "Left-wing",
-      TRUE ~ NA_character_
-    ), levels = c("Left-wing", "Right-wing")),
+    ideology_numeric = as.numeric(str_extract(as.character(ideology_lr), "^\\d+"))
+  )
+
+  # --- Clean respondent party ID using cfg$party_detect patterns (handles umlauts) ---
+  conjoint$resp_party_clean <- NA_character_
+  for (pn in names(cfg$party_detect)) {
+    pat <- cfg$party_detect[[pn]]
+    idx <- which(is.na(conjoint$resp_party_clean) &
+      (str_detect(coalesce(as.character(conjoint$party_id), ""), pat) |
+       str_detect(coalesce(as.character(conjoint$party_id_squeeze), ""), pat)))
+    if (length(idx) > 0) conjoint$resp_party_clean[idx] <- pn
+  }
+
+  conjoint <- conjoint |> mutate(
     resp_farright = factor(ifelse(
-      str_detect(party_id, cfg$far_right) | str_detect(coalesce(party_id_squeeze, ""), cfg$far_right),
+      resp_party_clean == cfg$far_right,
       paste0(cfg$far_right, " supporter"),
       paste0("Not ", cfg$far_right, " supporter")
     )),
+    # Both surveys are German-language, so these labels work for DE + AT
     resp_lgbtq = factor(case_when(
       is.na(sex_id) | sex_id == "" ~ NA_character_,
       sex_id %in% c("1", "Heterosexuell") ~ "Heterosexual",
@@ -501,8 +550,8 @@ process_country <- function(cfg, country_key) {
       TRUE ~ "LGBTQ+"
     ), levels = c("Heterosexual", "LGBTQ+")),
     party_bloc = factor(case_when(
-      party_id %in% cfg$left_parties ~ "Left-party voters",
-      party_id %in% cfg$right_nofr_parties ~ "Right-party voters (non-FR)",
+      resp_party_clean %in% cfg$left_parties ~ "Left-party voters",
+      resp_party_clean %in% cfg$right_nofr_parties ~ "Right-party voters (non-FR)",
       TRUE ~ NA_character_
     ), levels = c("Left-party voters", "Right-party voters (non-FR)"))
   )
@@ -599,11 +648,10 @@ if (nrow(progress_data) > 0) {
     geom_hline(data = targets, aes(yintercept = target, color = country),
                linetype = "dashed", alpha = 0.5) +
     scale_y_continuous(labels = comma) +
-    scale_color_manual(values = c("Germany" = "#DD1100", "Austria" = "#EE3333")) +
+    scale_color_manual(values = c("Germany" = pal$germany, "Austria" = pal$austria)) +
     labs(title = "Data Collection Progress",
          subtitle = "Dashed lines = target N (1,200 per country)",
-         x = "Date", y = "Cumulative Respondents", color = NULL) +
-    theme(plot.title = element_text(face = "bold"), legend.position = "bottom")
+         x = NULL, y = "Cumulative Respondents", color = NULL)
 
   # Progress table
   progress_tbl <- map_dfr(names(data), function(ck) {
@@ -622,12 +670,13 @@ if (nrow(progress_data) > 0) {
   progress_tbl |>
     gt() |>
     tab_header(title = "Collection Status") |>
-    tab_style(style = cell_fill(color = "#d4edda"),
+    tab_style(style = cell_fill(color = "#dcfce7"),
               locations = cells_body(rows = `%` >= 80)) |>
-    tab_style(style = cell_fill(color = "#fff3cd"),
+    tab_style(style = cell_fill(color = "#fef9c3"),
               locations = cells_body(rows = `%` >= 50 & `%` < 80)) |>
-    tab_style(style = cell_fill(color = "#f8d7da"),
-              locations = cells_body(rows = `%` < 50))
+    tab_style(style = cell_fill(color = "#fee2e2"),
+              locations = cells_body(rows = `%` < 50)) |>
+    tab_options(table.font.size = 13, column_labels.font.weight = "bold")
 }
 ```
 
@@ -685,18 +734,41 @@ check_quotas <- function(d) {
 ```{r quota-plot-fn}
 plot_quotas <- function(d) {
   quota_results <- check_quotas(d)
-  quota_results |>
-    mutate(label = paste0(dimension, ": ", level)) |>
-    ggplot(aes(x = label)) +
-    geom_col(aes(y = observed_pct), fill = "steelblue", alpha = 0.7, width = 0.6) +
-    geom_point(aes(y = target_pct), color = "red", size = 3, shape = 18) +
-    coord_flip() +
+  n_resp <- nrow(d$respondents)
+
+  quota_results <- quota_results |>
+    mutate(
+      level = factor(level, levels = rev(unique(level))),
+      status = case_when(
+        abs(deviation) <= 3 ~ "On target",
+        deviation > 3 ~ "Over-represented",
+        deviation < -3 ~ "Under-represented"
+      ),
+      bar_label = paste0(round(observed_pct, 0), "% (target: ", round(target_pct, 0), "%)")
+    )
+
+  ggplot(quota_results, aes(y = level)) +
+    # Target zone (subtle background)
+    geom_segment(aes(x = target_pct - 3, xend = target_pct + 3, y = level, yend = level),
+                 color = "grey90", linewidth = 12, alpha = 0.5) +
+    # Observed bar
+    geom_segment(aes(x = 0, xend = observed_pct, y = level, yend = level, color = status),
+                 linewidth = 6) +
+    # Target marker
+    geom_point(aes(x = target_pct), shape = "|", size = 5, color = "grey30") +
+    # Value labels
+    geom_text(aes(x = observed_pct, label = bar_label),
+              hjust = -0.1, size = 3.2, color = "grey30") +
+    scale_color_manual(values = c(
+      "On target" = pal$pass, "Over-represented" = pal$primary,
+      "Under-represented" = pal$accent
+    ), name = NULL) +
+    scale_x_continuous(limits = c(0, max(quota_results$observed_pct, quota_results$target_pct) * 1.4),
+                       labels = function(x) paste0(x, "%")) +
     facet_wrap(~dimension, scales = "free_y", ncol = 1) +
-    labs(title = paste0(d$cfg$label, ": Observed vs Target Quotas"),
-         subtitle = "Blue bars = observed, Red diamonds = target",
-         x = NULL, y = "Percentage") +
-    theme(plot.title = element_text(face = "bold"),
-          strip.text = element_blank())
+    labs(title = paste0(d$cfg$label, ": Quota Compliance (N = ", n_resp, ")"),
+         subtitle = "Grey zone = target +/- 3pp | Vertical mark = target",
+         x = NULL, y = NULL)
 }
 ```
 
@@ -708,7 +780,9 @@ plot_quotas <- function(d) {
 if ("germany" %in% names(data)) {
   plot_quotas(data[["germany"]])
   check_quotas(data[["germany"]]) |>
-    gt() |> tab_header(title = "Germany: Quota Compliance")
+    gt() |> tab_header(title = "Germany: Quota Compliance") |>
+    tab_options(table.font.size = 13, column_labels.font.weight = "bold") |>
+    opt_row_striping()
 }
 ```
 
@@ -718,7 +792,9 @@ if ("germany" %in% names(data)) {
 if ("austria" %in% names(data)) {
   plot_quotas(data[["austria"]])
   check_quotas(data[["austria"]]) |>
-    gt() |> tab_header(title = "Austria: Quota Compliance")
+    gt() |> tab_header(title = "Austria: Quota Compliance") |>
+    tab_options(table.font.size = 13, column_labels.font.weight = "bold") |>
+    opt_row_striping()
 }
 ```
 
@@ -960,7 +1036,7 @@ quality_plots <- function(d) {
     p1 <- durations |>
       filter(duration_min <= 60) |>
       ggplot(aes(x = duration_min)) +
-      geom_histogram(binwidth = 1, fill = "steelblue", color = "white", alpha = 0.8) +
+      geom_histogram(binwidth = 1, fill = pal$primary, color = "white", alpha = 0.8) +
       geom_vline(xintercept = 5, color = "red", linetype = "dashed") +
       labs(title = paste0(d$cfg$label, ": Completion Time Distribution"),
            subtitle = if (n_outliers > 0) paste0(n_outliers, " respondents >60 min not shown") else NULL,
@@ -977,8 +1053,8 @@ quality_plots <- function(d) {
   if (nrow(round_accept) > 0) {
     p2 <- round_accept |>
       ggplot(aes(x = round_num, y = accept_rate)) +
-      geom_line(color = "steelblue", linewidth = 1) +
-      geom_point(color = "steelblue", size = 3) +
+      geom_line(color = pal$primary, linewidth = 1) +
+      geom_point(color = pal$primary, size = 3) +
       geom_hline(yintercept = mean(d$conjoint$selected, na.rm = TRUE),
                  linetype = "dashed", alpha = 0.5) +
       scale_x_continuous(breaks = 1:10) +
@@ -1071,54 +1147,57 @@ plot_multi_ci <- function(df, h0 = 0.5, title = "", subtitle = "",
     )
   }
 
+  ci_caption <- "Thin = 99% CI | Medium = 95% CI | Thick = 90% CI"
+
   if (!is.null(color_var) && color_var %in% names(df)) {
-    # Two-group overlay with nudge
-    groups <- unique(df[[color_var]])
-    g1 <- df |> filter(.data[[color_var]] == groups[1])
-    g2 <- df |> filter(.data[[color_var]] == groups[2])
+    # Two-group overlay with proper legend
+    df$group_label <- as.character(df[[color_var]])
+    groups <- unique(df$group_label)
+    if (is.null(color_vals)) color_vals <- c(pal$left, pal$right)
+    names(color_vals) <- groups
+
+    df$nudge <- ifelse(df$group_label == groups[1], 0.15, -0.15)
+    g1 <- df |> filter(group_label == groups[1])
+    g2 <- df |> filter(group_label == groups[2])
 
     p <- ggplot() +
-      geom_vline(xintercept = h0, linetype = "dashed", alpha = 0.4) +
+      geom_vline(xintercept = h0, color = "grey80", linewidth = 0.5) +
       # Group 1 (nudged up)
       geom_segment(data = g1, aes(x = lower99, xend = higher99, y = level, yend = level),
-                   color = color_vals[1], size = 2, alpha = .6, position = position_nudge(y = .15)) +
+                   color = color_vals[1], linewidth = 1.5, alpha = .5, position = position_nudge(y = .15)) +
       geom_segment(data = g1, aes(x = lower95, xend = higher95, y = level, yend = level),
-                   color = color_vals[1], size = 3, alpha = .8, position = position_nudge(y = .15)) +
+                   color = color_vals[1], linewidth = 2.5, alpha = .7, position = position_nudge(y = .15)) +
       geom_segment(data = g1, aes(x = lower90, xend = higher90, y = level, yend = level),
-                   color = color_vals[1], size = 4, alpha = 1, position = position_nudge(y = .15)) +
-      geom_point(data = g1, aes(x = estimate, y = level), fill = "white", color = color_vals[1],
-                 size = 2.5, pch = 21, position = position_nudge(y = .15)) +
+                   color = color_vals[1], linewidth = 3.5, alpha = .9, position = position_nudge(y = .15)) +
+      geom_point(data = g1, aes(x = estimate, y = level, color = group_label),
+                 fill = "white", size = 2.5, pch = 21, stroke = 1.2, position = position_nudge(y = .15)) +
       # Group 2 (nudged down)
       geom_segment(data = g2, aes(x = lower99, xend = higher99, y = level, yend = level),
-                   color = color_vals[2], size = 2, alpha = .6, position = position_nudge(y = -.15)) +
+                   color = color_vals[2], linewidth = 1.5, alpha = .5, position = position_nudge(y = -.15)) +
       geom_segment(data = g2, aes(x = lower95, xend = higher95, y = level, yend = level),
-                   color = color_vals[2], size = 3, alpha = .8, position = position_nudge(y = -.15)) +
+                   color = color_vals[2], linewidth = 2.5, alpha = .7, position = position_nudge(y = -.15)) +
       geom_segment(data = g2, aes(x = lower90, xend = higher90, y = level, yend = level),
-                   color = color_vals[2], size = 4, alpha = 1, position = position_nudge(y = -.15)) +
-      geom_point(data = g2, aes(x = estimate, y = level), fill = "white", color = color_vals[2],
-                 size = 2.5, pch = 21, position = position_nudge(y = -.15))
-
-    # Manual legend
-    p <- p + annotate("text", x = -Inf, y = Inf, label = paste0(groups[1], " / ", groups[2]),
-                       hjust = -0.1, vjust = 1.5, size = 3.5, fontface = "italic",
-                       color = "grey40")
+                   color = color_vals[2], linewidth = 3.5, alpha = .9, position = position_nudge(y = -.15)) +
+      geom_point(data = g2, aes(x = estimate, y = level, color = group_label),
+                 fill = "white", size = 2.5, pch = 21, stroke = 1.2, position = position_nudge(y = -.15)) +
+      scale_color_manual(values = color_vals, name = NULL)
   } else {
     p <- ggplot(df, aes(y = level)) +
-      geom_vline(xintercept = h0, linetype = "dashed", alpha = 0.4) +
+      geom_vline(xintercept = h0, color = "grey80", linewidth = 0.5) +
       geom_segment(aes(x = lower99, xend = higher99, y = level, yend = level),
-                   color = "steelblue", size = 2, alpha = .6) +
+                   color = pal$primary, linewidth = 1.5, alpha = .5) +
       geom_segment(aes(x = lower95, xend = higher95, y = level, yend = level),
-                   color = "steelblue", size = 3, alpha = .8) +
+                   color = pal$primary, linewidth = 2.5, alpha = .7) +
       geom_segment(aes(x = lower90, xend = higher90, y = level, yend = level),
-                   color = "steelblue", size = 4, alpha = 1) +
-      geom_point(aes(x = estimate, y = level), fill = "white", color = "grey67",
-                 size = 2.5, pch = 21)
+                   color = pal$primary, linewidth = 3.5, alpha = .9) +
+      geom_point(aes(x = estimate, y = level), fill = "white", color = pal$primary,
+                 size = 2.5, pch = 21, stroke = 1.2)
   }
 
   if (show_labels) {
-    p <- p + geom_label(data = df, aes(x = estimate, y = level,
-                         label = sprintf("%0.2f", estimate)),
-                         nudge_y = .25, size = 3, fontface = "bold", alpha = 0.8)
+    p <- p + geom_text(data = df, aes(x = estimate, y = level,
+                        label = sprintf("%0.2f", estimate)),
+                        hjust = -0.3, size = 3.2, fontface = "bold", color = "grey30")
   }
 
   if (show_facets && "feature" %in% names(df)) {
@@ -1126,12 +1205,9 @@ plot_multi_ci <- function(df, h0 = 0.5, title = "", subtitle = "",
   }
 
   p <- p +
-    labs(title = title, subtitle = subtitle, x = NULL, y = NULL) +
-    theme(plot.title = element_text(face = "bold", size = 11),
-          plot.subtitle = element_text(size = 9),
-          strip.text.y = element_text(angle = 0, hjust = 0, face = "bold"),
-          strip.background = element_rect(fill = "grey95"),
-          legend.position = "none")
+    labs(title = title, subtitle = subtitle, x = NULL, y = NULL,
+         caption = ci_caption) +
+    theme(strip.text.y = element_text(angle = 0, hjust = 0))
 
   if (!is.null(xlimits)) p <- p + xlim(xlimits)
 
@@ -1152,18 +1228,19 @@ plot_full_attributes <- function(d) {
   mm_full <- mm(conjoint, full_attr_formula(), id = ~response_id, h0 = 0.5)
   amce_full <- amce(conjoint, full_attr_formula(), id = ~response_id)
 
+  n_resp <- n_distinct(conjoint$response_id)
+
   p_mm <- plot_multi_ci(mm_full, h0 = 0.5,
     title = paste0(cfg$label, ": Marginal Means"),
-    subtitle = "All attributes | CIs at 90/95/99%",
+    subtitle = paste0("All attributes | N = ", n_resp, " respondents"),
     show_facets = TRUE)
 
   p_amce <- plot_multi_ci(amce_full, h0 = 0,
     title = paste0(cfg$label, ": AMCEs"),
-    subtitle = "All attributes | CIs at 90/95/99%",
+    subtitle = paste0("All attributes | N = ", n_resp, " respondents"),
     show_facets = TRUE)
 
-  grid.arrange(p_mm, p_amce, ncol = 2,
-    bottom = "Confidence intervals at 99% (thin), 95% (medium), 90% (thick)")
+  grid.arrange(p_mm, p_amce, ncol = 2)
 }
 
 # --- H1a: Party detail with labels ---
@@ -1174,21 +1251,21 @@ plot_party_detail <- function(d) {
   mm_party <- mm(conjoint, selected ~ PARTY, id = ~response_id, h0 = 0.5)
   amce_party <- amce(conjoint, selected ~ PARTY, id = ~response_id)
 
+  n_resp <- n_distinct(conjoint$response_id)
+
   p_mm <- plot_multi_ci(mm_party, h0 = 0.5,
-    title = "Party Marginal Means",
-    subtitle = "H1a: Far-right stigmatization",
+    title = paste0(cfg$label, ": Party Marginal Means"),
+    subtitle = paste0("H1a: Far-right stigmatization | N = ", n_resp),
     show_labels = TRUE) +
     labs(x = "MM (Pr of acceptance)")
 
   p_amce <- plot_multi_ci(amce_party, h0 = 0,
-    title = "Party AMCEs",
+    title = paste0(cfg$label, ": Party AMCEs"),
     subtitle = "Relative to reference category",
     show_labels = TRUE) +
     labs(x = "AMCE")
 
-  grid.arrange(p_mm, p_amce, ncol = 2,
-    top = paste0(cfg$label, ": H1a - Party Effects"),
-    bottom = "CIs at 99%, 95%, 90%")
+  grid.arrange(p_mm, p_amce, ncol = 2)
 }
 
 # --- Subgroup heterogeneity (generic) ---
@@ -1210,13 +1287,16 @@ plot_subgroup_party <- function(d, by_var, by_label, color_vals, h_label) {
     return(invisible(NULL))
   }
 
+  # Build subtitle with group Ns
+  ns_text <- paste(paste0(group_ns[[1]], " (N=", group_ns$n, ")"), collapse = " vs ")
+
   # Conditional MMs
   mm_sub <- cj(sub_data, selected ~ PARTY, id = ~response_id,
                estimate = "mm", by = as.formula(paste0("~", rlang::as_name(by_sym))))
 
   p_mm <- plot_multi_ci(mm_sub, h0 = 0.5,
-    title = paste0("Party MMs by ", by_label),
-    subtitle = h_label,
+    title = paste0(cfg$label, ": ", h_label),
+    subtitle = ns_text,
     color_var = "BY", color_vals = color_vals) +
     labs(x = "Marginal Mean")
 
@@ -1226,26 +1306,23 @@ plot_subgroup_party <- function(d, by_var, by_label, color_vals, h_label) {
   diff_sub <- add_multi_ci(diff_sub)
 
   p_diff <- ggplot(diff_sub, aes(y = level)) +
-    geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.4) +
+    geom_vline(xintercept = 0, color = "grey80", linewidth = 0.5) +
     geom_segment(aes(x = lower99, xend = higher99, y = level, yend = level),
-                 color = "grey30", size = 2, alpha = .6) +
+                 color = pal$muted, linewidth = 1.5, alpha = .5) +
     geom_segment(aes(x = lower95, xend = higher95, y = level, yend = level),
-                 color = "grey30", size = 3, alpha = .8) +
+                 color = pal$muted, linewidth = 2.5, alpha = .7) +
     geom_segment(aes(x = lower90, xend = higher90, y = level, yend = level),
-                 color = "grey30", size = 4, alpha = 1) +
-    geom_point(aes(x = estimate, y = level), fill = "white", color = "grey50",
-               size = 2.5, pch = 21) +
-    geom_label(aes(x = estimate, y = level, label = sprintf("%0.2f", estimate)),
-               nudge_y = .25, size = 3, fontface = "bold", alpha = 0.8) +
+                 color = pal$muted, linewidth = 3.5, alpha = .9) +
+    geom_point(aes(x = estimate, y = level), fill = "white", color = pal$muted,
+               size = 2.5, pch = 21, stroke = 1.2) +
+    geom_text(aes(x = estimate, y = level, label = sprintf("%0.2f", estimate)),
+              hjust = -0.3, size = 3.2, fontface = "bold", color = "grey30") +
     labs(title = paste0("Difference (", paste(groups, collapse = " - "), ")"),
          subtitle = "0 = no heterogeneity",
-         x = "MM Difference", y = NULL) +
-    theme(plot.title = element_text(face = "bold", size = 11),
-          plot.subtitle = element_text(size = 9))
+         x = "MM Difference", y = NULL,
+         caption = "Thin = 99% CI | Medium = 95% CI | Thick = 90% CI")
 
-  grid.arrange(p_mm, p_diff, ncol = 2,
-    top = paste0(cfg$label, ": ", h_label),
-    bottom = "CIs at 99%, 95%, 90%")
+  grid.arrange(p_mm, p_diff, ncol = 2)
 }
 
 # --- Rejection signal analysis ---
@@ -1257,9 +1334,11 @@ plot_rejection_analysis <- function(d) {
   # Overall rejection effect
   mm_rej <- mm(conjoint_nofr, selected ~ REJECTION_CLEAN, id = ~response_id, h0 = 0.5)
 
+  n_nofr <- n_distinct(conjoint_nofr$response_id)
+
   p_overall <- plot_multi_ci(mm_rej, h0 = 0.5,
-    title = "H5: Rejection Signal Effect",
-    subtitle = "Non-far-right profiles only",
+    title = paste0(cfg$label, ": H5 Rejection Signal Effect"),
+    subtitle = paste0("Non-far-right profiles | N = ", n_nofr),
     show_labels = TRUE) +
     labs(x = "Marginal Mean")
 
@@ -1269,14 +1348,12 @@ plot_rejection_analysis <- function(d) {
 
   p_party <- plot_multi_ci(mm_rej_party, h0 = 0.5,
     title = "Rejection Signal by Party",
-    subtitle = "Effect varies by party?",
+    subtitle = "Does the effect vary by party?",
     show_facets = TRUE,
     color_var = NULL) +
     labs(x = "Marginal Mean")
 
-  grid.arrange(p_overall, p_party, ncol = 2,
-    top = paste0(cfg$label, ": Rejection Signal Deep Dive"),
-    bottom = "CIs at 99%, 95%, 90%")
+  grid.arrange(p_overall, p_party, ncol = 2)
 }
 
 # --- Rejection subgroup (H5c, H6) ---
@@ -1295,12 +1372,14 @@ plot_rejection_subgroup <- function(d, by_var, by_label, color_vals, h_label) {
     return(invisible(NULL))
   }
 
+  ns_text <- paste(paste0(group_ns[[1]], " (N=", group_ns$n, ")"), collapse = " vs ")
+
   mm_sub <- cj(sub_data, selected ~ REJECTION_CLEAN, id = ~response_id,
                estimate = "mm", by = as.formula(paste0("~", rlang::as_name(by_sym))))
 
   p_mm <- plot_multi_ci(mm_sub, h0 = 0.5,
-    title = paste0("Rejection Signal by ", by_label),
-    subtitle = h_label,
+    title = paste0(d$cfg$label, ": ", h_label),
+    subtitle = ns_text,
     color_var = "BY", color_vals = color_vals,
     show_labels = TRUE) +
     labs(x = "Marginal Mean")
@@ -1310,24 +1389,23 @@ plot_rejection_subgroup <- function(d, by_var, by_label, color_vals, h_label) {
   diff_sub <- add_multi_ci(diff_sub)
 
   p_diff <- ggplot(diff_sub, aes(y = level)) +
-    geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.4) +
+    geom_vline(xintercept = 0, color = "grey80", linewidth = 0.5) +
     geom_segment(aes(x = lower99, xend = higher99, y = level, yend = level),
-                 color = "grey30", size = 2, alpha = .6) +
+                 color = pal$muted, linewidth = 1.5, alpha = .5) +
     geom_segment(aes(x = lower95, xend = higher95, y = level, yend = level),
-                 color = "grey30", size = 3, alpha = .8) +
+                 color = pal$muted, linewidth = 2.5, alpha = .7) +
     geom_segment(aes(x = lower90, xend = higher90, y = level, yend = level),
-                 color = "grey30", size = 4, alpha = 1) +
-    geom_point(aes(x = estimate, y = level), fill = "white", color = "grey50",
-               size = 2.5, pch = 21) +
-    geom_label(aes(x = estimate, y = level, label = sprintf("%0.2f", estimate)),
-               nudge_y = .25, size = 3, fontface = "bold", alpha = 0.8) +
+                 color = pal$muted, linewidth = 3.5, alpha = .9) +
+    geom_point(aes(x = estimate, y = level), fill = "white", color = pal$muted,
+               size = 2.5, pch = 21, stroke = 1.2) +
+    geom_text(aes(x = estimate, y = level, label = sprintf("%0.2f", estimate)),
+              hjust = -0.3, size = 3.2, fontface = "bold", color = "grey30") +
     labs(title = paste0("Difference (", paste(groups, collapse = " - "), ")"),
-         x = "MM Difference", y = NULL) +
-    theme(plot.title = element_text(face = "bold", size = 11))
+         subtitle = "0 = no heterogeneity",
+         x = "MM Difference", y = NULL,
+         caption = "Thin = 99% CI | Medium = 95% CI | Thick = 90% CI")
 
-  grid.arrange(p_mm, p_diff, ncol = 2,
-    top = paste0(d$cfg$label, ": ", h_label),
-    bottom = "CIs at 99%, 95%, 90%")
+  grid.arrange(p_mm, p_diff, ncol = 2)
 }
 
 # --- PAP contrasts table ---
@@ -1467,14 +1545,24 @@ build_pap_table <- function(d) {
   tbl <- tbl_data |>
     gt() |>
     tab_header(title = paste0(d$cfg$label, ": PAP Contrasts Summary"),
-               subtitle = paste0("N = ", nrow(d$respondents), " respondents"))
+               subtitle = paste0("N = ", nrow(d$respondents), " respondents")) |>
+    opt_row_striping() |>
+    tab_options(
+      table.font.size = 13,
+      heading.title.font.size = 16,
+      heading.subtitle.font.size = 13,
+      column_labels.font.weight = "bold",
+      table.border.top.color = "grey80",
+      table.border.bottom.color = "grey80"
+    ) |>
+    cols_align(align = "center", columns = c(Estimate, SE, CI, p, Sig))
 
   if (length(sig_rows) > 0) {
-    tbl <- tbl |> tab_style(style = cell_fill(color = "#d4edda"),
+    tbl <- tbl |> tab_style(style = cell_fill(color = "#dcfce7"),
                              locations = cells_body(rows = sig_rows))
   }
   if (length(marg_rows) > 0) {
-    tbl <- tbl |> tab_style(style = cell_fill(color = "#fff3cd"),
+    tbl <- tbl |> tab_style(style = cell_fill(color = "#fef9c3"),
                              locations = cells_body(rows = marg_rows))
   }
   tbl
@@ -1487,7 +1575,7 @@ build_pap_table <- function(d) {
 
 ### Germany
 
-```{r fullattr-germany, eval=show_results, fig.height=14, fig.width=12}
+```{r fullattr-germany, eval=show_results, fig.height=18, fig.width=12}
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
   tryCatch(plot_full_attributes(data[["germany"]]),
            error = function(e) cat(paste0("Error: ", e$message, "\n\n")))
@@ -1496,7 +1584,7 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 
 ### Austria
 
-```{r fullattr-austria, eval=show_results, fig.height=14, fig.width=12}
+```{r fullattr-austria, eval=show_results, fig.height=18, fig.width=12}
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
   tryCatch(plot_full_attributes(data[["austria"]]),
            error = function(e) cat(paste0("Error: ", e$message, "\n\n")))
@@ -1539,7 +1627,7 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
   d <- data[["germany"]]
   tryCatch(print(plot_subgroup_party(d, party_bloc, "Party Bloc",
-    c("#E74C3C", "#3498DB"), "H3: Left vs Right (non-FR) party voters")),
+    c(pal$left, pal$right), "H3: Left vs Right (non-FR) party voters")),
     error = function(e) cat(paste0("H3 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1548,7 +1636,7 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
   d <- data[["germany"]]
   tryCatch(print(plot_subgroup_party(d, resp_gender, "Gender",
-    c("#3498DB", "#E74C3C"), "H4.1: Women penalize far-right more")),
+    c(pal$female, pal$male), "H4.1: Women penalize far-right more")),
     error = function(e) cat(paste0("H4.1 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1557,7 +1645,7 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
   d <- data[["germany"]]
   tryCatch(print(plot_subgroup_party(d, resp_lgbtq, "LGBTQ+ Status",
-    c("#2ECC71", "#9B59B6"), "H4.2: LGBTQ+ penalize far-right more")),
+    c(pal$hetero, pal$lgbtq), "H4.2: LGBTQ+ penalize far-right more")),
     error = function(e) cat(paste0("H4.2 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1568,7 +1656,7 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
   d <- data[["austria"]]
   tryCatch(print(plot_subgroup_party(d, party_bloc, "Party Bloc",
-    c("#E74C3C", "#3498DB"), "H3: Left vs Right (non-FR) party voters")),
+    c(pal$left, pal$right), "H3: Left vs Right (non-FR) party voters")),
     error = function(e) cat(paste0("H3 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1577,7 +1665,7 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
   d <- data[["austria"]]
   tryCatch(print(plot_subgroup_party(d, resp_gender, "Gender",
-    c("#3498DB", "#E74C3C"), "H4.1: Women penalize far-right more")),
+    c(pal$female, pal$male), "H4.1: Women penalize far-right more")),
     error = function(e) cat(paste0("H4.1 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1586,7 +1674,7 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
   d <- data[["austria"]]
   tryCatch(print(plot_subgroup_party(d, resp_lgbtq, "LGBTQ+ Status",
-    c("#2ECC71", "#9B59B6"), "H4.2: LGBTQ+ penalize far-right more")),
+    c(pal$hetero, pal$lgbtq), "H4.2: LGBTQ+ penalize far-right more")),
     error = function(e) cat(paste0("H4.2 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1609,7 +1697,7 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 ```{r rejection-h5c-germany, eval=show_results, fig.height=6, fig.width=12}
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
   tryCatch(print(plot_rejection_subgroup(data[["germany"]], party_bloc, "Party Bloc",
-    c("#E74C3C", "#3498DB"), "H5c: Rejection signal by left vs right (non-FR) voters")),
+    c(pal$left, pal$right), "H5c: Rejection signal by left vs right (non-FR) voters")),
     error = function(e) cat(paste0("H5c Error: ", e$message, "\n\n")))
 }
 ```
@@ -1617,7 +1705,7 @@ if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) 
 ```{r rejection-h6-germany, eval=show_results, fig.height=6, fig.width=12}
 if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
   tryCatch(print(plot_rejection_subgroup(data[["germany"]], resp_farright, "Far-Right Support",
-    c("#E67E22", "#7F8C8D"), "H6: Far-right supporters reject anti-far-right signals")),
+    c(pal$accent, pal$muted), "H6: Far-right supporters reject anti-far-right signals")),
     error = function(e) cat(paste0("H6 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1634,7 +1722,7 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 ```{r rejection-h5c-austria, eval=show_results, fig.height=6, fig.width=12}
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
   tryCatch(print(plot_rejection_subgroup(data[["austria"]], party_bloc, "Party Bloc",
-    c("#E74C3C", "#3498DB"), "H5c: Rejection signal by left vs right (non-FR) voters")),
+    c(pal$left, pal$right), "H5c: Rejection signal by left vs right (non-FR) voters")),
     error = function(e) cat(paste0("H5c Error: ", e$message, "\n\n")))
 }
 ```
@@ -1642,7 +1730,7 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 ```{r rejection-h6-austria, eval=show_results, fig.height=6, fig.width=12}
 if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
   tryCatch(print(plot_rejection_subgroup(data[["austria"]], resp_farright, "Far-Right Support",
-    c("#E67E22", "#7F8C8D"), "H6: Far-right supporters reject anti-far-right signals")),
+    c(pal$accent, pal$muted), "H6: Far-right supporters reject anti-far-right signals")),
     error = function(e) cat(paste0("H6 Error: ", e$message, "\n\n")))
 }
 ```
@@ -1684,6 +1772,7 @@ if (length(data) == 2) {
         PARTY_HARMONIZED = case_when(
           PARTY == d$cfg$far_right ~ "Far-right",
           PARTY == d$cfg$center_right ~ "Center-right",
+          PARTY %in% d$cfg$left_parties ~ "Left",
           TRUE ~ "Other"
         ),
         country = d$cfg$label
@@ -1692,7 +1781,7 @@ if (length(data) == 2) {
   }) |>
     mutate(
       PARTY_HARMONIZED = factor(PARTY_HARMONIZED,
-                                levels = c("Center-right", "Other", "Far-right")),
+                                levels = c("Left", "Center-right", "Other", "Far-right")),
       country = factor(country)
     )
 
@@ -1706,7 +1795,7 @@ if (length(data) == 2) {
         title = "Country Comparison: Party MMs (Harmonized)",
         subtitle = "H1a: Far-right penalty stronger in Germany than Austria?",
         color_var = "BY",
-        color_vals = c("#DD1100", "#2E86C1"),
+        color_vals = c(pal$germany, pal$austria),
         show_labels = TRUE) +
         labs(x = "Marginal Mean")
       print(p)
@@ -1753,20 +1842,16 @@ plot_attention_check <- function(d, country_label) {
     )
 
   p <- ggplot(response_counts, aes(x = factor(value), y = n, fill = pass)) +
-    geom_col(color = "white", width = 0.7) +
-    geom_text(aes(label = label), vjust = -0.3, size = 3.5, fontface = "bold") +
-    scale_fill_manual(values = c("Pass (correct = 3)" = "#27AE60", "Fail" = "#E74C3C")) +
-    scale_x_discrete(labels = 0:10) +
+    geom_col(color = "white", width = 0.7, alpha = 0.9) +
+    geom_text(aes(label = label), vjust = -0.3, size = 3.5, fontface = "bold",
+              color = "grey30") +
+    scale_fill_manual(values = c("Pass (correct = 3)" = pal$pass, "Fail" = pal$fail)) +
     scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
     labs(
-      title = paste0(country_label, ": Attention Check (Feeling Thermometer)"),
+      title = paste0(country_label, ": Attention Check"),
       subtitle = paste0(n_pass, "/", n_total, " passed | ",
                         n_fail, " failed (", fail_pct, "% failure rate)"),
       x = "Response value (correct answer = 3)", y = "Count", fill = NULL
-    ) +
-    theme(
-      plot.title = element_text(face = "bold"),
-      legend.position = "bottom"
     )
 
   print(p)
@@ -1903,18 +1988,20 @@ tbl <- all_status |>
              subtitle = paste0("Last updated: ", Sys.time()))
 
 if (length(green_rows) > 0) {
-  tbl <- tbl |> tab_style(style = cell_fill(color = "#d4edda"),
+  tbl <- tbl |> tab_style(style = cell_fill(color = "#dcfce7"),
                            locations = cells_body(rows = green_rows))
 }
 if (length(yellow_rows) > 0) {
-  tbl <- tbl |> tab_style(style = cell_fill(color = "#fff3cd"),
+  tbl <- tbl |> tab_style(style = cell_fill(color = "#fef9c3"),
                            locations = cells_body(rows = yellow_rows))
 }
 if (length(red_rows) > 0) {
-  tbl <- tbl |> tab_style(style = cell_fill(color = "#f8d7da"),
+  tbl <- tbl |> tab_style(style = cell_fill(color = "#fee2e2"),
                            locations = cells_body(rows = red_rows))
 }
-tbl
+tbl |>
+  tab_options(table.font.size = 13, column_labels.font.weight = "bold") |>
+  opt_row_striping()
 ```
 
 ---
