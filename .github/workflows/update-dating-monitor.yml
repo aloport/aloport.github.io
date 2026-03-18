@@ -2,8 +2,8 @@ name: Update Dating Monitor
 
 on:
   schedule:
-    # Every 6 hours: midnight, 6am, noon, 6pm UTC
-    - cron: "0 0,6,12,18 * * *"
+    # Every 15 minutes
+    - cron: "*/15 * * * *"
   workflow_dispatch: # Manual trigger
 
 permissions:
