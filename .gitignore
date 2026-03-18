@@ -10,3 +10,6 @@ Gemfile.lock
 assets/libs/
 node_modules/
 vendor
+dating-monitor/data/
+dating-monitor/src/fieldwork_monitor.html
+dating-monitor/src/*_files/
