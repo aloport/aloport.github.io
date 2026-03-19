@@ -575,7 +575,7 @@ process_country <- function(cfg, country_key) {
     PARTY = factor(PARTY, levels = c(cfg$center_right,
                                      setdiff(names(cfg$party_detect), cfg$center_right))),
     FLAG = factor(FLAG, levels = c("No flag", "National flag", "National + EU flag", "EU flag")),
-    SOLIDARITY = factor(SOLIDARITY, levels = c("None", "Anti-Trump", "Pro-Trump", "Pro-Putin", "Pro-Ukraine")),
+    SOLIDARITY = factor(SOLIDARITY, levels = c("Anti-Trump", "Pro-Trump")),
     REJECTION = factor(REJECTION),
     RELATIONSHIP_SEEK = factor(RELATIONSHIP_SEEK),
     country = cfg$label
@@ -692,39 +692,50 @@ check_quotas <- function(d) {
 
   results <- list()
 
+  buf <- cfg$buffer_n  # 1320 = target + 10% buffer
+
   # Gender
   gender_obs <- resp |>
     count(resp_gender) |>
-    mutate(observed_pct = round(n / sum(n) * 100, 1)) |>
-    rename(level = resp_gender) |>
-    mutate(level = as.character(level))
+    rename(observed_n = n, level = resp_gender) |>
+    mutate(observed_pct = round(observed_n / sum(observed_n) * 100, 1),
+           level = as.character(level))
   gender_check <- cfg$quotas$gender |>
     left_join(gender_obs, by = "level") |>
-    mutate(deviation = observed_pct - target_pct,
+    mutate(limit = ceiling(buf * target_pct / 100),
+           remaining = pmax(0L, limit - observed_n),
+           fill_pct = round(observed_n / limit * 100, 1),
+           deviation = observed_pct - target_pct,
            dimension = "Gender")
   results$gender <- gender_check
 
   # Age
   age_obs <- resp |>
     count(resp_age) |>
-    mutate(observed_pct = round(n / sum(n) * 100, 1)) |>
-    rename(level = resp_age) |>
-    mutate(level = as.character(level))
+    rename(observed_n = n, level = resp_age) |>
+    mutate(observed_pct = round(observed_n / sum(observed_n) * 100, 1),
+           level = as.character(level))
   age_check <- cfg$quotas$age |>
     left_join(age_obs, by = "level") |>
-    mutate(deviation = observed_pct - target_pct,
+    mutate(limit = ceiling(buf * target_pct / 100),
+           remaining = pmax(0L, limit - observed_n),
+           fill_pct = round(observed_n / limit * 100, 1),
+           deviation = observed_pct - target_pct,
            dimension = "Age")
   results$age <- age_check
 
   # Education
   edu_obs <- resp |>
     count(resp_edu_level) |>
-    mutate(observed_pct = round(n / sum(n) * 100, 1)) |>
-    rename(level = resp_edu_level) |>
-    mutate(level = as.character(level))
+    rename(observed_n = n, level = resp_edu_level) |>
+    mutate(observed_pct = round(observed_n / sum(observed_n) * 100, 1),
+           level = as.character(level))
   edu_check <- cfg$quotas$education |>
     left_join(edu_obs, by = "level") |>
-    mutate(deviation = observed_pct - target_pct,
+    mutate(limit = ceiling(buf * target_pct / 100),
+           remaining = pmax(0L, limit - observed_n),
+           fill_pct = round(observed_n / limit * 100, 1),
+           deviation = observed_pct - target_pct,
            dimension = "Education")
   results$education <- edu_check
 
@@ -773,15 +784,76 @@ plot_quotas <- function(d) {
 }
 ```
 
+```{r quota-fill-fn}
+plot_quota_fill <- function(d) {
+  quota_results <- check_quotas(d)
+
+  quota_results <- quota_results |>
+    mutate(
+      level = factor(level, levels = rev(unique(level))),
+      fill_status = case_when(
+        fill_pct >= 100 ~ "Full",
+        fill_pct >= 80  ~ "Nearly full",
+        TRUE            ~ "Needs more"
+      ),
+      bar_label = case_when(
+        fill_pct >= 100 ~ paste0(observed_n, " / ", limit, " (FULL)"),
+        TRUE            ~ paste0(observed_n, " / ", limit, " (", fill_pct, "%)")
+      )
+    )
+
+  ggplot(quota_results, aes(y = level)) +
+    # Limit marker (grey background bar)
+    geom_segment(aes(x = 0, xend = limit, y = level, yend = level),
+                 color = "grey90", linewidth = 8) +
+    # Observed fill bar
+    geom_segment(aes(x = 0, xend = observed_n, y = level, yend = level, color = fill_status),
+                 linewidth = 6) +
+    # Limit tick
+    geom_point(aes(x = limit), shape = "|", size = 5, color = "grey40") +
+    # Labels
+    geom_text(aes(x = observed_n, label = bar_label),
+              hjust = -0.08, size = 3.2, color = "grey30") +
+    scale_color_manual(values = c(
+      "Full" = pal$pass,
+      "Nearly full" = "#f59e0b",
+      "Needs more" = pal$accent
+    ), name = NULL) +
+    scale_x_continuous(
+      limits = c(0, max(quota_results$limit) * 1.45),
+      labels = comma
+    ) +
+    facet_wrap(~dimension, scales = "free_y", ncol = 1) +
+    labs(title = paste0(d$cfg$label, ": Quota Fill Progress"),
+         subtitle = paste0("Absolute counts vs quota limit (", d$cfg$buffer_n, " total slots) | Grey bar = limit"),
+         x = "N respondents", y = NULL)
+}
+```
+
 ::: {.panel-tabset}
 
 ## Germany
 
-```{r quota-germany, fig.height=6}
+```{r quota-germany, fig.height=8}
 if ("germany" %in% names(data)) {
   plot_quotas(data[["germany"]])
+  plot_quota_fill(data[["germany"]])
   check_quotas(data[["germany"]]) |>
-    gt() |> tab_header(title = "Germany: Quota Compliance") |>
+    select(dimension, level, observed_n, limit, remaining, fill_pct, observed_pct, target_pct, deviation) |>
+    rename(
+      Dimension = dimension, Group = level,
+      N = observed_n, Limit = limit, Remaining = remaining,
+      `Fill %` = fill_pct, `Obs %` = observed_pct,
+      `Target %` = target_pct, `Dev (pp)` = deviation
+    ) |>
+    gt() |>
+    tab_header(title = "Germany: Quota Fill Status") |>
+    tab_style(style = cell_fill(color = "#dcfce7"),
+              locations = cells_body(rows = `Fill %` >= 100)) |>
+    tab_style(style = cell_fill(color = "#fef9c3"),
+              locations = cells_body(rows = `Fill %` >= 80 & `Fill %` < 100)) |>
+    tab_style(style = cell_fill(color = "#fee2e2"),
+              locations = cells_body(rows = `Fill %` < 80)) |>
     tab_options(table.font.size = 13, column_labels.font.weight = "bold") |>
     opt_row_striping()
 }
@@ -789,11 +861,26 @@ if ("germany" %in% names(data)) {
 
 ## Austria
 
-```{r quota-austria, fig.height=6}
+```{r quota-austria, fig.height=8}
 if ("austria" %in% names(data)) {
   plot_quotas(data[["austria"]])
+  plot_quota_fill(data[["austria"]])
   check_quotas(data[["austria"]]) |>
-    gt() |> tab_header(title = "Austria: Quota Compliance") |>
+    select(dimension, level, observed_n, limit, remaining, fill_pct, observed_pct, target_pct, deviation) |>
+    rename(
+      Dimension = dimension, Group = level,
+      N = observed_n, Limit = limit, Remaining = remaining,
+      `Fill %` = fill_pct, `Obs %` = observed_pct,
+      `Target %` = target_pct, `Dev (pp)` = deviation
+    ) |>
+    gt() |>
+    tab_header(title = "Austria: Quota Fill Status") |>
+    tab_style(style = cell_fill(color = "#dcfce7"),
+              locations = cells_body(rows = `Fill %` >= 100)) |>
+    tab_style(style = cell_fill(color = "#fef9c3"),
+              locations = cells_body(rows = `Fill %` >= 80 & `Fill %` < 100)) |>
+    tab_style(style = cell_fill(color = "#fee2e2"),
+              locations = cells_body(rows = `Fill %` < 80)) |>
     tab_options(table.font.size = 13, column_labels.font.weight = "bold") |>
     opt_row_striping()
 }
@@ -1238,8 +1325,9 @@ plot_full_attributes <- function(d) {
 
   p_amce <- plot_multi_ci(amce_full, h0 = 0,
     title = paste0(cfg$label, ": AMCEs"),
-    subtitle = paste0("All attributes | N = ", n_resp, " respondents"),
-    show_facets = TRUE)
+    subtitle = paste0("All attributes | N = ", n_resp, " respondents | ref = first level of each attribute"),
+    show_facets = TRUE,
+    show_labels = TRUE)
 
   grid.arrange(p_mm, p_amce, ncol = 2)
 }
@@ -1267,6 +1355,41 @@ plot_party_detail <- function(d) {
     labs(x = "AMCE")
 
   grid.arrange(p_mm, p_amce, ncol = 2)
+}
+
+# --- Geopolitical attributes: FLAG & SOLIDARITY ---
+plot_geopolitical <- function(d) {
+  conjoint <- d$conjoint
+  cfg <- d$cfg
+  n_resp <- n_distinct(conjoint$response_id)
+
+  # FLAG
+  mm_flag  <- mm(conjoint, selected ~ FLAG, id = ~response_id, h0 = 0.5)
+  amce_flag <- amce(conjoint, selected ~ FLAG, id = ~response_id)
+
+  p_mm_flag <- plot_multi_ci(mm_flag, h0 = 0.5,
+    title = paste0(cfg$label, ": Nationality Flag — Marginal Means"),
+    subtitle = paste0("N = ", n_resp, " respondents | ref: No flag"))
+
+  p_amce_flag <- plot_multi_ci(amce_flag, h0 = 0,
+    title = paste0(cfg$label, ": Nationality Flag — AMCEs"),
+    subtitle = paste0("N = ", n_resp, " respondents | ref: No flag"))
+
+  grid.arrange(p_mm_flag, p_amce_flag, ncol = 2)
+
+  # SOLIDARITY
+  mm_sol  <- mm(conjoint, selected ~ SOLIDARITY, id = ~response_id, h0 = 0.5)
+  amce_sol <- amce(conjoint, selected ~ SOLIDARITY, id = ~response_id)
+
+  p_mm_sol <- plot_multi_ci(mm_sol, h0 = 0.5,
+    title = paste0(cfg$label, ": Trump Signal — Marginal Means"),
+    subtitle = paste0("N = ", n_resp, " respondents | ref: Anti-Trump"))
+
+  p_amce_sol <- plot_multi_ci(amce_sol, h0 = 0,
+    title = paste0(cfg$label, ": Trump Signal — AMCEs"),
+    subtitle = paste0("N = ", n_resp, " respondents | ref: Anti-Trump"))
+
+  grid.arrange(p_mm_sol, p_amce_sol, ncol = 2)
 }
 
 # --- Subgroup heterogeneity (generic) ---
@@ -1738,7 +1861,31 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 
 :::
 
-## 6.5 PAP Contrasts Summary {.tabset}
+## 6.5 Geopolitical Attitudes (FLAG & Trump Signal) {.tabset}
+
+::: {.panel-tabset}
+
+### Germany
+
+```{r geopolitical-germany, eval=show_results, fig.height=6, fig.width=12}
+if ("germany" %in% names(data) && nrow(data[["germany"]]$respondents) >= min_n) {
+  tryCatch(plot_geopolitical(data[["germany"]]),
+           error = function(e) cat(paste0("Error: ", e$message, "\n\n")))
+}
+```
+
+### Austria
+
+```{r geopolitical-austria, eval=show_results, fig.height=6, fig.width=12}
+if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) {
+  tryCatch(plot_geopolitical(data[["austria"]]),
+           error = function(e) cat(paste0("Error: ", e$message, "\n\n")))
+}
+```
+
+:::
+
+## 6.6 PAP Contrasts Summary {.tabset}
 
 ::: {.panel-tabset}
 
@@ -1762,7 +1909,7 @@ if ("austria" %in% names(data) && nrow(data[["austria"]]$respondents) >= min_n) 
 
 :::
 
-## 6.6 Country Comparison
+## 6.7 Country Comparison
 
 ```{r country-comparison-v2, eval=show_results, fig.height=8, fig.width=12}
 if (length(data) == 2) {
