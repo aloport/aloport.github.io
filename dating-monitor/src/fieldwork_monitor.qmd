@@ -329,6 +329,15 @@ process_country <- function(cfg, country_key) {
       swipe = case_when(choice == 1 ~ "Reject", choice == 2 ~ "Super Like", choice == 4 ~ "Like")
     )
 
+  # --- Keep only completers (answered all 10 rounds) ---
+  completers <- decisions |>
+    group_by(response_id) |>
+    summarise(max_round = max(arm_round), .groups = "drop") |>
+    filter(max_round == 10) |>
+    pull(response_id)
+  decisions <- decisions |> filter(response_id %in% completers)
+  raw       <- raw       |> filter(response_id %in% completers)
+
   # --- Merge ---
   conjoint <- decisions |>
     select(response_id, round, choice, selected, swipe, arm) |>
@@ -920,34 +929,47 @@ run_randomization_checks <- function(d) {
   n_profiles <- nrow(conjoint)
   cat(paste0("\n### ", cfg$label, " (N=", nrow(d$respondents),
              " respondents, ", n_profiles, " profiles)\n\n"))
+  if (n_profiles == 0) { cat("No conjoint data available.\n\n"); return(invisible(NULL)) }
 
   # --- Party distribution ---
   cat("#### Party Distribution\n\n")
-  party_dist <- conjoint |>
-    filter(!is.na(PARTY)) |>
-    count(PARTY) |>
-    mutate(observed_pct = round(n / sum(n) * 100, 1),
-           expected_pct = round(100 / length(cfg$parties), 1),
+  n_parties <- length(cfg$parties)
+  party_dist <- tibble(PARTY = cfg$parties) |>
+    left_join(conjoint |> filter(!is.na(PARTY)) |> count(PARTY), by = "PARTY") |>
+    mutate(n = replace_na(n, 0L),
+           observed_pct = round(n / max(sum(n), 1) * 100, 1),
+           expected_pct = round(100 / n_parties, 1),
            deviation = observed_pct - expected_pct)
 
-  n_parties <- length(cfg$parties)
-  party_chisq <- chisq.test(party_dist$n, p = rep(1/n_parties, n_parties))
-  cat(paste0("Chi-squared: X2=", round(party_chisq$statistic, 2),
-             ", p=", round(party_chisq$p.value, 3), "\n\n"))
+  party_chisq <- tryCatch(
+    chisq.test(party_dist$n, p = rep(1/n_parties, n_parties)),
+    error = function(e) NULL
+  )
+  if (!is.null(party_chisq)) {
+    cat(paste0("Chi-squared: X2=", round(party_chisq$statistic, 2),
+               ", p=", round(party_chisq$p.value, 3), "\n\n"))
+  } else {
+    cat("Chi-squared: insufficient data\n\n")
+  }
 
   print(knitr::kable(party_dist, caption = paste0("Expected: ~", round(100/n_parties, 1), "% each")))
   cat("\n\n")
 
   # --- Rejection signal ---
   cat("#### Rejection Signal Rate\n\n")
-  non_fr <- conjoint |> filter(PARTY != cfg$far_right)
+  non_fr <- conjoint |> filter(!is.na(PARTY) & PARTY != cfg$far_right)
   rej_rate <- mean(non_fr$REJECTION_BINARY, na.rm = TRUE)
-  rej_test <- binom.test(sum(non_fr$REJECTION_BINARY), nrow(non_fr), p = 0.3)
+  rej_test <- if (nrow(non_fr) > 0)
+    tryCatch(binom.test(sum(non_fr$REJECTION_BINARY, na.rm = TRUE), nrow(non_fr), p = 0.3),
+             error = function(e) NULL)
+  else NULL
   cat(paste0("Observed rejection rate (non-far-right): **",
              round(rej_rate * 100, 1), "%** (expected: 30%)\n\n"))
-  cat(paste0("Binomial test: p=", round(rej_test$p.value, 3),
-             ", 95% CI: [", round(rej_test$conf.int[1]*100, 1),
-             "%, ", round(rej_test$conf.int[2]*100, 1), "%]\n\n"))
+  if (!is.null(rej_test)) {
+    cat(paste0("Binomial test: p=", round(rej_test$p.value, 3),
+               ", 95% CI: [", round(rej_test$conf.int[1]*100, 1),
+               "%, ", round(rej_test$conf.int[2]*100, 1), "%]\n\n"))
+  }
 
   fr_with_signal <- conjoint |> filter(PARTY == cfg$far_right & REJECTION_BINARY == 1)
   cat(paste0(cfg$far_right, " profiles with rejection signal (should be 0): ",
@@ -2060,13 +2082,18 @@ build_status <- function(d) {
   )
 
   # Party randomization
-  party_dist <- conjoint |> filter(!is.na(PARTY)) |> count(PARTY)
-  party_p <- chisq.test(party_dist$n, p = rep(1/length(cfg$parties),
-                                               length(cfg$parties)))$p.value
+  party_dist <- tibble(PARTY = cfg$parties) |>
+    left_join(conjoint |> filter(!is.na(PARTY)) |> count(PARTY), by = "PARTY") |>
+    mutate(n = replace_na(n, 0L))
+  party_chisq_res <- tryCatch(
+    chisq.test(party_dist$n, p = rep(1/length(cfg$parties), length(cfg$parties))),
+    error = function(e) NULL
+  )
+  party_p <- if (!is.null(party_chisq_res)) party_chisq_res$p.value else NA_real_
   checks$party <- tibble(
     Check = paste0("Party randomization (", cfg$label, ")"),
-    Status = ifelse(party_p > 0.05, "GREEN", ifelse(party_p > 0.01, "YELLOW", "RED")),
-    Details = paste0("chi-sq p=", round(party_p, 3))
+    Status = ifelse(is.na(party_p), "N/A", ifelse(party_p > 0.05, "GREEN", ifelse(party_p > 0.01, "YELLOW", "RED"))),
+    Details = ifelse(is.na(party_p), "insufficient data", paste0("chi-sq p=", round(party_p, 3)))
   )
 
   # Rejection signal
