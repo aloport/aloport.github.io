@@ -329,11 +329,13 @@ process_country <- function(cfg, country_key) {
       swipe = case_when(choice == 1 ~ "Reject", choice == 2 ~ "Super Like", choice == 4 ~ "Like")
     )
 
-  # --- Keep only completers (answered all 10 rounds) ---
+  # --- Keep only completers (answered all mapped rounds) ---
+  # Use max observed arm_round as the target (handles Austria QID offset: max=9 not 10)
+  max_possible_round <- max(decisions$arm_round, na.rm = TRUE)
   completers <- decisions |>
     group_by(response_id) |>
     summarise(max_round = max(arm_round), .groups = "drop") |>
-    filter(max_round == 10) |>
+    filter(max_round == max_possible_round) |>
     pull(response_id)
   decisions <- decisions |> filter(response_id %in% completers)
   raw       <- raw       |> filter(response_id %in% completers)
