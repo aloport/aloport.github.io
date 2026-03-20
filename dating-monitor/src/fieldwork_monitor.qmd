@@ -24,7 +24,7 @@ execute:
 ---
 
 ::: {.callout-note appearance="minimal"}
-**Last updated:** `r format(Sys.time(), "%A %B %d, %Y at %H:%M %Z")` | **Next auto-update:** every 30 minutes via GitHub Actions (until March 22, 2026)
+**Last updated:** `r format(Sys.time(), "%A %B %d, %Y at %H:%M %Z")`
 :::
 
 # 0. Setup
