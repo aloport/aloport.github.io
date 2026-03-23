@@ -124,8 +124,8 @@ countries <- list(
     col_party = c("FPO" = "#005DA5", "OVP" = "#63C3D0", "SPO" = "#E3000F",
                   "Grune" = "#88B626", "NEOS" = "#E84188", "KPO" = "#CC0000"),
     quotas = list(
-      gender = tibble(level = c("Woman", "Man"), target_pct = c(50.1, 49.9)),
-      education = tibble(level = c("Low", "Medium", "High"), target_pct = c(22.6, 44.36, 33.04)),
+      gender = tibble(level = c("Woman", "Man"), target_pct = c(50, 50)),
+      education = tibble(level = c("Low", "Medium", "High"), target_pct = c(23, 44, 33)),
       age = tibble(level = c("18-29", "30-39", "40-49", "50-59", "60-74"),
                    target_pct = c(21.10, 18.46, 17.51, 19.84, 23.09))
     ),
@@ -759,20 +759,22 @@ plot_quotas <- function(d) {
   quota_results <- check_quotas(d)
   n_resp <- nrow(d$respondents)
 
+  # Tolerance: +/- 5pp for gender/education (soft), +/- 3pp for age (strict)
   quota_results <- quota_results |>
     mutate(
+      tol = ifelse(dimension == "Age", 3, 5),
       level = factor(level, levels = rev(unique(level))),
       status = case_when(
-        abs(deviation) <= 3 ~ "On target",
-        deviation > 3 ~ "Over-represented",
-        deviation < -3 ~ "Under-represented"
+        abs(deviation) <= tol ~ "On target",
+        deviation > tol ~ "Over-represented",
+        deviation < -tol ~ "Under-represented"
       ),
       bar_label = paste0(round(observed_pct, 0), "% (target: ", round(target_pct, 0), "%)")
     )
 
   ggplot(quota_results, aes(y = level)) +
     # Target zone (subtle background)
-    geom_segment(aes(x = target_pct - 3, xend = target_pct + 3, y = level, yend = level),
+    geom_segment(aes(x = target_pct - tol, xend = target_pct + tol, y = level, yend = level),
                  color = "grey90", linewidth = 12, alpha = 0.5) +
     # Observed bar
     geom_segment(aes(x = 0, xend = observed_pct, y = level, yend = level, color = status),
@@ -790,7 +792,7 @@ plot_quotas <- function(d) {
                        labels = function(x) paste0(x, "%")) +
     facet_wrap(~dimension, scales = "free_y", ncol = 1) +
     labs(title = paste0(d$cfg$label, ": Quota Compliance (N = ", n_resp, ")"),
-         subtitle = "Grey zone = target +/- 3pp | Vertical mark = target",
+         subtitle = "Grey zone = tolerance (Age: +/-3pp | Gender & Education: +/-5pp) | Vertical mark = target",
          x = NULL, y = NULL)
 }
 ```
@@ -2073,14 +2075,18 @@ build_status <- function(d) {
   )
 
   # Quota deviations
-  quota_results <- check_quotas(d)
+  quota_results <- check_quotas(d) |>
+    mutate(tol = ifelse(dimension == "Age", 3, 5),
+           over_tol = abs(deviation) > tol)
+  n_over <- sum(quota_results$over_tol, na.rm = TRUE)
   max_dev <- max(abs(quota_results$deviation), na.rm = TRUE)
+  age_max_dev <- max(abs(quota_results$deviation[quota_results$dimension == "Age"]), na.rm = TRUE)
   checks$quotas <- tibble(
     Check = paste0("Quotas (", cfg$label, ")"),
-    Status = case_when(max_dev <= 3 ~ "GREEN",
-                       max_dev <= 5 ~ "YELLOW",
+    Status = case_when(n_over == 0 ~ "GREEN",
+                       age_max_dev <= 5 & n_over <= 2 ~ "YELLOW",
                        TRUE ~ "RED"),
-    Details = paste0("Max deviation: ", round(max_dev, 1), "pp")
+    Details = paste0("Max deviation: ", round(max_dev, 1), "pp (age max: ", round(age_max_dev, 1), "pp)")
   )
 
   # Party randomization
