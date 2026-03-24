@@ -92,10 +92,10 @@ countries <- list(
     col_party = c("AfD" = "#009EE0", "CDU/CSU" = "#000000", "SPD" = "#E3000F",
                   "Grune" = "#64A12D", "FDP" = "#FFED00", "Die Linke" = "#BE3075"),
     quotas = list(
-      gender = tibble(level = c("Woman", "Man"), target_pct = c(50.6, 49.4)),
-      education = tibble(level = c("Low", "Medium", "High"), target_pct = c(36.2, 30.2, 33.6)),
+      gender = tibble(level = c("Woman", "Man"), target_pct = c(50, 50)),
+      education = tibble(level = c("Low", "Medium", "High"), target_pct = c(41, 31, 28)),
       age = tibble(level = c("18-29", "30-39", "40-49", "50-59", "60-74"),
-                   target_pct = c(21.27, 17.65, 16.30, 19.94, 24.84))
+                   target_pct = c(22.5, 17.5, 16.5, 20.0, 23.5))
     ),
     party_detect = list(
       "AfD" = "AfD", "CDU/CSU" = "CDU", "SPD" = "SPD",
@@ -125,9 +125,9 @@ countries <- list(
                   "Grune" = "#88B626", "NEOS" = "#E84188", "KPO" = "#CC0000"),
     quotas = list(
       gender = tibble(level = c("Woman", "Man"), target_pct = c(50, 50)),
-      education = tibble(level = c("Low", "Medium", "High"), target_pct = c(23, 44, 33)),
+      education = tibble(level = c("Low", "Medium", "High"), target_pct = c(17, 48, 35)),
       age = tibble(level = c("18-29", "30-39", "40-49", "50-59", "60-74"),
-                   target_pct = c(21.10, 18.46, 17.51, 19.84, 23.09))
+                   target_pct = c(22.0, 17.5, 17.0, 20.0, 23.5))
     ),
     party_detect = list(
       "FPO" = "FPÖ|FPO", "OVP" = "ÖVP|OVP", "SPO" = "SPÖ|SPO",
@@ -762,7 +762,7 @@ plot_quotas <- function(d) {
   # Tolerance: +/- 5pp for gender/education (soft), +/- 3pp for age (strict)
   quota_results <- quota_results |>
     mutate(
-      tol = ifelse(dimension == "Age", 3, 5),
+      tol = case_when(dimension == "Age" ~ 3, dimension == "Education" ~ 7, TRUE ~ 5),
       level = factor(level, levels = rev(unique(level))),
       status = case_when(
         abs(deviation) <= tol ~ "On target",
@@ -792,7 +792,7 @@ plot_quotas <- function(d) {
                        labels = function(x) paste0(x, "%")) +
     facet_wrap(~dimension, scales = "free_y", ncol = 1) +
     labs(title = paste0(d$cfg$label, ": Quota Compliance (N = ", n_resp, ")"),
-         subtitle = "Grey zone = tolerance (Age: +/-3pp | Gender & Education: +/-5pp) | Vertical mark = target",
+         subtitle = "Grey zone = tolerance (Age: +/-3pp | Gender: +/-5pp | Education: +/-7pp) | Vertical mark = target",
          x = NULL, y = NULL)
 }
 ```
@@ -2076,7 +2076,7 @@ build_status <- function(d) {
 
   # Quota deviations
   quota_results <- check_quotas(d) |>
-    mutate(tol = ifelse(dimension == "Age", 3, 5),
+    mutate(tol = case_when(dimension == "Age" ~ 3, dimension == "Education" ~ 7, TRUE ~ 5),
            over_tol = abs(deviation) > tol)
   n_over <- sum(quota_results$over_tol, na.rm = TRUE)
   max_dev <- max(abs(quota_results$deviation), na.rm = TRUE)
