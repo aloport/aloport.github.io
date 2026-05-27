@@ -12,17 +12,24 @@
 
 <style>
 /* ===========================================================
-   THEME — warm dark editorial.
-   Deep ink background, warm cream type, brass accent.
-   Inspired by academic press / serious magazine design
-   (think MIT Press, n+1, The Drift) rather than pitch decks.
+   THEME — pride editorial.
+   Deep ink background, warm cream type, full-spectrum accents.
+   Academic-press restraint (MIT Press, n+1, The Drift) as the
+   base, with a rainbow accent system layered on top.
    =========================================================== */
 :root {
     --bg:           #0F1115;
     --text:         #ECE6D6;
     --text-dim:     #8A8472;
-    --accent:       #C5A059;
+    --accent:       #FF4D8D;   /* pride magenta — unified small accents */
     --rule:         rgba(236, 230, 214, 0.10);
+
+    /* Pride accent system */
+    --pride-1:      #FF4D6D;   /* red / pink  — section 01 */
+    --pride-2:      #FF9F1C;   /* orange      — section 02 */
+    --pride-3:      #3FBF6F;   /* green       — section 03 */
+    --pride-4:      #4D8DFF;   /* blue        — section 04 */
+    --pride-grad:   linear-gradient(90deg, #FF4D6D 0%, #FF9F1C 22%, #FFE14D 42%, #3FBF6F 62%, #4D8DFF 82%, #9B5DE5 100%);
 
     --display:      'Fraunces', Georgia, serif;
     --body:         'Inter Tight', -apple-system, system-ui, sans-serif;
@@ -75,8 +82,8 @@ body {
     position: relative;
     background: var(--bg);
     background-image:
-        radial-gradient(ellipse 90% 60% at 12% 0%,   rgba(197, 160, 89, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 70% 50% at 100% 100%, rgba(197, 160, 89, 0.05) 0%, transparent 55%);
+        radial-gradient(ellipse 90% 60% at 12% 0%,   rgba(255, 77, 141, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 100% 100%, rgba(77, 141, 255, 0.06) 0%, transparent 55%);
 }
 
 /* Hairline column rules — subtle editorial detail */
@@ -101,7 +108,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-bottom: clamp(0.5rem, 1.2vw, 1rem);
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 2px solid transparent;
+    border-image: var(--pride-grad) 1;
     margin-bottom: clamp(0.85rem, 1.8vw, 1.6rem);
     flex-shrink: 0;
 }
@@ -120,8 +128,8 @@ body {
 .eyebrow::before {
     content: '';
     width: clamp(20px, 3vw, 36px);
-    height: 1px;
-    background: var(--accent);
+    height: 2px;
+    background: var(--pride-grad);
 }
 
 .slide-meta {
@@ -149,8 +157,12 @@ body {
 
 .slide-title em {
     font-style: italic;
-    color: var(--accent);
     font-weight: 350;
+    background: var(--pride-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 /* Slide 2 title is slightly smaller to leave room for grid */
@@ -375,6 +387,18 @@ body {
 }
 
 /* ===========================================================
+   PRIDE — per-section accent colors (numerals)
+   =========================================================== */
+.theme:nth-child(1) .theme-num,
+.project-cluster:nth-child(1) .cluster-num { color: var(--pride-1); }
+.theme:nth-child(2) .theme-num,
+.project-cluster:nth-child(2) .cluster-num { color: var(--pride-2); }
+.theme:nth-child(3) .theme-num,
+.project-cluster:nth-child(3) .cluster-num { color: var(--pride-3); }
+.theme:nth-child(4) .theme-num,
+.project-cluster:nth-child(4) .cluster-num { color: var(--pride-4); }
+
+/* ===========================================================
    ANIMATIONS — subtle fade-up, editorial pacing
    =========================================================== */
 .reveal {
@@ -576,7 +600,7 @@ body {
         <div class="theme">
             <div class="theme-num">02</div>
             <div>
-                <div class="theme-name">LGBTQ+ politics</div>
+                <div class="theme-name">LGBTQ+ politics and communication</div>
                 <p class="theme-desc">Race, identity disclosure, and gender in LGBTQ+ candidacies and movements: media coverage, voter response, candidate self-presentation, activist silence.</p>
             </div>
         </div>
@@ -592,7 +616,7 @@ body {
         <div class="theme">
             <div class="theme-num">04</div>
             <div>
-                <div class="theme-name">Dating &amp; social cohesion</div>
+                <div class="theme-name">Online dating &amp; social cohesion</div>
                 <p class="theme-desc">Intimate-life preferences as a signal of cultural-political backlash; how dating platforms and discourse surface and amplify prejudice against sexual minorities.</p>
             </div>
         </div>
@@ -635,7 +659,7 @@ body {
         <div class="project-cluster">
             <div class="cluster-head">
                 <span class="cluster-num">02</span>
-                <span class="cluster-name">LGBTQ+ politics</span>
+                <span class="cluster-name">LGBTQ+ politics and communication</span>
             </div>
             <ul class="project-list">
                 <li>Queer Eyes for White Guys: how race and queerness shape mass politics <span class="collab">— Marcel Roman</span></li>
@@ -662,7 +686,7 @@ body {
         <div class="project-cluster">
             <div class="cluster-head">
                 <span class="cluster-num">04</span>
-                <span class="cluster-name">Dating &amp; social cohesion</span>
+                <span class="cluster-name">Online dating &amp; social cohesion</span>
             </div>
             <ul class="project-list">
                 <li>The Dating Divide <span class="collab">— Cambridge Elements R&amp;R, Lala Muradova</span></li>
