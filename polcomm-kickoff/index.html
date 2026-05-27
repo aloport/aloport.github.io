@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>VU Polcomm Group — Research Agenda</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================================
+   THEME — warm dark editorial.
+   Deep ink background, warm cream type, brass accent.
+   Inspired by academic press / serious magazine design
+   (think MIT Press, n+1, The Drift) rather than pitch decks.
+   =========================================================== */
+:root {
+    --bg:           #0F1115;
+    --text:         #ECE6D6;
+    --text-dim:     #8A8472;
+    --accent:       #C5A059;
+    --rule:         rgba(236, 230, 214, 0.10);
+
+    --display:      'Fraunces', Georgia, serif;
+    --body:         'Inter Tight', -apple-system, system-ui, sans-serif;
+    --mono:         'JetBrains Mono', ui-monospace, monospace;
+
+    /* Responsive type — every size scales with viewport */
+    --label-size:   clamp(0.65rem, 0.85vw, 0.78rem);
+    --title-size:   clamp(1.5rem, 3.4vw, 2.85rem);
+    --h2-size:      clamp(1.05rem, 1.8vw, 1.4rem);
+    --body-size:    clamp(0.78rem, 1vw, 0.95rem);
+    --small-size:   clamp(0.72rem, 0.9vw, 0.85rem);
+    --tiny-size:    clamp(0.6rem, 0.72vw, 0.72rem);
+    --numeral-size: clamp(1.5rem, 2.5vw, 2.1rem);
+
+    --slide-padding: clamp(1.5rem, 4vw, 3.5rem);
+    --ease:          cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; overflow-x: hidden; }
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    background: var(--bg);
+}
+
+body {
+    font-family: var(--body);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===========================================================
+   SLIDE BASE — viewport-locked, no scroll.
+   Soft radial accent glows give depth without distraction.
+   =========================================================== */
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: var(--slide-padding);
+    position: relative;
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse 90% 60% at 12% 0%,   rgba(197, 160, 89, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 100% 100%, rgba(197, 160, 89, 0.05) 0%, transparent 55%);
+}
+
+/* Hairline column rules — subtle editorial detail */
+.slide::before,
+.slide::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: var(--rule);
+    pointer-events: none;
+}
+.slide::before { left:  calc(var(--slide-padding) - 14px); }
+.slide::after  { right: calc(var(--slide-padding) - 14px); }
+
+/* ===========================================================
+   SLIDE HEADER — eyebrow label + meta line
+   =========================================================== */
+.slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: clamp(0.5rem, 1.2vw, 1rem);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: clamp(0.85rem, 1.8vw, 1.6rem);
+    flex-shrink: 0;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--mono);
+    font-size: var(--label-size);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.eyebrow::before {
+    content: '';
+    width: clamp(20px, 3vw, 36px);
+    height: 1px;
+    background: var(--accent);
+}
+
+.slide-meta {
+    font-family: var(--mono);
+    font-size: var(--tiny-size);
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+}
+
+/* ===========================================================
+   SLIDE TITLE — large serif, italic accent on key phrase
+   =========================================================== */
+.slide-title {
+    font-family: var(--display);
+    font-size: var(--title-size);
+    font-weight: 350;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    max-width: 28ch;
+    color: var(--text);
+    margin-bottom: clamp(1rem, 2vw, 1.8rem);
+    font-variation-settings: "opsz" 80;
+    flex-shrink: 0;
+}
+
+.slide-title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 350;
+}
+
+/* Slide 2 title is slightly smaller to leave room for grid */
+.slide#slide-2 .slide-title {
+    font-size: clamp(1.25rem, 2.6vw, 2.05rem);
+    margin-bottom: clamp(0.7rem, 1.4vw, 1.2rem);
+}
+
+/* ===========================================================
+   SLIDE 1 — Themes grid (2×2)
+   =========================================================== */
+.themes-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1rem, 2.2vw, 1.8rem) clamp(1.5rem, 3vw, 3rem);
+    align-content: center;
+    min-height: 0;
+}
+
+.theme {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(0.7rem, 1.4vw, 1.2rem);
+    align-items: start;
+    padding-top: clamp(0.5rem, 1vw, 0.8rem);
+    border-top: 1px solid var(--rule);
+}
+
+.theme-num {
+    font-family: var(--display);
+    font-size: var(--numeral-size);
+    font-weight: 300;
+    line-height: 0.9;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144;
+    font-feature-settings: "lnum";
+}
+
+.theme-name {
+    font-family: var(--display);
+    font-size: var(--h2-size);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: clamp(0.3rem, 0.6vw, 0.5rem);
+    font-variation-settings: "opsz" 30;
+}
+
+.theme-desc {
+    font-size: var(--body-size);
+    line-height: 1.5;
+    color: var(--text-dim);
+}
+
+/* ===========================================================
+   SLIDE 1 — Footer note
+   =========================================================== */
+.slide-footer {
+    margin-top: clamp(0.8rem, 1.6vw, 1.4rem);
+    padding-top: clamp(0.6rem, 1.2vw, 1rem);
+    border-top: 1px solid var(--rule);
+    font-size: var(--small-size);
+    color: var(--text-dim);
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.5;
+    flex-shrink: 0;
+}
+
+.slide-footer strong {
+    color: var(--text);
+    font-family: var(--body);
+    font-style: normal;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    letter-spacing: -0.005em;
+}
+
+/* ===========================================================
+   SLIDE 2 — Project clusters grid (2×2)
+   =========================================================== */
+.projects-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(0.9rem, 1.7vw, 1.5rem) clamp(1.6rem, 2.6vw, 2.6rem);
+    align-content: start;
+    min-height: 0;
+}
+
+.project-cluster { display: flex; flex-direction: column; }
+
+.cluster-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding-bottom: clamp(0.3rem, 0.6vw, 0.5rem);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: clamp(0.35rem, 0.7vw, 0.55rem);
+}
+
+.cluster-num {
+    font-family: var(--mono);
+    font-size: var(--tiny-size);
+    color: var(--accent);
+    letter-spacing: 0.06em;
+}
+
+.cluster-name {
+    font-family: var(--display);
+    font-size: clamp(0.95rem, 1.35vw, 1.12rem);
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 24;
+}
+
+.project-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.2rem, 0.4vw, 0.35rem);
+}
+
+.project-list li {
+    font-size: var(--small-size);
+    line-height: 1.42;
+    color: var(--text);
+    padding-left: 0.95rem;
+    position: relative;
+}
+
+.project-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    top: -0.05em;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.project-list .collab {
+    color: var(--text-dim);
+    font-size: 0.92em;
+}
+
+/* Highlight Mariken-led / Mariken-co-authored projects: marker + accent name */
+.project-list li.with-mariken::before {
+    content: '▸';
+    color: var(--accent);
+    font-size: 0.9em;
+    top: 0.02em;
+    font-weight: 500;
+}
+
+.collab .mariken {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* Small "PROPOSED" tag for brand-new project ideas */
+.tag-proposed {
+    display: inline-block;
+    margin-left: 0.45em;
+    padding: 0.08em 0.5em 0.12em;
+    font-family: var(--mono);
+    font-size: 0.7em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    vertical-align: 2px;
+    white-space: nowrap;
+}
+
+/* ===========================================================
+   SLIDE 2 — Footer band: grants + time
+   =========================================================== */
+.footer-band {
+    margin-top: clamp(0.8rem, 1.6vw, 1.3rem);
+    padding-top: clamp(0.7rem, 1.4vw, 1.1rem);
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    flex-shrink: 0;
+}
+
+.footer-block-label {
+    font-family: var(--mono);
+    font-size: var(--tiny-size);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: clamp(0.4rem, 0.8vw, 0.65rem);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-block-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+}
+
+.footer-block p {
+    font-size: var(--small-size);
+    line-height: 1.5;
+    color: var(--text-dim);
+}
+
+.footer-block p strong {
+    color: var(--text);
+    font-weight: 500;
+    font-family: var(--body);
+}
+
+/* ===========================================================
+   ANIMATIONS — subtle fade-up, editorial pacing
+   =========================================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+.slide.visible .reveal:nth-child(1) { transition-delay: 0.05s; }
+.slide.visible .reveal:nth-child(2) { transition-delay: 0.15s; }
+.slide.visible .reveal:nth-child(3) { transition-delay: 0.25s; }
+.slide.visible .reveal:nth-child(4) { transition-delay: 0.35s; }
+
+.themes-grid .theme,
+.projects-grid .project-cluster {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.slide.visible .themes-grid .theme:nth-child(1),
+.slide.visible .projects-grid .project-cluster:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.30s; }
+.slide.visible .themes-grid .theme:nth-child(2),
+.slide.visible .projects-grid .project-cluster:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.40s; }
+.slide.visible .themes-grid .theme:nth-child(3),
+.slide.visible .projects-grid .project-cluster:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.50s; }
+.slide.visible .themes-grid .theme:nth-child(4),
+.slide.visible .projects-grid .project-cluster:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.60s; }
+
+/* ===========================================================
+   NAV DOTS + KBD HINT
+   =========================================================== */
+.nav-dots {
+    position: fixed;
+    right: clamp(1rem, 2vw, 2rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    z-index: 100;
+}
+
+.nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    opacity: 0.35;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    padding: 0;
+}
+
+.nav-dot.active {
+    opacity: 1;
+    background: var(--accent);
+    transform: scale(1.4);
+}
+
+.kbd-hint {
+    position: fixed;
+    bottom: clamp(0.8rem, 1.5vw, 1.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: var(--tiny-size);
+    color: var(--text-dim);
+    opacity: 0.45;
+    letter-spacing: 0.1em;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.kbd-hint kbd {
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    margin: 0 0.2em;
+    font-size: 0.9em;
+}
+
+/* ===========================================================
+   RESPONSIVE BREAKPOINTS — short / narrow viewports
+   =========================================================== */
+@media (max-height: 750px) {
+    :root {
+        --slide-padding: clamp(1rem, 3vw, 2.5rem);
+        --title-size: clamp(1.3rem, 3vw, 2.4rem);
+        --body-size: clamp(0.72rem, 0.95vw, 0.88rem);
+        --small-size: clamp(0.68rem, 0.85vw, 0.8rem);
+    }
+}
+
+@media (max-height: 620px) {
+    :root {
+        --title-size: clamp(1.15rem, 2.8vw, 2rem);
+        --h2-size: clamp(0.92rem, 1.5vw, 1.18rem);
+        --body-size: clamp(0.68rem, 0.9vw, 0.82rem);
+        --small-size: clamp(0.64rem, 0.8vw, 0.76rem);
+        --numeral-size: clamp(1.15rem, 2vw, 1.65rem);
+    }
+    .nav-dots, .kbd-hint { display: none; }
+}
+
+@media (max-width: 820px) {
+    .themes-grid,
+    .projects-grid,
+    .footer-band {
+        grid-template-columns: 1fr;
+    }
+    .nav-dots { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+    html { scroll-behavior: auto; }
+}
+
+/* ===========================================================
+   PRINT — 16:9 landscape, one slide per page, no animation
+   =========================================================== */
+@page {
+    size: 20in 11.25in;  /* 16:9 at large size so render = 1920x1080 CSS px (no breakpoint trip) */
+    margin: 0;
+}
+
+@media print {
+    html, body {
+        height: auto;
+        overflow: visible;
+        scroll-snap-type: none;
+        background: var(--bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .slide {
+        width: 20in;
+        height: 11.25in;
+        page-break-after: always;
+        break-after: page;
+        overflow: hidden;
+    }
+    .slide:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+    .nav-dots, .kbd-hint { display: none !important; }
+    /* Force all animated elements to their final state */
+    .reveal,
+    .themes-grid .theme,
+    .projects-grid .project-cluster {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-dots" aria-label="Slide navigation">
+    <button class="nav-dot active" data-slide="0" aria-label="Slide 1"></button>
+    <button class="nav-dot"        data-slide="1" aria-label="Slide 2"></button>
+</nav>
+
+<div class="kbd-hint">
+    <kbd>↓</kbd> <kbd>↑</kbd> or <kbd>space</kbd> to navigate
+</div>
+
+<!-- =========================================================
+     SLIDE 1 — Research agenda
+     ========================================================= -->
+<section class="slide" id="slide-1">
+    <header class="slide-header reveal">
+        <span class="eyebrow">Research agenda</span>
+        <span class="slide-meta">VU Polcomm Group · A. López Ortega · 01 / 02</span>
+    </header>
+
+    <h1 class="slide-title reveal">
+        Four interlocking lines on democracy, political communication, and <em>identity politics.</em>
+    </h1>
+
+    <div class="themes-grid">
+        <div class="theme">
+            <div class="theme-num">01</div>
+            <div>
+                <div class="theme-name">Selective liberalism</div>
+                <p class="theme-desc">How liberal majorities deploy liberal-democratic <em>frames</em> to legitimize exclusion: homonationalist discourse, advocacy-as-foreign-imposition framing, nativism dressed in liberal language.</p>
+            </div>
+        </div>
+
+        <div class="theme">
+            <div class="theme-num">02</div>
+            <div>
+                <div class="theme-name">LGBTQ+ politics</div>
+                <p class="theme-desc">Race, identity disclosure, and gender in LGBTQ+ candidacies and movements: media coverage, voter response, candidate self-presentation, activist silence.</p>
+            </div>
+        </div>
+
+        <div class="theme">
+            <div class="theme-num">03</div>
+            <div>
+                <div class="theme-name">Identity &amp; otherness</div>
+                <p class="theme-desc">Communication mechanisms of out-group construction: moral vs. epistemic attribution in partisan discourse, traitor framing of defectors, media normalization of the radical right.</p>
+            </div>
+        </div>
+
+        <div class="theme">
+            <div class="theme-num">04</div>
+            <div>
+                <div class="theme-name">Dating &amp; social cohesion</div>
+                <p class="theme-desc">Intimate-life preferences as a signal of cultural-political backlash; how dating platforms and discourse surface and amplify prejudice against sexual minorities.</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="slide-footer reveal">
+        <strong>Group fit.</strong> All experimental, all media- or discourse-facing. Direct overlap: attribution and pre-registration (Mariken, Leon), media normalization of the radical right (Chiara), digital information environments (Silvia).
+    </p>
+</section>
+
+<!-- =========================================================
+     SLIDE 2 — Projects + grants + protected time
+     ========================================================= -->
+<section class="slide" id="slide-2">
+    <header class="slide-header reveal">
+        <span class="eyebrow">Active pipeline</span>
+        <span class="slide-meta">VU Polcomm Group · A. López Ortega · 02 / 02</span>
+    </header>
+
+    <h2 class="slide-title reveal">
+        Active projects across the four lines, with <em>clear hooks for the group.</em>
+    </h2>
+
+    <div class="projects-grid">
+        <div class="project-cluster">
+            <div class="cluster-head">
+                <span class="cluster-num">01</span>
+                <span class="cluster-name">Selective liberalism</span>
+            </div>
+            <ul class="project-list">
+                <li>Still Instrumentally Liberal <span class="collab">— Stuart Turnbull-Dugarte (R&amp;R, APSR)</span></li>
+                <li>Foreign LGBTQ+ advocacy and backlash (Kuwait) <span class="collab">— Yuree Noh</span></li>
+                <li class="with-mariken">Corporate advertising as democratic practice: inclusion, belonging, selective liberalism <span class="collab">— <span class="mariken">Mariken van der Velden</span>, Ana Lopes</span></li>
+                <li>Homonationalism and military justification <span class="collab">— Tony Z. Yang, Eddy Yeung</span></li>
+                <li>Housing nativism: blame framing and right-wing issue ownership <span class="collab">— Pablo Simón</span></li>
+                <li>Homonationalism and religious affect (conjoint) <span class="collab">— Agustín Blanco-Bosco, Stuart Turnbull-Dugarte, Michal Grahn</span></li>
+            </ul>
+        </div>
+
+        <div class="project-cluster">
+            <div class="cluster-head">
+                <span class="cluster-num">02</span>
+                <span class="cluster-name">LGBTQ+ politics</span>
+            </div>
+            <ul class="project-list">
+                <li>Queer Eyes for White Guys: how race and queerness shape mass politics <span class="collab">— Marcel Roman</span></li>
+                <li>LGBTQ+ candidate disclosure and electoral consequences</li>
+                <li>TERFs and the vote: who they are and what they support <span class="collab">— Agustín Blanco-Bosco</span></li>
+                <li>Queer activists and silence: self-censorship and strategic silence <span class="collab">— Diego Garcia Blum (Harvard Carr Center)</span></li>
+            </ul>
+        </div>
+
+        <div class="project-cluster">
+            <div class="cluster-head">
+                <span class="cluster-num">03</span>
+                <span class="cluster-name">Identity &amp; otherness</span>
+            </div>
+            <ul class="project-list">
+                <li class="with-mariken">Multiparty attribution: moral vs. epistemic explanations of partisan disagreement <span class="collab">— <span class="mariken">Mariken van der Velden</span>, Leon Chiata (Vienna paper + follow-up)</span></li>
+                <li>Reality shows and the radical right: media diets and far-right voting <span class="collab">— Silvia Majó-Vázquez, Chiara Vargiu</span><span class="tag-proposed">Proposed</span></li>
+                <li>Andpol: asymmetric devolution and regional identity (Spain / Italy conjoint) <span class="collab">— Álvaro Canalejo, Javier Padilla</span></li>
+                <li>Gray liberals: minority-conservative voters and the right <span class="collab">— Martin Naunov</span></li>
+                <li>Identifying sexual violence: identity cues and partisan interpretation <span class="collab">— Leire Rincón</span></li>
+            </ul>
+        </div>
+
+        <div class="project-cluster">
+            <div class="cluster-head">
+                <span class="cluster-num">04</span>
+                <span class="cluster-name">Dating &amp; social cohesion</span>
+            </div>
+            <ul class="project-list">
+                <li>The Dating Divide <span class="collab">— Cambridge Elements R&amp;R, Lala Muradova</span></li>
+                <li>Rejection signals and sexual backlash in online dating</li>
+                <li>The Sexuality Gap: re-reading the Gen Z gender gap <span class="collab">— Stuart Turnbull-Dugarte (submission target: Sept 2026)</span></li>
+                <li>Men's problems and the gender gap <span class="collab">— Stuart Turnbull-Dugarte (submission target: Sept 2026)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-band">
+        <div class="footer-block">
+            <div class="footer-block-label">Grants in pipeline</div>
+            <p><strong>ERC Starting Grant.</strong> Two proposals in active drafting (moral panic; political selves). A dedicated co-thinker would help frame the idea.<br>
+            <strong>NWO VENI.</strong> Year 1 — actively running. Group input on design and analysis very welcome.</p>
+        </div>
+
+        <div class="footer-block">
+            <div class="footer-block-label">Protected time</div>
+            <p><strong>Semester-dependent.</strong> Summer: broadly flexible. Fall: two recurring slots to be confirmed once the teaching timetable (Media &amp; Politics, Public Opinion) lands.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+/* ===========================================================
+   SLIDE CONTROLLER
+   - Intersection observer triggers .visible (animations)
+     and updates active nav dot.
+   - Keyboard: arrows / space / page keys.
+   - Dot click jumps to slide.
+   =========================================================== */
+class SlideDeck {
+    constructor() {
+        this.slides = Array.from(document.querySelectorAll('.slide'));
+        this.dots   = Array.from(document.querySelectorAll('.nav-dot'));
+        this.current = 0;
+        this.init();
+    }
+
+    init() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const idx = this.slides.indexOf(entry.target);
+                    this.setActive(idx);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        this.slides.forEach(s => observer.observe(s));
+
+        this.dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => this.goTo(i));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (['ArrowDown', 'PageDown', ' '].includes(e.key)) {
+                e.preventDefault();
+                this.goTo(Math.min(this.current + 1, this.slides.length - 1));
+            } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
+                e.preventDefault();
+                this.goTo(Math.max(this.current - 1, 0));
+            }
+        });
+    }
+
+    goTo(idx) {
+        this.slides[idx].scrollIntoView({ behavior: 'smooth' });
+    }
+
+    setActive(idx) {
+        this.current = idx;
+        this.dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.slide').classList.add('visible');
+    new SlideDeck();
+});
+</script>
+
+</body>
+</html>
