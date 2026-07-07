@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Too Much Pride? — Collaborative Experiment Concept Note</title>
+<style>
+  :root{
+    --ink:#1c1c22; --muted:#5d5d6b; --line:#e6e3dd; --bg:#fbfaf7;
+    --accent:#7b2d8e; --accent2:#d4448a; --accent3:#e8902a;
+    --band1:#7b2d8e; --band2:#d4448a; --band3:#e8902a; --band4:#3a9d6e; --band5:#2e7bb8;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:17px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:0 28px 96px}
+  header.hero{padding:64px 28px 40px; margin-bottom:8px; border-bottom:1px solid var(--line);}
+  .hero-inner{max-width:820px; margin:0 auto}
+  .rainbow{height:6px; width:100%; border-radius:6px; margin-bottom:30px;
+    background:linear-gradient(90deg,var(--band1) 0 20%,var(--band2) 20% 40%,var(--band3) 40% 60%,var(--band4) 60% 80%,var(--band5) 80% 100%);}
+  .kicker{font:600 13px/1.4 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--accent2); margin:0 0 14px}
+  h1{font-size:2.5rem; line-height:1.12; margin:0 0 14px; letter-spacing:-.01em}
+  h1 .sub{display:block; font-size:1.35rem; color:var(--muted); font-style:italic; margin-top:10px; letter-spacing:0}
+  .byline{font:15px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--muted); margin-top:18px}
+  .byline b{color:var(--ink)}
+  .stamp{font:600 12px/1 ui-sans-serif,system-ui,-apple-system,sans-serif; letter-spacing:.1em; text-transform:uppercase; color:var(--accent3); margin-top:10px}
+
+  h2{font-size:1.5rem; margin:52px 0 6px; letter-spacing:-.01em; padding-top:8px}
+  h2 .num{color:var(--accent2); font:700 1rem/1 ui-sans-serif,system-ui,sans-serif; margin-right:10px; vertical-align:2px}
+  h3{font-size:1.12rem; margin:30px 0 6px}
+  p{margin:14px 0}
+  a{color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(123,45,142,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  strong{color:#111}
+  em{color:#33333a}
+  .lede{font-size:1.18rem; line-height:1.6; color:#2c2c34}
+
+  .ask{background:#fff; border:1px solid var(--line); border-left:4px solid var(--accent2);
+    border-radius:10px; padding:22px 26px; margin:26px 0; box-shadow:0 1px 0 rgba(0,0,0,.02);}
+  .ask .label{font:700 12px/1 ui-sans-serif,system-ui,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); margin:0 0 10px}
+  .aside{font-size:.92rem; color:var(--muted); font-style:italic; margin-top:12px}
+
+  ul,ol{margin:14px 0; padding-left:22px}
+  li{margin:9px 0}
+
+  .hyp{counter-reset:h; list-style:none; padding-left:0; margin:18px 0}
+  .hyp>li{position:relative; padding:14px 16px 14px 64px; margin:10px 0; background:#fff; border:1px solid var(--line); border-radius:10px}
+  .hyp>li .tag{position:absolute; left:14px; top:14px; font:700 12px/1.3 ui-sans-serif,system-ui,sans-serif; color:#fff; background:var(--accent); padding:4px 7px; border-radius:6px; letter-spacing:.04em}
+  .hyp>li:nth-child(2) .tag{background:var(--accent2)}
+  .hyp>li:nth-child(3) .tag{background:var(--accent3)}
+  .hyp>li:nth-child(4) .tag{background:var(--band4)}
+  .hyp>li:nth-child(5) .tag{background:var(--band5)}
+  .fork{list-style:none; padding-left:0; margin:10px 0 2px}
+  .fork li{background:#f7f3ef; border:1px solid var(--line); border-radius:8px; padding:10px 13px; margin:8px 0; font-size:.96rem}
+  .fork .lbl{font:700 12px/1.3 ui-sans-serif,system-ui,sans-serif; letter-spacing:.03em; color:var(--accent); display:block; margin-bottom:3px}
+
+  table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.93rem;
+    font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+  .scroll{overflow-x:auto}
+  th,td{text-align:left; padding:10px 11px; border-bottom:1px solid var(--line); vertical-align:top}
+  thead th{background:#f3efe8; font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+  tbody tr:nth-child(odd){background:#fff}
+  .pos{color:var(--band4); font-weight:600}
+  .neg{color:#c0392b; font-weight:700}
+  .neu{color:var(--muted)}
+  .tbl-cap{margin:20px 0 2px; font-family:ui-sans-serif,system-ui,sans-serif; font-size:.85rem; font-weight:600; letter-spacing:.04em; color:var(--muted); text-transform:uppercase}
+
+  .team{display:grid; grid-template-columns:1fr; gap:14px; margin:20px 0}
+  .person{background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px 20px}
+  .person h4{margin:0 0 4px; font-size:1.05rem; font-family:ui-sans-serif,system-ui,sans-serif}
+  .person .role{font:600 12px/1.3 ui-sans-serif,system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; color:var(--accent2); margin-bottom:8px}
+  .person p{margin:6px 0; font-size:.97rem}
+
+  .three{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:22px 0}
+  .card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px}
+  .card .h{font:700 12px/1.3 ui-sans-serif,system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); margin-bottom:8px}
+  .card p{margin:0; font-size:.92rem; color:#3a3a42}
+
+  .refs{font-size:.9rem; color:#3a3a42; line-height:1.55}
+  .refs li{margin:8px 0}
+  .note{font-size:.85rem; color:var(--muted); font-style:italic; margin-top:14px}
+  hr.sec{border:0; border-top:1px solid var(--line); margin:44px 0 0}
+  footer{margin-top:48px; padding-top:22px; border-top:1px solid var(--line); font:14px/1.6 ui-sans-serif,system-ui,sans-serif; color:var(--muted)}
+
+  @media (max-width:680px){
+    h1{font-size:2rem} .three{grid-template-columns:1fr} .wrap{padding:0 20px 64px} header.hero{padding:44px 20px 32px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="rainbow"></div>
+    <p class="kicker">Collaborative experiment concept note</p>
+    <h1>Too Much Pride?
+      <span class="sub">Saturation, fatigue, and backlash to corporate Pride advertising</span>
+    </h1>
+    <p class="byline">
+      <b>Alberto López Ortega</b> — VU, Political Communication ·
+      <b>Ana Isabel Lopes</b> — VU, Corporate Communication ·
+      to run inside a simulated-feed study on the VU Digital Media &amp; Behavior Lab platform
+    </p>
+    <p class="stamp">Draft v2 · July 2026</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="ask">
+    <p class="label">The ask in one paragraph</p>
+    <p class="lede" style="margin-top:0">We (Alberto and Ana) want to test whether there is a <em>saturation</em> effect to corporate Pride advertising: a point past which "more Pride" stops helping and starts hurting. The cleanest test is inside a realistic social-media feed, where we can vary how much Pride-branded corporate content a participant scrolls past. Rather than build a new platform, we want to integrate this manipulation into an existing simulated-feed study running on the lab's infrastructure. For us, the placement and density of corporate Pride content (both paid ads and organic brand posts) is the treatment; everything else is just other randomized dimensions, the way attributes work in a conjoint. The marginal cost to the host study is low; the payoff is a shared paper at the intersection of identity politics, corporate communication, and social-media effects.</p>
+    <p class="aside">General by design: this note describes the idea and the manipulation independent of any one host study, so we can slot it into whichever platform study is best placed to carry it.</p>
+  </div>
+
+  <h2><span class="num">01</span>The puzzle</h2>
+  <p>Every June, brands turn their logos rainbow. The public debate treats this as binary, you either support Pride or you do not, but the interesting empirical question is about <em>dose</em>, not presence. Three observations motivate the project.</p>
+  <ul>
+    <li><strong>Advertising has a wear-out curve.</strong> Repeated exposure first builds positive attitudes, then flattens, then reverses into annoyance and reactance. Schmidt and Eisend's (2015) meta-analysis puts the inflection around ten exposures; beyond it, repetition breeds tedium and resistance. Corporate Pride is a high-frequency saturation campaign squeezed into one month. Nobody has asked whether identity-signaling ads obey the same wear-out logic, or whether the curve bends differently by audience.</li>
+    <li><strong>There is a documented "green fatigue" analogue.</strong> Dense, repetitive green claims produce skepticism, "green cynicism," and disengagement rather than the intended shift. Corporate Pride is a natural place to look for the same dynamic, with the twist that the cause is contested along partisan lines.</li>
+    <li><strong>Visibility cuts both ways.</strong> Increased LGBTQ+ visibility normalizes for some audiences and triggers backlash in others. Corporate Pride is one of the most ubiquitous visibility mechanisms in everyday life, yet it is studied almost entirely as a marketing-authenticity question, not as a political-attitudes treatment.</li>
+  </ul>
+  <p>Together these yield a clean, under-tested hypothesis: <strong>the effect of corporate Pride advertising is non-monotonic in dose and conditional on ideology, on two outcomes at once</strong> — (a) LGBTQ+ attitudes and norms, and (b) attitudes toward the advertising companies themselves.</p>
+  <p>Crucially, <em>dose interacts with ideology, and possibly asymmetrically.</em> For liberal/progressive audiences, low-to-moderate exposure likely helps, with fatigue only at very high dose (saturation / rainbow-washing). For conservatives, the negative reaction may kick in far earlier — perhaps at a single exposure — and there may be <em>no</em> dose that moves them positively. So the company-evaluation outcome can backlash on <em>both</em> flanks at high dose: conservatives recoil at the politics, progressives read saturation as cynical rainbow-washing. That asymmetry is a live question we set out explicitly in H2.</p>
+
+  <h2><span class="num">02</span>Theory and hypotheses</h2>
+  <div class="three">
+    <div class="card"><div class="h">Wear-out &amp; reactance</div><p>Repetition persuades up to a point (~10 exposures), then becomes counter-persuasive through tedium and reactance. Gives us the <em>shape</em> and a concrete inflection point.</p></div>
+    <div class="card"><div class="h">Brand activism / woke-washing</div><p>Sociopolitical positioning persuades when authentic, backfires when performative. Saturation is itself an authenticity cue. Gives us the corporate-side <em>mechanism</em>.</p></div>
+    <div class="card"><div class="h">Norm perception</div><p>Ambient signals shift perceived norms, which move (or fail to move) personal attitudes (Tankard &amp; Paluck). Gives us the audience-side <em>mechanism</em> and a norm outcome.</p></div>
+  </div>
+  <p>On the political side, the project sits inside Alberto's program on instrumental liberalism, selective illiberalism, and visibility backlash: conservatives may selectively reject corporate Pride as elite/commercial signaling even while professing tolerance in other registers.</p>
+
+  <ol class="hyp">
+    <li><span class="tag">H1</span><strong>Main effect (averaged).</strong> Pride-ad dose has a weak positive or null effect on LGBTQ+ attitudes, pride attitudes, and perceived pro-LGBTQ+ norms across all participants. We expect it small, because it pools opposing sub-group curves.</li>
+    <li><span class="tag">H2</span><strong>Moderation — the core claim, and an open question.</strong> Ideology moderates the dose-response curve. The five-condition design is built to adjudicate between two competing specifications:
+      <ul class="fork">
+        <li><span class="lbl">H2a · asymmetric threshold</span> Both groups follow an inverted-U (positive, then fatigue), but conservatives hit the downturn at a <em>lower</em> dose. Fatigue is universal; its threshold is ideology-dependent.</li>
+        <li><span class="lbl">H2b · no positive arm for conservatives</span> Repetition helps <em>only</em> liberal/progressive audiences, who warm to Pride up to the ~10-exposure saturation point and then fatigue at 13. Conservatives sit at or below baseline at <em>every</em> dose, perhaps negative from the first exposure. Saturation/fatigue is then a <em>progressive-audience</em> phenomenon; conservatives show monotonic rejection.</li>
+      </ul>
+      The saturation threshold is anchored to Schmidt &amp; Eisend's ~10-exposure inflection; the conditions (3 / 6–7 / 10 / 13) bracket it — below, approaching, at, and beyond.</li>
+    <li><span class="tag">H3</span><strong>Norm channel.</strong> Effects on <em>perceived norms</em> are larger and more uniform across ideology than effects on <em>personal attitudes</em>: norm-signaling outruns attitude change.</li>
+    <li><span class="tag">H4</span><strong>Mechanism.</strong> Backlash at high dose is mediated by perceived inauthenticity / rainbow-washing and by reactance/annoyance, not by changed beliefs about the cause itself.</li>
+    <li><span class="tag">H5</span><strong>Company evaluation — co-primary outcome.</strong> Dose shapes attitudes toward the advertising company itself, not just the cause. Conservatives: dose lowers brand attitudes, authenticity, and purchase intention across the range (strongest at the top). Progressive / LGBTQ+ audiences: low-to-moderate dose improves brand evaluation, but very high dose <em>also</em> depresses it via perceived rainbow-washing — a two-sided saturation penalty. The brand optimum is intermediate, not maximal.</li>
+  </ol>
+
+  <h2><span class="num">03</span>Design: integrate, don't rebuild</h2>
+  <p>Minimal intrusion into the host study's platform. We add <strong>one randomized factor</strong>: the <strong>density of corporate Pride content</strong> a participant encounters while scrolling. "Pride messages" comprise two content types we track separately — <strong>paid ads</strong> and <strong>organic brand posts</strong>.</p>
+  <ul>
+    <li><strong>Treatment.</strong> Randomize participants across five dose conditions, from a Pride-free baseline up to a level past the advertising saturation threshold. All Pride messages are drawn from a shared pool of <strong>10 ads and 15 brand posts</strong>, so content is held constant and only <em>density</em> varies. Brands are fictitious or rotated to avoid real-brand priors. Non-Pride feed content is whatever the host study uses — from our side, orthogonal background.</li>
+  </ul>
+
+  <p class="tbl-cap">Dose conditions — anchored to Schmidt &amp; Eisend's inverted-U</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Cond.</th><th>Pride messages</th><th>Ads</th><th>Brand posts</th><th>Display logic</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>0 (baseline)</td><td>0</td><td>0</td><td>None</td></tr>
+      <tr><td>2</td><td>3 — early "saturation" (legacy 3-exposure rule)</td><td>1</td><td>2</td><td>1 brand post within posts 2–10; others in random order within the first 25 posts</td></tr>
+      <tr><td>3</td><td>6–7 — intermediary</td><td>3</td><td>3–4</td><td>1 brand post + 1 ad within posts 2–10; others random within the first 30 posts</td></tr>
+      <tr><td>4</td><td>10 — saturation point (Schmidt &amp; Eisend)</td><td>4</td><td>6</td><td>1 brand post + 1 ad within posts 2–10; others random within the first 45 posts</td></tr>
+      <tr><td>5</td><td>13 — past saturation</td><td>6</td><td>7</td><td>1 brand post + 1 ad within posts 2–10; others random within the first 50 posts</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:.92rem; color:#3a3a42">The escalating "first N posts" window keeps Pride density roughly proportional to feed length, so higher conditions raise the <em>count</em> of Pride messages without making the feed implausibly dense. Early forced placement (posts 2–10) guarantees minimum exposure before drop-off.</p>
+
+  <ul>
+    <li><strong>Factorial logic.</strong> A single attribute layered onto an existing feed composes cleanly with the host's own manipulations as a crossed factorial, the way attributes stack in a conjoint. We estimate the marginal effect of Pride dose and its ideology interaction; the host estimates whatever they are after; cell sizes are shared.</li>
+    <li><strong>Optional second factor (only if cheap).</strong> An authenticity cue — rainbow logo only vs. logo plus a substantive-commitment line — to separate "saturation" from "performativity." Droppable; the dose manipulation is the irreducible core.</li>
+  </ul>
+
+  <h3>Outcomes — two co-primary families, measured for every participant</h3>
+  <ul>
+    <li><strong>LGBTQ+ attitudes &amp; norms (Alberto):</strong> LGBTQ+ feeling thermometer; support for specific rights/policies; attitudes toward Pride and public visibility; perceived descriptive and injunctive norms about LGBTQ+ acceptance.</li>
+    <li><strong>Company / brand evaluation (Ana):</strong> attitude toward the advertising company; perceived brand authenticity; purchase intention; willingness to recommend; perceived brand motive (genuine vs. opportunistic). A co-equal dependent variable — a central deliverable is the dose-response curve for <em>company</em> attitudes and how its optimum differs by audience.</li>
+    <li><strong>Mechanism (shared):</strong> perceived authenticity / rainbow-washing; ad annoyance / reactance; subjective saturation (manipulation check).</li>
+  </ul>
+  <h3>Key moderators</h3>
+  <p>Political ideology / conservatism (primary), religiosity, baseline LGBTQ+ attitudes, own LGBTQ+ identity, prior brand attitudes.</p>
+
+  <h3>Predictions at a glance</h3>
+  <p style="font-size:.92rem; color:#3a3a42">Effects vs. the 0-Pride baseline. Read under <strong>H2b</strong> as leading; under <strong>H2a</strong>, conservatives would show a small positive/null arm at the lowest dose before turning negative.</p>
+
+  <p class="tbl-cap">LGBTQ+ attitudes &amp; norms</p>
+  <table>
+    <thead><tr><th>Audience</th><th>3</th><th>6–7</th><th>10</th><th>13</th></tr></thead>
+    <tbody>
+      <tr><td>Liberal / progressive</td><td class="pos">+</td><td class="pos">+ (peak)</td><td class="pos">+ / flat</td><td class="neu">null / − (fatigue)</td></tr>
+      <tr><td>Conservative</td><td class="neg">−</td><td class="neg">−</td><td class="neg">−</td><td class="neg">− −</td></tr>
+      <tr><td>Perceived norms (all)</td><td class="pos">+</td><td class="pos">+</td><td class="pos">+</td><td class="pos">+ flatter, uniform</td></tr>
+    </tbody>
+  </table>
+
+  <p class="tbl-cap">Company / brand evaluation</p>
+  <table>
+    <thead><tr><th>Audience</th><th>3</th><th>6–7</th><th>10</th><th>13</th></tr></thead>
+    <tbody>
+      <tr><td>Liberal / progressive / LGBTQ+</td><td class="pos">+</td><td class="pos">+ (peak)</td><td class="neu">null / −</td><td class="neg">− (rainbow-washing)</td></tr>
+      <tr><td>Conservative</td><td class="neg">−</td><td class="neg">−</td><td class="neg">−</td><td class="neg">− − (strongest)</td></tr>
+    </tbody>
+  </table>
+  <p>The signature results are two shapes: on the progressive/LGBTQ+ side, an <strong>inverted-U</strong> (warmth up to ~10 exposures, fatigue at 13) on both attitudes and brand evaluation; on the conservative side, <strong>monotonic rejection</strong> with no positive arm. Whether conservatives ever show a positive arm at very low dose is exactly the H2a-vs-H2b question the design resolves. The norm-perception effect should survive even where personal-attitude effects do not.</p>
+
+  <h2><span class="num">04</span>Why this is worth a paper</h2>
+  <ul>
+    <li><strong>Theoretical.</strong> First test of advertising wear-out / saturation logic applied to identity-signaling political content, bridging persuasion, brand-activism, and political-behavior literatures.</li>
+    <li><strong>Substantive.</strong> Speaks to the live corporate dilemma (the post-2023 retreat from Pride marketing) with causal, dose-response evidence rather than case studies or sentiment scraping.</li>
+    <li><strong>Methodological.</strong> An efficient piggyback design — a politically meaningful, conjoint-style manipulation layered onto a realistic social-media simulation — reusable infrastructure for us going forward.</li>
+    <li><strong>Fit.</strong> Lands in communication and political-behavior outlets and advances all collaborators' agendas at once.</li>
+  </ul>
+
+  <h2><span class="num">05</span>Team and fit</h2>
+  <div class="team">
+    <div class="person">
+      <h4>Alberto López Ortega</h4>
+      <div class="role">Political Communication · VU</div>
+      <p>Identity politics, LGBTQ+ attitudes, experimental design. <em>APSR</em> 2024 on homonationalism and instrumental liberalism; visual conjoint in <em>Political Behavior</em> (2024) and <em>PSRM</em> (2025); VENI on identity politics and democratic resilience. Brings the political theory, the backlash/visibility framing, and conjoint-style estimation.</p>
+    </div>
+    <div class="person">
+      <h4>Ana Isabel Lopes</h4>
+      <div class="role">Corporate Communication · VU</div>
+      <p>CSR, brand activism, consumer skepticism, and authenticity perceptions; the "green fatigue" / greenwashing-skepticism literature is her home turf. Brings the brand-side theory, the authenticity and woke-washing measures, and the marketing outcomes.</p>
+    </div>
+    <div class="person">
+      <h4>Host collaborator</h4>
+      <div class="role">Digital Media &amp; Behavior Lab · VU</div>
+      <p>Social norms and behavioral contagion on social media; preregistered studies using realistic social-media simulations. Brings the platform, the social-media-effects framing, and norm-perception measurement.</p>
+    </div>
+  </div>
+  <p>The collaboration is naturally complementary: identity-politics theory × brand-activism theory × a social-media simulation built for exactly this kind of feed manipulation. All at VU.</p>
+
+  <h2><span class="num">06</span>Practicalities (for discussion)</h2>
+  <ul>
+    <li><strong>Host study:</strong> a simulated-feed study on the lab's platform, fielded in Qualtrics. We first check within our research groups whether a study already planned/running can host the Pride-dose factor; if not, we approach a specific host.</li>
+    <li><strong>Sample:</strong> ideologically balanced national sample(s) with enough conservative N to power the H2 interaction; NL and/or US/UK fielding TBD. Power the dose × ideology interaction, not just the main effect.</li>
+    <li><strong>Preregistration:</strong> full PAP on OSF/AsPredicted before fielding; open data, code, materials.</li>
+    <li><strong>Division of labor:</strong> Alberto leads political design and analysis; Ana leads brand stimuli and marketing outcomes; the host leads platform and norm measurement. Joint write-up.</li>
+    <li><strong>Authorship:</strong> agreed up front; the host contribution is treated as full co-authorship, order settled once scope is fixed.</li>
+    <li><strong>Cost to the host:</strong> one extra randomized factor and a shared pool of ad/brand-post stimuli in a study running anyway; incremental sample cost only if we boost conservative cells.</li>
+  </ul>
+
+  <h2><span class="num">07</span>Immediate next steps</h2>
+  <ol>
+    <li><strong>Lock the two design decisions:</strong> (i) confirm the five dose conditions and the ads/brand-post split; (ii) settle the moderation framing — preregister H2a and H2b as competing predictions, or commit to H2b as primary. (Alberto + Ana align, then it's ready to share.)</li>
+    <li><strong>Find the host study.</strong> Check within our research groups for a platform study that can carry the factor and identify who is fielding on the platform.</li>
+    <li><strong>Share and get moving.</strong> Once conditions are fixed, send this note to the host, then draft the PAP and stimulus set and pretest the ad/brand-post pool and the subjective-saturation manipulation check.</li>
+  </ol>
+
+  <hr class="sec">
+  <h2 style="margin-top:36px"><span class="num">★</span>Selected references</h2>
+  <ul class="refs">
+    <li>Ahmad, F., Guzmán, F., &amp; Al-Emran, M. (2024). Brand activism and the consequence of woke washing. <em>Journal of Business Research</em>, 170, 114362.</li>
+    <li>Schmidt, S., &amp; Eisend, M. (2015). Advertising repetition: A meta-analysis on effective frequency in advertising. <em>Journal of Advertising</em>.</li>
+    <li>Tankard, M. E., &amp; Paluck, E. L. (2016). Norm perception as a vehicle for social change. <em>Social Issues and Policy Review</em>, 10(1).</li>
+    <li>Tankard, M. E., &amp; Paluck, E. L. (2017). The effect of a Supreme Court decision regarding gay marriage on social norms and personal attitudes. <em>Psychological Science</em>, 28(9).</li>
+    <li>Vredenburg, J., Kapitan, S., Spry, A., &amp; Kemper, J. A. (2020). Brands taking a stand: Authentic brand activism or woke washing? <em>Journal of Public Policy &amp; Marketing</em>, 39(4), 444–460.</li>
+    <li>"Pride or Rainbow-Washing? Exploring LGBTQ+ Advertising from the Vested Stakeholder Perspective" (2024). <em>Journal of Advertising</em>, doi:10.1080/00913367.2024.2317147.</li>
+    <li>Authentic brand positioning or woke washing? LGBTQI+ consumer perceptions of brand activism (2024). <em>Equality, Diversity and Inclusion</em>, 43(1).</li>
+    <li>Turnbull-Dugarte, S. J., &amp; López Ortega, A. (2024). Homonationalism / instrumental liberalism. <em>American Political Science Review</em>.</li>
+  </ul>
+  <p class="note">Reference list to be completed and verified at PAP stage; entries above confirmed against source records.</p>
+
+  <footer>
+    Draft v2 · July 2026 · for internal alignment before sharing with the host.
+  </footer>
+
+</div>
+</body>
+</html>
